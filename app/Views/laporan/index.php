@@ -56,7 +56,7 @@
         <div class="card border-0 shadow-sm border-start border-success border-4 h-100 mb-0">
             <div class="card-body p-3 d-flex align-items-center justify-content-between">
                 <div>
-                    <span class="text-muted small d-block mb-1">Pemasukan Iuran (Agt 2026)</span>
+                    <span class="text-muted small d-block mb-1">Pemasukan Iuran</span>
                     <h4 class="text-dark fw-bold mb-0 text-nowrap">Rp 4.500.000</h4>
                     <small class="text-success font-12 fw-semibold">42 Transaksi Warga Lunas</small>
                 </div>
@@ -71,7 +71,7 @@
         <div class="card border-0 shadow-sm border-start border-danger border-4 h-100 mb-0">
             <div class="card-body p-3 d-flex align-items-center justify-content-between">
                 <div>
-                    <span class="text-muted small d-block mb-1">Total Pengeluaran (Agt 2026)</span>
+                    <span class="text-muted small d-block mb-1">Total Pengeluaran</span>
                     <h4 class="text-dark fw-bold mb-0 text-nowrap">Rp 1.850.000</h4>
                     <small class="text-danger font-12 fw-semibold">4 Kegiatan Lingkungan</small>
                 </div>
@@ -87,7 +87,7 @@
         <div class="card border-0 shadow-sm border-start border-success border-4 h-100 mb-0">
             <div class="card-body p-3 d-flex align-items-center justify-content-between">
                 <div>
-                    <span class="text-muted small d-block mb-1">Arus Kas (Surplus)</span>
+                    <span class="text-muted small d-block mb-1">Arus Kas</span>
                     <h4 class="text-success fw-bold mb-0 text-nowrap">+ Rp 2.650.000</h4>
                     <small class="text-muted font-12">Surplus Kas Bulan Ini</small>
                 </div>
