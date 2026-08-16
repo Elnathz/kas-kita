@@ -1,186 +1,143 @@
 <!-- ============================================================== -->
-<!-- Topbar header - style you can find in pages.scss -->
+<!-- Topbar header -->
 <!-- ============================================================== -->
+<?php
+$uri = service('uri');
+$seg1 = $uri->getTotalSegments() >= 1 ? $uri->getSegment(1) : '';
+$isWargaMode = ($seg1 === 'dashboard-warga' || ($seg1 === 'iuran' && in_array($uri->getTotalSegments() >= 2 ? $uri->getSegment(2) : '', ['tagihan', 'bayar', 'riwayat'])));
+$currentUserName = $isWargaMode ? 'Farros Rifantiarno' : (session()->get('nama') ?? 'Pengurus RT');
+$currentUserRole = $isWargaMode ? 'Warga RT 04' : (ucfirst(session()->get('role') ?? 'Pengurus RT'));
+?>
 <header class="topbar" data-navbarbg="skin6">
     <nav class="navbar top-navbar navbar-expand-lg">
-        <div class="navbar-header" data-logobg="skin6">
-            <!-- This is for the sidebar toggle which is visible on mobile only -->
-            <a class="nav-toggler waves-effect waves-light d-block d-lg-none" href="javascript:void(0)"><i
-                    class="ti-menu ti-close"></i></a>
-            <!-- ============================================================== -->
-            <!-- Logo -->
-            <!-- ============================================================== -->
-            <div class="navbar-brand">
-                <a href="<?= base_url() ?>" class="d-flex align-items-center text-decoration-none">
-                    <img src="<?= base_url('FreeDash/src/assets/images/logo-icon.png') ?>" alt="Logo Kas-Kita" class="img-fluid me-2" style="max-height: 38px;">
-                    <span class="logo-text fw-bolder mb-0" style="font-size: 1.65rem; background: linear-gradient(135deg, #059669 0%, #10b981 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: -0.5px;">Kas-Kita</span>
+        <div class="navbar-header d-flex align-items-center justify-content-between px-2 px-md-3" data-logobg="skin6">
+            <!-- Left: Sidebar toggle visible on mobile only -->
+            <a class="nav-toggler waves-effect waves-light d-block d-lg-none text-dark p-1" href="javascript:void(0)" title="Menu Navigasi">
+                <i data-feather="menu" class="feather-icon" style="width: 22px; height: 22px;"></i>
+            </a>
+            
+            <!-- Brand Logo with Wordmark -->
+            <div class="navbar-brand py-0">
+                <a href="<?= base_url($isWargaMode ? 'dashboard-warga' : 'dashboard') ?>" class="d-flex align-items-center text-decoration-none py-1">
+                    <img id="headerBrandLogo" src="<?= base_url('assets/images/logo-full.svg') ?>" data-full-logo="<?= base_url('assets/images/logo-full.svg') ?>" data-icon-logo="<?= base_url('assets/images/logo-icon.svg') ?>" alt="Kas Kita - Manajemen Kas RT" class="img-fluid" style="height: 44px; width: auto;">
                 </a>
             </div>
-            <!-- ============================================================== -->
-            <!-- End Logo -->
-            <!-- ============================================================== -->
-            <!-- ============================================================== -->
-            <!-- Toggle which is visible on mobile only -->
-            <!-- ============================================================== -->
-            <a class="topbartoggler d-block d-lg-none waves-effect waves-light" href="javascript:void(0)"
-                data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><i
-                    class="ti-more"></i></a>
-        </div>
-        <!-- ============================================================== -->
-        <!-- End Logo -->
-        <!-- ============================================================== -->
-        <div class="navbar-collapse collapse" id="navbarSupportedContent">
-            <!-- ============================================================== -->
-            <!-- toggle and nav items -->
-            <!-- ============================================================== -->
-            <ul class="navbar-nav float-left me-auto ms-3 ps-1">
-                <!-- Notification -->
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle pl-md-3 position-relative" href="javascript:void(0)"
-                        id="bell" role="button" data-bs-toggle="dropdown" aria-haspopup="true"
-                        aria-expanded="false">
-                        <span><i data-feather="bell" class="svg-icon"></i></span>
-                        <span class="badge text-bg-primary notify-no rounded-circle">5</span>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-left mailbox animated bounceInDown">
-                        <ul class="list-style-none">
-                            <li>
-                                <div class="message-center notifications position-relative">
-                                    <!-- Message -->
-                                    <a href="javascript:void(0)"
-                                        class="message-item d-flex align-items-center border-bottom px-3 py-2">
-                                        <div class="btn btn-danger rounded-circle btn-circle"><i
-                                                data-feather="airplay" class="text-white"></i></div>
-                                        <div class="w-75 d-inline-block v-middle ps-2">
-                                            <h6 class="message-title mb-0 mt-1">Luanch Admin</h6>
-                                            <span class="font-12 text-nowrap d-block text-muted">Just see
-                                                the my new
-                                                admin!</span>
-                                            <span class="font-12 text-nowrap d-block text-muted">9:30 AM</span>
-                                        </div>
-                                    </a>
-                                    <!-- Message -->
-                                    <a href="javascript:void(0)"
-                                        class="message-item d-flex align-items-center border-bottom px-3 py-2">
-                                        <span class="btn btn-success text-white rounded-circle btn-circle"><i
-                                                data-feather="calendar" class="text-white"></i></span>
-                                        <div class="w-75 d-inline-block v-middle ps-2">
-                                            <h6 class="message-title mb-0 mt-1">Event today</h6>
-                                            <span
-                                                class="font-12 text-nowrap d-block text-muted text-truncate">Just
-                                                a reminder that you have event</span>
-                                            <span class="font-12 text-nowrap d-block text-muted">9:10 AM</span>
-                                        </div>
-                                    </a>
-                                    <!-- Message -->
-                                    <a href="javascript:void(0)"
-                                        class="message-item d-flex align-items-center border-bottom px-3 py-2">
-                                        <span class="btn btn-info rounded-circle btn-circle"><i
-                                                data-feather="settings" class="text-white"></i></span>
-                                        <div class="w-75 d-inline-block v-middle ps-2">
-                                            <h6 class="message-title mb-0 mt-1">Settings</h6>
-                                            <span
-                                                class="font-12 text-nowrap d-block text-muted text-truncate">You
-                                                can customize this template
-                                                as you want</span>
-                                            <span class="font-12 text-nowrap d-block text-muted">9:08 AM</span>
-                                        </div>
-                                    </a>
-                                    <!-- Message -->
-                                    <a href="javascript:void(0)"
-                                        class="message-item d-flex align-items-center border-bottom px-3 py-2">
-                                        <span class="btn btn-primary rounded-circle btn-circle"><i
-                                                data-feather="box" class="text-white"></i></span>
-                                        <div class="w-75 d-inline-block v-middle ps-2">
-                                            <h6 class="message-title mb-0 mt-1">Pavan kumar</h6> <span
-                                                class="font-12 text-nowrap d-block text-muted">Just
-                                                see the my admin!</span>
-                                            <span class="font-12 text-nowrap d-block text-muted">9:02 AM</span>
-                                        </div>
-                                    </a>
-                                </div>
-                            </li>
-                            <li>
-                                <a class="nav-link pt-3 text-center text-dark" href="javascript:void(0);">
-                                    <strong>Check all notifications</strong>
-                                    <i class="fa fa-angle-right"></i>
-                                </a>
-                            </li>
-                        </ul>
+
+            <!-- Desktop Sidebar Toggle Button (Mini / Full Sidebar) -->
+            <a class="nav-link text-dark p-1 d-none d-lg-inline-flex align-items-center justify-content-center rounded hover-bg-light" href="javascript:void(0)" id="toggleSidebarDesktop" title="Buka / Tutup Menu Sidebar" style="width: 34px; height: 34px;">
+                <i data-feather="menu" class="feather-icon" style="width: 20px; height: 20px;"></i>
+            </a>
+
+            <!-- Right: Profile Dropdown Button on Mobile -->
+            <div class="dropdown d-block d-lg-none">
+                <a class="nav-link dropdown-toggle p-0" href="javascript:void(0)" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Menu Akun">
+                    <img src="<?= base_url('FreeDash/src/assets/images/users/profile-pic.jpg') ?>" alt="Foto Profil" class="rounded-circle shadow-sm" width="34" height="34" style="border: 2px solid var(--kk-green-500); object-fit: cover;">
+                </a>
+                <div class="dropdown-menu dropdown-menu-end user-dd animated flipInY shadow border-0 rounded-3 mt-1" style="z-index: 1050;">
+                    <!-- Compact Header: Name + Badge on Single Line -->
+                    <div class="px-3 py-2 border-bottom bg-light d-flex align-items-center justify-content-between">
+                        <span class="fw-bold text-dark font-13 text-truncate" style="max-width: 120px;"><?= $currentUserName ?></span>
+                        <span class="badge <?= $isWargaMode ? 'bg-info-subtle text-info-emphasis border border-info' : 'bg-success-subtle text-success-emphasis border border-success' ?> font-10 px-2 py-0 ms-1"><?= $currentUserRole ?></span>
                     </div>
-                </li>
-                <!-- End Notification -->
-                <!-- ============================================================== -->
-                <!-- create new -->
-                <!-- ============================================================== -->
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                        data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i data-feather="settings" class="svg-icon"></i>
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
+                    
+                    <?php if ($isWargaMode) : ?>
+                        <a class="dropdown-item" href="<?= base_url('dashboard-warga') ?>">
+                            <i data-feather="home" class="svg-icon text-primary"></i> Dashboard Warga
+                        </a>
+                        <a class="dropdown-item" href="<?= base_url('iuran/tagihan') ?>">
+                            <i data-feather="file-text" class="svg-icon text-warning"></i> Tagihan Saya
+                        </a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Something else here</a>
-                    </div>
-                </li>
-                <li class="nav-item d-none d-md-block">
-                    <a class="nav-link" href="javascript:void(0)">
-                        <div class="customize-input">
-                            <select
-                                class="custom-select form-control bg-white custom-radius custom-shadow border-0">
-                                <option selected>EN</option>
-                                <option value="1">AB</option>
-                                <option value="2">AK</option>
-                                <option value="3">BE</option>
-                            </select>
-                        </div>
+                        <a class="dropdown-item text-success fw-semibold" href="<?= base_url('dashboard') ?>">
+                            <i data-feather="repeat" class="svg-icon text-success"></i> Mode Pengurus RT
+                        </a>
+                    <?php else : ?>
+                        <a class="dropdown-item" href="<?= base_url('dashboard') ?>">
+                            <i data-feather="home" class="svg-icon text-primary"></i> Dashboard Pengurus
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item text-primary fw-semibold" href="<?= base_url('dashboard-warga') ?>">
+                            <i data-feather="user" class="svg-icon text-primary"></i> Mode Warga (Farros)
+                        </a>
+                    <?php endif; ?>
+
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item text-danger" href="<?= base_url('logout') ?>">
+                        <i data-feather="power" class="svg-icon text-danger"></i> Keluar
                     </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="navbar-collapse collapse" id="navbarSupportedContent">
+            <!-- Left nav items (Quick Shortcuts) -->
+            <ul class="navbar-nav float-left me-auto ms-3 ps-1">
+                <li class="nav-item d-none d-md-block">
+                    <span class="badge <?= $isWargaMode ? 'bg-info-subtle text-info-emphasis border border-info' : 'bg-success-subtle text-success-emphasis border border-success' ?> px-2 py-1">
+                        Mode Aktif: <strong><?= $isWargaMode ? 'Warga RT' : 'Pengurus RT' ?></strong>
+                    </span>
                 </li>
             </ul>
-            <!-- ============================================================== -->
-            <!-- Right side toggle and nav items -->
-            <!-- ============================================================== -->
-            <ul class="navbar-nav float-end">
-                <!-- ============================================================== -->
-                <!-- Search -->
-                <!-- ============================================================== -->
-                <li class="nav-item d-none d-md-block">
-                    <a class="nav-link" href="javascript:void(0)">
-                        <form>
-                            <div class="customize-input">
-                                <input class="form-control custom-shadow custom-radius border-0 bg-white"
-                                    type="search" placeholder="Search" aria-label="Search">
-                                <i class="form-control-icon" data-feather="search"></i>
-                            </div>
-                        </form>
-                    </a>
+
+            <!-- Right side items (User profile & Role Switcher for Desktop) -->
+            <ul class="navbar-nav float-end align-items-center">
+                <!-- Role Switcher Quick Button (Sangat Berguna untuk Demo UTS) -->
+                <li class="nav-item me-2 d-none d-sm-block">
+                    <?php if ($isWargaMode) : ?>
+                        <a href="<?= base_url('dashboard') ?>" class="btn btn-sm btn-outline-success d-flex align-items-center gap-1">
+                            <i data-feather="repeat" class="feather-icon" style="width: 14px; height: 14px;"></i>
+                            <span>Beralih ke Pengurus</span>
+                        </a>
+                    <?php else : ?>
+                        <a href="<?= base_url('dashboard-warga') ?>" class="btn btn-sm btn-outline-primary d-flex align-items-center gap-1">
+                            <i data-feather="user" class="feather-icon" style="width: 14px; height: 14px;"></i>
+                            <span>Lihat Akun Farros (Warga)</span>
+                        </a>
+                    <?php endif; ?>
                 </li>
-                <!-- User profile -->
-                <li class="nav-item dropdown">
+
+                <!-- User profile (Desktop) -->
+                <li class="nav-item dropdown d-none d-lg-block">
                     <a class="nav-link dropdown-toggle" href="javascript:void(0)" data-bs-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false">
-                        <img src="<?= base_url('FreeDash/src/assets/images/users/profile-pic.jpg') ?>" alt="user" class="rounded-circle"
-                            width="40">
+                        <img src="<?= base_url('FreeDash/src/assets/images/users/profile-pic.jpg') ?>" alt="Foto Pengguna" class="rounded-circle"
+                            width="38" height="38" style="border: 2px solid var(--kk-green-500); object-fit: cover;">
                         <span class="ms-2 d-none d-lg-inline-block">
                             <span>Halo,</span> 
-                            <span class="text-dark fw-semibold"><?= session()->get('nama') ?? 'Pengurus RT' ?></span> 
+                            <span class="text-dark fw-semibold"><?= $currentUserName ?></span> 
                             <i data-feather="chevron-down" class="svg-icon"></i>
                         </span>
                     </a>
-                    <div class="dropdown-menu dropdown-menu-end dropdown-menu-right user-dd animated flipInY">
-                        <div class="p-3 border-bottom">
-                            <h6 class="mb-0 fw-bold"><?= session()->get('nama') ?? 'Pengurus RT' ?></h6>
-                            <span class="text-muted small"><?= ucfirst(session()->get('role') ?? 'pengurus') ?></span>
+                    <div class="dropdown-menu dropdown-menu-end dropdown-menu-right user-dd animated flipInY shadow border-0 rounded-3">
+                        <div class="px-3 py-2 border-bottom bg-light d-flex align-items-center justify-content-between">
+                            <span class="fw-bold text-dark font-13 text-truncate" style="max-width: 130px;"><?= $currentUserName ?></span>
+                            <span class="badge bg-success font-10 px-2 py-0 ms-1"><?= $currentUserRole ?></span>
                         </div>
-                        <a class="dropdown-item" href="<?= base_url('dashboard') ?>">
-                            <i data-feather="home" class="svg-icon me-2 ms-1"></i> Dashboard
-                        </a>
+                        
+                        <?php if ($isWargaMode) : ?>
+                            <a class="dropdown-item" href="<?= base_url('dashboard-warga') ?>">
+                                <i data-feather="home" class="svg-icon text-primary"></i> Dashboard Warga
+                            </a>
+                            <a class="dropdown-item" href="<?= base_url('iuran/tagihan') ?>">
+                                <i data-feather="file-text" class="svg-icon text-warning"></i> Tagihan Saya
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item text-success fw-semibold" href="<?= base_url('dashboard') ?>">
+                                <i data-feather="repeat" class="svg-icon text-success"></i> Mode Pengurus RT
+                            </a>
+                        <?php else : ?>
+                            <a class="dropdown-item" href="<?= base_url('dashboard') ?>">
+                                <i data-feather="home" class="svg-icon text-primary"></i> Dashboard Pengurus
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item text-primary fw-semibold" href="<?= base_url('dashboard-warga') ?>">
+                                <i data-feather="user" class="svg-icon text-primary"></i> Mode Warga (Farros)
+                            </a>
+                        <?php endif; ?>
+
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item text-danger" href="<?= base_url('logout') ?>">
-                            <i data-feather="power" class="svg-icon me-2 ms-1 text-danger"></i> Keluar
+                            <i data-feather="power" class="svg-icon text-danger"></i> Keluar
                         </a>
                     </div>
                 </li>
@@ -188,6 +145,3 @@
         </div>
     </nav>
 </header>
-<!-- ============================================================== -->
-<!-- End Topbar header -->
-<!-- ============================================================== -->

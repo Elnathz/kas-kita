@@ -1,15 +1,15 @@
-# Technical Design Document (TDD) - Kas-Kita
+# Technical Design Document (TDD) - Kas Kita
 
 **Versi**: 1.0
 **Tanggal**: 16 Agustus 2026
 **Proyek**: Aplikasi Manajemen Kas RT
-**Nama Aplikasi**: Kas-Kita
+**Nama Aplikasi**: Kas Kita
 
 ---
 
 ## 1. Ringkasan Proyek
 
-Kas-Kita adalah aplikasi berbasis web untuk memudahkan pengurus RT dalam mencatat pemasukan (iuran warga) dan pengeluaran kas RT. Aplikasi ini memiliki dua jenis pengguna: **pengurus** dan **warga**. Warga dapat melakukan pembayaran iuran melalui upload bukti transfer, sedangkan pengurus memvalidasi pembayaran, memantau status iuran, mencatat pengeluaran, dan mendapatkan laporan bulanan.
+Kas Kita adalah aplikasi berbasis web untuk memudahkan pengurus RT dalam mencatat pemasukan (iuran warga) dan pengeluaran kas RT. Aplikasi ini memiliki dua jenis pengguna: **pengurus** dan **warga**. Warga dapat melakukan pembayaran iuran melalui upload bukti transfer, sedangkan pengurus memvalidasi pembayaran, memantau status iuran, mencatat pengeluaran, dan mendapatkan laporan bulanan.
 
 ---
 
@@ -173,6 +173,21 @@ pengaturan_iuran (standalone config)
 - **Branch UTS**: Hardcoded credentials (`admin` / md5 hash dari `admin123`), simpan di session native PHP
 - **Branch main**: Validasi dari database, session CI4, filter auth
 
+#### Registrasi Warga Baru (Branch Main)
+
+- **URL**: `/register`
+- **Method**: GET (form pendaftaran), POST (proses registrasi)
+- **Input Terstandar**:
+  - Nama Lengkap Kepala Keluarga
+  - Blok Rumah *(Dropdown terstandar: Blok A, Blok B, dll)*
+  - Nomor Rumah *(Dropdown terstandar: No. 01 s/d No. 30)*
+  - Nama Jalan *(Dropdown terstandar: Jl. Mawar, Jl. Melati, dll)*
+  - Nomor Telepon / WA (numerik)
+  - Username (maks 20 karakter) & Password
+- **Status Akun Awal**: `is_active = 0` (Menunggu Persetujuan Pengurus)
+- **Alur Persetujuan**: Pengurus dapat melihat daftar pendaftar baru di dashboard / menu Warga, lalu memilih **Setujui** (`is_active = 1`) atau **Tolak**.
+- **Login Guard**: Jika warga login saat status masih `is_active = 0`, sistem menampilkan pesan: *"Akun Anda sedang menunggu persetujuan dari pengurus RT."*
+
 #### Logout
 
 - **URL**: `/logout`
@@ -247,17 +262,15 @@ pengaturan_iuran (standalone config)
 - **Aksi**: Lihat bukti transfer, terima atau tolak dengan catatan
 - **Info tambahan**: Jika warga berstatus "macet", tampilkan alert banner di atas halaman sebagai konteks bagi pengurus
 
-#### Tagihan Saya (Warga)
+#### Tagihan & Bayar Iuran (Warga)
 
-- **URL**: `/iuran/tagihan`
-- **Method**: GET
-- **Menampilkan**: Daftar tagihan (bulan ini + tunggakan)
-
-#### Bayar Iuran (Warga)
-
-- **URL**: `/iuran/bayar` (form), `/iuran/bayar/proses` (proses)
-- **Method**: GET (form), POST (proses)
-- **Input**: Pilih periode bulan, upload bukti transfer
+- **URL**: `/iuran/tagihan` atau `/iuran/bayar`
+- **Method**: GET (daftar tagihan + form pembayaran), POST (`/iuran/bayar/proses`)
+- **Menampilkan**: Rincian tagihan bulan berjalan dan tunggakan bulan sebelumnya (jika ada)
+- **Mekanisme Pilihan Pembayaran**:
+  - **Opsi Bayar Semua Sekaligus**: Warga melunasi seluruh tunggakan + bulan berjalan sekaligus dengan 1 bukti transfer.
+  - **Opsi Bayar Sebagian (Satu per Satu)**: Warga dapat memilih bulan tertentu yang ingin dibayar terlebih dahulu. Sistem mewajibkan pelunasan dengan prinsip **FIFO (First In, First Out)**, yaitu melunasi tunggakan bulan paling lama terlebih dahulu sebelum membayar bulan berikutnya.
+- **Input**: Checkbox pilihan bulan tagihan yang ingin dibayar, nominal otomatis terakumulasi, upload bukti transfer.
 
 #### Riwayat Pembayaran (Warga)
 
@@ -435,6 +448,18 @@ Template menggunakan FreeDash-lite dengan struktur:
 3. Pilih kategori, isi tanggal, nominal, keterangan
 4. Submit
 5. Pengeluaran tercatat dan masuk ke laporan
+```
+
+### 8.4 Alur Registrasi dan Persetujuan Warga Baru (Branch Main)
+
+```
+1. Warga buka halaman /register
+2. Warga mengisi form: Nama lengkap, No Rumah, No Telepon/WA, Username, Password
+3. Data tersimpan ke tabel users dengan role 'warga' dan is_active = 0 (Menunggu Persetujuan)
+4. Pengurus login dan melihat notifikasi/daftar pendaftar baru di menu Warga
+5. Pengurus memverifikasi identitas warga:
+   - Jika Disetujui -> is_active diubah menjadi 1 (Warga dapat login dan mengakses dashboard/iuran)
+   - Jika Ditolak -> data pendaftaran dihapus atau ditandai ditolak
 ```
 
 ---

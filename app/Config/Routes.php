@@ -7,11 +7,14 @@ use CodeIgniter\Router\RouteCollection;
 // Auth routes
 $routes->get('/login', 'AuthController::index');
 $routes->post('/login', 'AuthController::login');
+$routes->get('/register', 'AuthController::register');
+$routes->post('/register', 'AuthController::prosesRegister');
 $routes->get('/logout', 'AuthController::logout');
 
 // Dashboard routes
 $routes->get('/', 'DashboardController::index');
 $routes->get('/dashboard', 'DashboardController::index');
+$routes->get('/dashboard-warga', 'DashboardController::warga');
 
 // Warga routes
 $routes->get('/warga', 'WargaController::index');
@@ -29,6 +32,7 @@ $routes->post('/iuran/bayar/proses', 'IuranController::prosesBayar');
 $routes->get('/iuran/riwayat', 'IuranController::riwayat');
 $routes->get('/iuran/verifikasi/(:num)', 'IuranController::verifikasi/$1');
 $routes->post('/iuran/verifikasi/proses/(:num)', 'IuranController::prosesVerifikasi/$1');
+$routes->get('/iuran/kuitansi/(:num)', 'IuranController::kuitansi/$1');
 
 // Pengeluaran routes
 $routes->get('/pengeluaran', 'PengeluaranController::index');

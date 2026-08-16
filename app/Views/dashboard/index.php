@@ -3,70 +3,63 @@
 <!-- ============================================================== -->
 <!-- Kartu Ringkasan Statistik Kas RT -->
 <!-- ============================================================== -->
-<div class="row">
+<div class="row g-3 mb-4">
     <!-- Saldo Kas RT -->
-    <div class="col-sm-6 col-lg-3">
-        <div class="card border-0 shadow-sm border-start border-success border-4">
-            <div class="card-body">
-                <div class="d-flex align-items-center">
-                    <div>
-                        <h2 class="text-dark mb-1 font-weight-medium">Rp 12.650.000</h2>
-                        <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">Total Saldo Kas RT</h6>
-                    </div>
-                    <div class="ms-auto mt-md-3 mt-lg-0">
-                        <span class="opacity-7 text-muted"><i data-feather="dollar-sign" class="feather-icon text-success"></i></span>
-                    </div>
+    <div class="col-sm-6 col-xl-3">
+        <div class="card border-0 shadow-sm border-start border-success border-4 h-100 mb-0">
+            <div class="card-body p-3 d-flex align-items-center justify-content-between">
+                <div>
+                    <span class="text-muted small d-block mb-1">Total Saldo Kas RT</span>
+                    <h4 class="text-dark fw-bold mb-0 text-nowrap">Rp 12.650.000</h4>
+                </div>
+                <div class="bg-light rounded p-2 text-success d-flex align-items-center justify-content-center" style="width: 42px; height: 42px;">
+                    <i data-feather="dollar-sign" class="feather-icon text-success"></i>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- Pemasukan Bulan Ini -->
-    <div class="col-sm-6 col-lg-3">
-        <div class="card border-0 shadow-sm border-start border-primary border-4">
-            <div class="card-body">
-                <div class="d-flex align-items-center">
-                    <div>
-                        <h2 class="text-dark mb-1 font-weight-medium">Rp 4.500.000</h2>
-                        <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">Pemasukan Bulan Ini</h6>
-                    </div>
-                    <div class="ms-auto mt-md-3 mt-lg-0">
-                        <span class="opacity-7 text-muted"><i data-feather="trending-up" class="feather-icon text-primary"></i></span>
-                    </div>
+    <div class="col-sm-6 col-xl-3">
+        <div class="card border-0 shadow-sm border-start border-primary border-4 h-100 mb-0">
+            <div class="card-body p-3 d-flex align-items-center justify-content-between">
+                <div>
+                    <span class="text-muted small d-block mb-1">Pemasukan Bulan Ini</span>
+                    <h4 class="text-dark fw-bold mb-0 text-nowrap">Rp 4.500.000</h4>
+                </div>
+                <div class="bg-light rounded p-2 text-primary d-flex align-items-center justify-content-center" style="width: 42px; height: 42px;">
+                    <i data-feather="trending-up" class="feather-icon text-primary"></i>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- Pengeluaran Bulan Ini -->
-    <div class="col-sm-6 col-lg-3">
-        <div class="card border-0 shadow-sm border-start border-danger border-4">
-            <div class="card-body">
-                <div class="d-flex align-items-center">
-                    <div>
-                        <h2 class="text-dark mb-1 font-weight-medium">Rp 1.850.000</h2>
-                        <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">Pengeluaran Bulan Ini</h6>
-                    </div>
-                    <div class="ms-auto mt-md-3 mt-lg-0">
-                        <span class="opacity-7 text-muted"><i data-feather="trending-down" class="feather-icon text-danger"></i></span>
-                    </div>
+    <div class="col-sm-6 col-xl-3">
+        <div class="card border-0 shadow-sm border-start border-danger border-4 h-100 mb-0">
+            <div class="card-body p-3 d-flex align-items-center justify-content-between">
+                <div>
+                    <span class="text-muted small d-block mb-1">Pengeluaran Bulan Ini</span>
+                    <h4 class="text-dark fw-bold mb-0 text-nowrap">Rp 1.850.000</h4>
+                </div>
+                <div class="bg-light rounded p-2 text-danger d-flex align-items-center justify-content-center" style="width: 42px; height: 42px;">
+                    <i data-feather="trending-down" class="feather-icon text-danger"></i>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- Partisipasi Iuran Warga -->
-    <div class="col-sm-6 col-lg-3">
-        <div class="card border-0 shadow-sm border-start border-info border-4">
-            <div class="card-body">
-                <div class="d-flex align-items-center">
-                    <div>
-                        <h2 class="text-dark mb-1 font-weight-medium">42 / 50</h2>
-                        <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">Warga Sudah Bayar</h6>
-                    </div>
-                    <div class="ms-auto mt-md-3 mt-lg-0">
-                        <span class="opacity-7 text-muted"><i data-feather="users" class="feather-icon text-info"></i></span>
-                    </div>
+    <div class="col-sm-6 col-xl-3">
+        <div class="card border-0 shadow-sm border-start border-info border-4 h-100 mb-0">
+            <div class="card-body p-3 d-flex align-items-center justify-content-between">
+                <div>
+                    <span class="text-muted small d-block mb-1">Sudah Bayar Bulan Ini</span>
+                    <h4 class="text-dark fw-bold mb-0 text-nowrap">42 <span class="fs-6 text-muted fw-normal">/ 50 Warga</span></h4>
+                    <small class="text-success font-12 fw-semibold">Agustus 2026 (84%)</small>
+                </div>
+                <div class="bg-light rounded p-2 text-info d-flex align-items-center justify-content-center" style="width: 42px; height: 42px;">
+                    <i data-feather="users" class="feather-icon text-info"></i>
                 </div>
             </div>
         </div>
@@ -74,49 +67,69 @@
 </div>
 
 <!-- ============================================================== -->
-<!-- Warga Pembayaran Macet Alert & Tabel Cepat -->
+<!-- Tabel Monitoring Macet & Verifikasi Pembayaran (Maks 5 Data) -->
 <!-- ============================================================== -->
-<div class="row">
+<div class="row g-4">
     <!-- Card Warga Macet -->
     <div class="col-lg-6">
-        <div class="card border-0 shadow-sm">
-            <div class="card-body">
-                <div class="d-flex align-items-center mb-3">
-                    <h4 class="card-title mb-0 fw-bold">Monitoring Pembayaran Macet</h4>
-                    <span class="badge bg-danger ms-auto">Belum bayar >= 2 bulan</span>
+        <div class="card border-0 shadow-sm h-100">
+            <div class="card-body p-4 d-flex flex-column">
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <div>
+                        <h4 class="card-title mb-1 fw-bold">Monitoring Pembayaran Macet</h4>
+                        <p class="text-muted small mb-0">Daftar warga yang menunggak iuran 2 bulan atau lebih.</p>
+                    </div>
+                    <span class="badge bg-danger">Tunggakan 2 Bulan Lebih</span>
                 </div>
-                <p class="text-muted small mb-3">Daftar warga yang menunggak iuran lebih dari 2 bulan berturut-turut untuk ditindaklanjuti.</p>
-                <div class="table-responsive">
-                    <table class="table table-hover align-middle">
+
+                <div class="table-responsive flex-grow-1">
+                    <table class="table table-hover align-middle mb-0">
                         <thead class="table-light">
                             <tr>
-                                <th>Nama Warga</th>
-                                <th>No. Rumah</th>
-                                <th>Tunggakan</th>
-                                <th>Status</th>
+                                <th class="text-nowrap">Nama Warga</th>
+                                <th class="text-nowrap">Rumah</th>
+                                <th class="text-nowrap">Tunggakan</th>
+                                <th class="text-nowrap text-center">Status</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td class="fw-semibold">Bambang Susanto</td>
-                                <td>Blok A / 04</td>
-                                <td>3 Bulan (Rp 150.000)</td>
-                                <td><span class="badge bg-danger">Macet</span></td>
+                                <td class="fw-semibold text-nowrap text-dark">Bambang Susanto</td>
+                                <td class="text-nowrap text-dark fw-medium">Blok A / No. 04</td>
+                                <td class="text-danger fw-semibold text-nowrap">3 Bulan (Rp 150.000)</td>
+                                <td class="text-center"><span class="badge bg-danger">Macet</span></td>
                             </tr>
                             <tr>
-                                <td class="fw-semibold">Hendra Wijaya</td>
-                                <td>Blok B / 12</td>
-                                <td>2 Bulan (Rp 100.000)</td>
-                                <td><span class="badge bg-danger">Macet</span></td>
+                                <td class="fw-semibold text-nowrap text-dark">Hendra Wijaya</td>
+                                <td class="text-nowrap text-dark fw-medium">Blok B / No. 12</td>
+                                <td class="text-danger fw-semibold text-nowrap">2 Bulan (Rp 100.000)</td>
+                                <td class="text-center"><span class="badge bg-danger">Macet</span></td>
                             </tr>
                             <tr>
-                                <td class="fw-semibold">Siti Aminah</td>
-                                <td>Blok C / 08</td>
-                                <td>2 Bulan (Rp 100.000)</td>
-                                <td><span class="badge bg-danger">Macet</span></td>
+                                <td class="fw-semibold text-nowrap text-dark">Siti Aminah</td>
+                                <td class="text-nowrap text-dark fw-medium">Blok C / No. 08</td>
+                                <td class="text-danger fw-semibold text-nowrap">2 Bulan (Rp 100.000)</td>
+                                <td class="text-center"><span class="badge bg-danger">Macet</span></td>
+                            </tr>
+                            <tr>
+                                <td class="fw-semibold text-nowrap text-dark">Dedi Kusnadi</td>
+                                <td class="text-nowrap text-dark fw-medium">Blok A / No. 15</td>
+                                <td class="text-danger fw-semibold text-nowrap">2 Bulan (Rp 100.000)</td>
+                                <td class="text-center"><span class="badge bg-danger">Macet</span></td>
+                            </tr>
+                            <tr>
+                                <td class="fw-semibold text-nowrap text-dark">Gunawan Wibowo</td>
+                                <td class="text-nowrap text-dark fw-medium">Blok D / No. 02</td>
+                                <td class="text-danger fw-semibold text-nowrap">2 Bulan (Rp 100.000)</td>
+                                <td class="text-center"><span class="badge bg-danger">Macet</span></td>
                             </tr>
                         </tbody>
                     </table>
+                </div>
+
+                <div class="pt-3 border-top mt-3 d-flex justify-content-between align-items-center">
+                    <small class="text-muted">Menampilkan 5 dari 5 warga macet</small>
+                    <a href="<?= base_url('warga') ?>" class="btn btn-sm btn-outline-danger fw-semibold">Lihat Semua Warga</a>
                 </div>
             </div>
         </div>
@@ -124,50 +137,98 @@
 
     <!-- Card Pembayaran Terbaru Menunggu Verifikasi -->
     <div class="col-lg-6">
-        <div class="card border-0 shadow-sm">
-            <div class="card-body">
-                <div class="d-flex align-items-center mb-3">
-                    <h4 class="card-title mb-0 fw-bold">Verifikasi Pembayaran Masuk</h4>
-                    <a href="<?= base_url('iuran') ?>" class="btn btn-sm btn-outline-primary ms-auto">Lihat Semua</a>
+        <div class="card border-0 shadow-sm h-100">
+            <div class="card-body p-4 d-flex flex-column">
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <div>
+                        <h4 class="card-title mb-1 fw-bold">Verifikasi Pembayaran Masuk</h4>
+                        <p class="text-muted small mb-0">Bukti transfer warga menunggu konfirmasi pengurus.</p>
+                    </div>
+                    <span class="badge bg-warning text-dark">5 Menunggu</span>
                 </div>
-                <p class="text-muted small mb-3">Bukti transfer iuran warga yang baru masuk dan menunggu konfirmasi pengurus.</p>
-                <div class="table-responsive">
-                    <table class="table table-hover align-middle">
+
+                <div class="table-responsive flex-grow-1">
+                    <table class="table table-hover align-middle mb-0">
                         <thead class="table-light">
                             <tr>
-                                <th>Warga</th>
-                                <th>Periode</th>
-                                <th>Nominal</th>
-                                <th>Aksi</th>
+                                <th class="text-nowrap">Nama Warga</th>
+                                <th class="text-nowrap">Rumah</th>
+                                <th class="text-nowrap">Periode &amp; Nominal</th>
+                                <th class="text-nowrap text-center">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
+                            <!-- Contoh 1: Pembayaran 1 Bulan Normal -->
                             <tr>
-                                <td class="fw-semibold">Ahmad Fauzi</td>
-                                <td>Agustus 2026</td>
-                                <td>Rp 50.000</td>
-                                <td>
-                                    <a href="<?= base_url('iuran/verifikasi/1') ?>" class="btn btn-sm btn-primary">Periksa</a>
+                                <td class="fw-semibold text-nowrap text-dark">Ahmad Fauzi</td>
+                                <td class="text-nowrap text-dark fw-medium">Blok A / No. 01</td>
+                                <td class="text-nowrap">
+                                    <span class="fw-bold text-dark">Rp 50.000</span>
+                                    <small class="text-muted d-block font-12">Agustus 2026</small>
+                                </td>
+                                <td class="text-center">
+                                    <a href="<?= base_url('iuran/verifikasi/1') ?>" class="btn btn-sm btn-success px-3 fw-semibold">Periksa</a>
                                 </td>
                             </tr>
+
+                            <!-- Contoh 2: Pembayaran 2 Bulan Sekaligus -->
                             <tr>
-                                <td class="fw-semibold">Rina Marlina</td>
-                                <td>Agustus 2026</td>
-                                <td>Rp 50.000</td>
-                                <td>
-                                    <a href="<?= base_url('iuran/verifikasi/2') ?>" class="btn btn-sm btn-primary">Periksa</a>
+                                <td class="fw-semibold text-nowrap text-dark">Rina Marlina</td>
+                                <td class="text-nowrap text-dark fw-medium">Blok B / No. 06</td>
+                                <td class="text-nowrap">
+                                    <span class="fw-bold text-dark">Rp 100.000</span>
+                                    <small class="text-muted d-block font-12">Juli &amp; Agustus 2026 (2 Bulan)</small>
+                                </td>
+                                <td class="text-center">
+                                    <a href="<?= base_url('iuran/verifikasi/2') ?>" class="btn btn-sm btn-success px-3 fw-semibold">Periksa</a>
                                 </td>
                             </tr>
+
+                            <!-- Contoh 3: Pembayaran 3 Bulan Sekaligus -->
                             <tr>
-                                <td class="fw-semibold">Budi Santoso</td>
-                                <td>Agustus 2026</td>
-                                <td>Rp 50.000</td>
-                                <td>
-                                    <a href="<?= base_url('iuran/verifikasi/3') ?>" class="btn btn-sm btn-primary">Periksa</a>
+                                <td class="fw-semibold text-nowrap text-dark">Budi Santoso</td>
+                                <td class="text-nowrap text-dark fw-medium">Blok C / No. 10</td>
+                                <td class="text-nowrap">
+                                    <span class="fw-bold text-dark">Rp 150.000</span>
+                                    <small class="text-muted d-block font-12">Juni - Agustus 2026 (3 Bulan)</small>
+                                </td>
+                                <td class="text-center">
+                                    <a href="<?= base_url('iuran/verifikasi/3') ?>" class="btn btn-sm btn-success px-3 fw-semibold">Periksa</a>
+                                </td>
+                            </tr>
+
+                            <!-- Contoh 4: Pembayaran 1 Bulan Normal -->
+                            <tr>
+                                <td class="fw-semibold text-nowrap text-dark">Eko Prasetyo</td>
+                                <td class="text-nowrap text-dark fw-medium">Blok D / No. 05</td>
+                                <td class="text-nowrap">
+                                    <span class="fw-bold text-dark">Rp 50.000</span>
+                                    <small class="text-muted d-block font-12">Agustus 2026</small>
+                                </td>
+                                <td class="text-center">
+                                    <a href="<?= base_url('iuran/verifikasi/4') ?>" class="btn btn-sm btn-success px-3 fw-semibold">Periksa</a>
+                                </td>
+                            </tr>
+
+                            <!-- Contoh 5: Pembayaran 1 Bulan Normal -->
+                            <tr>
+                                <td class="fw-semibold text-nowrap text-dark">Dewi Lestari</td>
+                                <td class="text-nowrap text-dark fw-medium">Blok B / No. 14</td>
+                                <td class="text-nowrap">
+                                    <span class="fw-bold text-dark">Rp 50.000</span>
+                                    <small class="text-muted d-block font-12">Agustus 2026</small>
+                                </td>
+                                <td class="text-center">
+                                    <a href="<?= base_url('iuran/verifikasi/5') ?>" class="btn btn-sm btn-success px-3 fw-semibold">Periksa</a>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
+                </div>
+
+                <div class="pt-3 border-top mt-3 d-flex justify-content-between align-items-center">
+                    <small class="text-muted">Menampilkan 5 dari 8 pembayaran baru</small>
+                    <a href="<?= base_url('iuran') ?>" class="btn btn-sm btn-outline-success fw-semibold">Lihat Semua Iuran</a>
                 </div>
             </div>
         </div>

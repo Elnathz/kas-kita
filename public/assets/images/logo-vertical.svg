@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 110" width="100%" height="100%" fill="none">
+    <defs>
+        <!-- Gradients -->
+        <linearGradient id="kkVertBgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#059669" />
+            <stop offset="50%" stop-color="#10b981" />
+            <stop offset="100%" stop-color="#34d399" />
+        </linearGradient>
+        <linearGradient id="kkVertTextGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#065f46" />
+            <stop offset="50%" stop-color="#059669" />
+            <stop offset="100%" stop-color="#10b981" />
+        </linearGradient>
+        <linearGradient id="kkVertCoinGrad" x1="0%" y1="100%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#34d399" />
+            <stop offset="100%" stop-color="#a7f3d0" />
+        </linearGradient>
+        <filter id="kkVertShadow" x="-15%" y="-15%" width="130%" height="130%">
+            <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#047857" flood-opacity="0.25" />
+        </filter>
+    </defs>
+
+    <!-- Center Icon Emblem -->
+    <g transform="translate(54, 4)">
+        <rect x="0" y="0" width="52" height="52" rx="16" fill="url(#kkVertBgGrad)" filter="url(#kkVertShadow)" />
+
+        <!-- Inner Vault Arch -->
+        <path d="M26 10L12 21V40C12 42.4 13.8 44 16 44H36C38.2 44 40 42.4 40 40V21L26 10Z" fill="white" fill-opacity="0.16" />
+
+        <!-- Outer Ring -->
+        <circle cx="26" cy="26" r="11.5" stroke="#ffffff" stroke-width="2" fill="none" stroke-opacity="0.85" />
+
+        <!-- Kas 'K' Symbol -->
+        <path d="M22.5 19.5V32.5" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" />
+        <path d="M31 20.5L23.5 26.5L31 32.5" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+
+        <!-- Decorative Dot -->
+        <circle cx="32" cy="19.5" r="1.8" fill="url(#kkVertCoinGrad)" />
+    </g>
+
+    <!-- Wordmark & Tagline Below -->
+    <g transform="translate(80, 0)">
+        <text x="0" y="80" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="20" font-weight="800" fill="url(#kkVertTextGrad)" letter-spacing="-0.3">Kas Kita</text>
+        <text x="0" y="96" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="8.5" font-weight="700" fill="#059669" letter-spacing="1.8">APLIKASI KAS RT</text>
+    </g>
+</svg>

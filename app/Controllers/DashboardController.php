@@ -11,4 +11,9 @@ class DashboardController extends BaseController
     {
         return view('dashboard/index'); 
     }
+
+    public function warga()
+    {
+        return view('dashboard/warga');
+    }
 }

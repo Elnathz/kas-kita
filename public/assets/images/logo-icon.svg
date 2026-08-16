@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="100%" height="100%" fill="none">
+    <defs>
+        <!-- Gradients -->
+        <linearGradient id="kkBgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#059669" />
+            <stop offset="50%" stop-color="#10b981" />
+            <stop offset="100%" stop-color="#34d399" />
+        </linearGradient>
+        <linearGradient id="kkCoinGrad" x1="0%" y1="100%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#34d399" />
+            <stop offset="100%" stop-color="#a7f3d0" />
+        </linearGradient>
+        <linearGradient id="kkLeafGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#ffffff" stop-opacity="0.95" />
+            <stop offset="100%" stop-color="#d1fae5" stop-opacity="0.9" />
+        </linearGradient>
+        <filter id="kkShadow" x="-10%" y="-10%" width="130%" height="130%">
+            <feDropShadow dx="0" dy="6" stdDeviation="6" flood-color="#047857" flood-opacity="0.28" />
+        </filter>
+    </defs>
+
+    <!-- Base Rounded Emblem -->
+    <rect x="12" y="12" width="96" height="96" rx="28" fill="url(#kkBgGrad)" filter="url(#kkShadow)" />
+
+    <!-- Inner Protective House & Community Arch -->
+    <path d="M60 28L34 49V82C34 86.4 37.6 90 42 90H78C82.4 90 86 86.4 86 82V49L60 28Z" fill="white" fill-opacity="0.15" />
+
+    <!-- Stylized Coin & Community Vault Center -->
+    <!-- Outer Ring -->
+    <circle cx="60" cy="58" r="23" stroke="url(#kkLeafGrad)" stroke-width="4" fill="none" stroke-linecap="round" />
+    
+    <!-- Central Kas 'K' Emblem & Community Leaf -->
+    <path d="M53 45V71" stroke="#ffffff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M69 47L54 59L69 71" stroke="#ffffff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" />
+    
+    <!-- Small Decorative Spark / Growth Dot -->
+    <circle cx="71" cy="45" r="3.5" fill="url(#kkCoinGrad)" />
+</svg>
