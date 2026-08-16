@@ -120,25 +120,25 @@
                         <tbody>
                             <tr>
                                 <td class="text-muted small text-nowrap">14 Agu 2026</td>
-                                <td class="text-nowrap"><span class="badge bg-primary">Operasional</span></td>
+                                <td class="text-nowrap text-dark fw-medium">Operasional</td>
                                 <td class="text-dark fw-medium text-nowrap">Lampu penerangan gang RT</td>
                                 <td class="text-end fw-bold text-dark text-nowrap">Rp 350.000</td>
                             </tr>
                             <tr>
                                 <td class="text-muted small text-nowrap">10 Agu 2026</td>
-                                <td class="text-nowrap"><span class="badge bg-info text-white">Sosial</span></td>
+                                <td class="text-nowrap text-dark fw-medium">Sosial</td>
                                 <td class="text-dark fw-medium text-nowrap">Santunan warga sakit (Bpk. Mulyono)</td>
                                 <td class="text-end fw-bold text-dark text-nowrap">Rp 500.000</td>
                             </tr>
                             <tr>
                                 <td class="text-muted small text-nowrap">08 Agu 2026</td>
-                                <td class="text-nowrap"><span class="badge bg-primary">Operasional</span></td>
+                                <td class="text-nowrap text-dark fw-medium">Operasional</td>
                                 <td class="text-dark fw-medium text-nowrap">Kerja bakti &amp; perbaikan saluran gang</td>
                                 <td class="text-end fw-bold text-dark text-nowrap">Rp 750.000</td>
                             </tr>
                             <tr>
                                 <td class="text-muted small text-nowrap">05 Agu 2026</td>
-                                <td class="text-nowrap"><span class="badge bg-warning text-dark">Konsumsi</span></td>
+                                <td class="text-nowrap text-dark fw-medium">Konsumsi</td>
                                 <td class="text-dark fw-medium text-nowrap">Konsumsi rapat pengurus RT</td>
                                 <td class="text-end fw-bold text-dark text-nowrap">Rp 250.000</td>
                             </tr>
@@ -146,7 +146,7 @@
                         <tfoot class="table-light">
                             <tr>
                                 <th colspan="3" class="text-end fw-bold text-dark">Total Pengeluaran Agustus 2026:</th>
-                                <th class="text-end text-danger fw-bold fs-6">Rp 1.850.000</th>
+                                <th class="text-end fw-bold text-dark fs-6">Rp 1.850.000</th>
                             </tr>
                         </tfoot>
                     </table>
