@@ -1,15 +1,15 @@
-# Technical Design Document (TDD) - Kas-Kita
+# Technical Design Document (TDD) - Kas Kita
 
 **Versi**: 1.0
 **Tanggal**: 16 Agustus 2026
 **Proyek**: Aplikasi Manajemen Kas RT
-**Nama Aplikasi**: Kas-Kita
+**Nama Aplikasi**: Kas Kita
 
 ---
 
 ## 1. Ringkasan Proyek
 
-Kas-Kita adalah aplikasi berbasis web untuk memudahkan pengurus RT dalam mencatat pemasukan (iuran warga) dan pengeluaran kas RT. Aplikasi ini memiliki dua jenis pengguna: **pengurus** dan **warga**. Warga dapat melakukan pembayaran iuran melalui upload bukti transfer, sedangkan pengurus memvalidasi pembayaran, memantau status iuran, mencatat pengeluaran, dan mendapatkan laporan bulanan.
+Kas Kita adalah aplikasi berbasis web untuk memudahkan pengurus RT dalam mencatat pemasukan (iuran warga) dan pengeluaran kas RT. Aplikasi ini memiliki dua jenis pengguna: **pengurus** dan **warga**. Warga dapat melakukan pembayaran iuran melalui upload bukti transfer, sedangkan pengurus memvalidasi pembayaran, memantau status iuran, mencatat pengeluaran, dan mendapatkan laporan bulanan.
 
 ---
 

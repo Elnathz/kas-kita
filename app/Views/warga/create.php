@@ -7,7 +7,7 @@
                 <div class="d-flex align-items-center justify-content-between mb-4">
                     <div>
                         <h4 class="card-title fw-bold mb-1">Tambah Data Warga Baru</h4>
-                        <p class="text-muted small mb-0">Lengkapi formulir berikut untuk mendaftarkan warga ke sistem Kas-Kita.</p>
+                        <p class="text-muted small mb-0">Lengkapi formulir berikut untuk mendaftarkan warga ke sistem Kas Kita.</p>
                     </div>
                     <a href="<?= base_url('warga') ?>" class="btn btn-outline-secondary btn-sm">Kembali</a>
                 </div>

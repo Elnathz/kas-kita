@@ -12,7 +12,7 @@ if (uri_string() != "" && uri_string() != "/") {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/png" sizes="16x16" href="<?= base_url('FreeDash/src/assets/images/favicon.png') ?>">
-    <title>Kas-Kita | <?= $hlm ?></title>
+    <title>Kas Kita | <?= $hlm ?></title>
     <!-- Custom CSS FreeDash & Plugins -->
     <link href="<?= base_url('FreeDash/src/assets/extra-libs/c3/c3.min.css') ?>" rel="stylesheet">
     <link href="<?= base_url('FreeDash/src/assets/libs/chartist/dist/chartist.min.css') ?>" rel="stylesheet">
