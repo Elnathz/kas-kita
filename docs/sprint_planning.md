@@ -14,46 +14,46 @@
 
 | No | Task                                        | Estimasi  | Status |
 |----|----------------------------------------------|----------|--------|
-| 1  | Init git repo, buat .gitignore               | 10 menit | [ ]    |
-| 2  | Fix konfigurasi .env (port 3309, dbkaskita)   | 5 menit  | [ ]    |
-| 3  | Clone FreeDash-lite, ekstrak assets ke public | 20 menit | [ ]    |
-| 4  | Commit initial setup                          | 5 menit  | [ ]    |
+| 1  | Init git repo, buat .gitignore               | 10 menit | [x]    |
+| 2  | Fix konfigurasi .env (port 3309, dbkaskita)   | 5 menit  | [x]    |
+| 3  | Clone FreeDash-lite, ekstrak assets ke public | 20 menit | [x]    |
+| 4  | Commit initial setup                          | 5 menit  | [x]    |
 
 ### Sprint 0.2: Layout Slicing (16 Agustus, siang-sore)
 
 | No | Task                                        | Estimasi  | Status |
 |----|----------------------------------------------|----------|--------|
-| 5  | Buat layout utama (app.php) dari FreeDash    | 30 menit | [ ]    |
-| 6  | Slicing komponen header (header.php)          | 20 menit | [ ]    |
-| 7  | Slicing komponen sidebar (sidebar.php)        | 30 menit | [ ]    |
-| 8  | Slicing komponen footer (footer.php)          | 10 menit | [ ]    |
-| 9  | Buat halaman login (standalone, tanpa sidebar)| 20 menit | [ ]    |
-| 10 | Test visual: semua komponen render dengan benar| 15 menit | [ ]    |
-| 11 | Commit layout slicing                         | 5 menit  | [ ]    |
+| 5  | Buat layout utama (layout.php/clear) FreeDash | 30 menit | [x]    |
+| 6  | Slicing komponen header (header.php)          | 20 menit | [x]    |
+| 7  | Slicing komponen sidebar (sidebar.php)        | 30 menit | [x]    |
+| 8  | Slicing komponen footer (footer.php)          | 10 menit | [x]    |
+| 9  | Buat halaman login (v_login.php)              | 20 menit | [x]    |
+| 10 | Test visual: semua komponen render            | 15 menit | [x]    |
+| 11 | Commit layout slicing                         | 5 menit  | [x]    |
 
 ### Sprint 0.3: Controller dan View Skeleton (16 Agustus, sore-malam)
 
 | No | Task                                        | Estimasi  | Status |
 |----|----------------------------------------------|----------|--------|
-| 12 | Buat LoginController (hardcoded auth, md5)    | 20 menit | [ ]    |
-| 13 | Buat DashboardController + view (dummy data)  | 20 menit | [ ]    |
-| 14 | Buat WargaController + views (index, create, edit) | 30 menit | [ ] |
-| 15 | Buat IuranController + views (index, bayar, riwayat, tagihan, verifikasi) | 40 menit | [ ] |
-| 16 | Buat PengeluaranController + views (index, create, edit) | 30 menit | [ ] |
-| 17 | Buat KategoriController + views (index, create, edit)    | 20 menit | [ ] |
-| 18 | Buat LaporanController + view (index)         | 15 menit | [ ]    |
-| 19 | Buat PengaturanController + view (iuran)      | 15 menit | [ ]    |
+| 12 | Buat AuthController (hardcoded auth, md5)     | 20 menit | [x]    |
+| 13 | Buat DashboardController + view (dummy data)  | 20 menit | [x]    |
+| 14 | Buat WargaController + views (index, create, edit) | 30 menit | [x] |
+| 15 | Buat IuranController + views (index, bayar, riwayat, tagihan, verifikasi) | 40 menit | [x] |
+| 16 | Buat PengeluaranController + views (index, create, edit) | 30 menit | [x] |
+| 17 | Buat KategoriController + views (index, create, edit)    | 20 menit | [x] |
+| 18 | Buat LaporanController + view (index)         | 15 menit | [x]    |
+| 19 | Buat PengaturanController + view (iuran)      | 15 menit | [x]    |
 
 ### Sprint 0.4: Routes dan Final UTS (16 Agustus, malam)
 
 | No | Task                                        | Estimasi  | Status |
 |----|----------------------------------------------|----------|--------|
-| 20 | Setup semua routes di Routes.php              | 20 menit | [ ]    |
-| 21 | Dynamic sidebar: highlight active menu        | 15 menit | [ ]    |
-| 22 | Test semua route bisa diakses                 | 15 menit | [ ]    |
-| 23 | Test login flow (login -> dashboard -> logout)| 10 menit | [ ]    |
-| 24 | Final review branch uts                       | 15 menit | [ ]    |
-| 25 | Commit final + push branch uts                | 5 menit  | [ ]    |
+| 20 | Setup semua routes di Routes.php              | 20 menit | [x]    |
+| 21 | Dynamic sidebar: highlight active menu        | 15 menit | [x]    |
+| 22 | Test semua route bisa diakses                 | 15 menit | [x]    |
+| 23 | Test login flow (login -> dashboard -> logout)| 10 menit | [x]    |
+| 24 | Final review branch uts                       | 15 menit | [x]    |
+| 25 | Commit final + push branch uts                | 5 menit  | [x]    |
 
 ---
 

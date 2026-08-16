@@ -1,4 +1,4 @@
-<?= $this->extend('layout_clear') ?>
+<?= $this->extend('layouts/clear') ?>
 <?= $this->section('content') ?>
 <div class="auth-wrapper d-flex no-block justify-content-center align-items-center position-relative min-vh-100"
     style="background: url(<?= base_url('FreeDash/src/assets/images/big/auth-bg.jpg') ?>) no-repeat center center; background-size: cover;">

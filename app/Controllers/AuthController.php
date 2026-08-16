@@ -13,7 +13,7 @@ class AuthController extends BaseController
             return redirect()->to('/dashboard');
         }
 
-        return view('v_login');
+        return view('auth/login');
     }
 
     public function login()

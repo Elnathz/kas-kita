@@ -1,4 +1,4 @@
-<?= $this->extend('layout') ?>
+<?= $this->extend('layouts/app') ?>
 <?= $this->section('content') ?>
 <!-- ============================================================== -->
 <!-- Kartu Ringkasan Statistik Kas RT -->
