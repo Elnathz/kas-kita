@@ -131,7 +131,7 @@
                                 <td class="text-nowrap text-muted">10 Jul 2026</td>
                                 <td class="text-center text-nowrap"><span class="badge bg-success">Terverifikasi</span></td>
                                 <td class="text-center text-nowrap">
-                                    <button class="btn btn-sm btn-outline-secondary py-0 px-2" onclick="alert('Demo: Tampilkan foto bukti transfer transfer_juli.jpg')">Lihat</button>
+                                    <button class="btn btn-xs btn-outline-secondary" onclick="lihatBuktiTransfer('Juli 2026', 'Rp 50.000', '10 Jul 2026 - 14:20 WIB', 'bukti_transfer_juli_farros.jpg')">Lihat</button>
                                 </td>
                             </tr>
                             <tr>
@@ -140,7 +140,7 @@
                                 <td class="text-nowrap text-muted">08 Jun 2026</td>
                                 <td class="text-center text-nowrap"><span class="badge bg-success">Terverifikasi</span></td>
                                 <td class="text-center text-nowrap">
-                                    <button class="btn btn-sm btn-outline-secondary py-0 px-2" onclick="alert('Demo: Tampilkan foto bukti transfer transfer_juni.jpg')">Lihat</button>
+                                    <button class="btn btn-xs btn-outline-secondary" onclick="lihatBuktiTransfer('Juni 2026', 'Rp 50.000', '08 Jun 2026 - 11:05 WIB', 'bukti_transfer_juni_farros.jpg')">Lihat</button>
                                 </td>
                             </tr>
                             <tr>
@@ -149,7 +149,7 @@
                                 <td class="text-nowrap text-muted">12 Mei 2026</td>
                                 <td class="text-center text-nowrap"><span class="badge bg-success">Terverifikasi</span></td>
                                 <td class="text-center text-nowrap">
-                                    <button class="btn btn-sm btn-outline-secondary py-0 px-2" onclick="alert('Demo: Tampilkan foto bukti transfer transfer_mei.jpg')">Lihat</button>
+                                    <button class="btn btn-xs btn-outline-secondary" onclick="lihatBuktiTransfer('Mei 2026', 'Rp 50.000', '12 Mei 2026 - 09:45 WIB', 'bukti_transfer_mei_farros.jpg')">Lihat</button>
                                 </td>
                             </tr>
                         </tbody>
@@ -214,4 +214,57 @@
         </div>
     </div>
 </div>
+
+<!-- Modal Pratinjau Bukti Transfer Warga -->
+<div class="modal fade" id="modalLihatBuktiTransfer" tabindex="-1" aria-labelledby="modalLihatBuktiTransferLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow">
+            <div class="modal-header bg-light py-3 border-bottom">
+                <h5 class="modal-title fw-bold text-dark" id="modalLihatBuktiTransferLabel">
+                    <i data-feather="file-text" class="feather-icon text-success me-2" style="width: 16px; height: 16px;"></i>
+                    Bukti Transfer Pembayaran Iuran
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-4 text-center">
+                <div class="p-4 bg-light rounded-3 border d-flex flex-column align-items-center justify-content-center mb-3" style="min-height: 200px;">
+                    <div class="mb-2">
+                        <i data-feather="image" class="text-success" style="width: 48px; height: 48px;"></i>
+                    </div>
+                    <h6 class="fw-bold text-dark mb-1" id="modalBuktiPeriode">-</h6>
+                    <span class="text-success fw-bold fs-6 d-block mb-1" id="modalBuktiNominal">-</span>
+                    <small class="text-muted d-block mb-2 font-12" id="modalBuktiWaktu">-</small>
+                    <span class="badge bg-white text-dark border font-11 px-2 py-1" id="modalBuktiFilename">bukti_transfer.jpg</span>
+                </div>
+                <div class="alert alert-success font-12 py-2 px-3 mb-0">
+                    <i data-feather="check-circle" class="feather-icon me-1" style="width: 14px; height: 14px;"></i>
+                    Bukti pembayaran telah divalidasi lunas oleh bendahara RT.
+                </div>
+            </div>
+            <div class="modal-footer bg-light py-2">
+                <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Tutup</button>
+                <button type="button" class="btn btn-success btn-sm fw-semibold" onclick="showAppToast('File bukti transfer berhasil diunduh.', 'success', 'Unduhan Berhasil')">
+                    Unduh Bukti
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function lihatBuktiTransfer(periode, nominal, waktu, filename) {
+    document.getElementById('modalBuktiPeriode').textContent = 'Iuran Kas RT: ' + periode;
+    document.getElementById('modalBuktiNominal').textContent = nominal;
+    document.getElementById('modalBuktiWaktu').textContent = 'Diupload pada ' + waktu;
+    document.getElementById('modalBuktiFilename').textContent = filename;
+
+    const modalEl = document.getElementById('modalLihatBuktiTransfer');
+    const modal = new bootstrap.Modal(modalEl);
+    modal.show();
+
+    if (typeof feather !== 'undefined') {
+        feather.replace();
+    }
+}
+</script>
 <?= $this->endSection() ?>

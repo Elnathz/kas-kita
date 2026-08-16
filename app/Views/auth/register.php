@@ -174,15 +174,15 @@ function validateForm() {
     const jalan = document.getElementById('input_nama_jalan').value;
 
     if (!blok) {
-        alert('Silakan pilih blok rumah terlebih dahulu.');
+        showAppToast('Silakan pilih blok rumah terlebih dahulu.', 'warning', 'Blok Rumah Kosong');
         return false;
     }
     if (!noRumah) {
-        alert('Silakan pilih nomor rumah terlebih dahulu.');
+        showAppToast('Silakan pilih nomor rumah terlebih dahulu.', 'warning', 'Nomor Rumah Kosong');
         return false;
     }
     if (!jalan) {
-        alert('Silakan pilih nama jalan terlebih dahulu.');
+        showAppToast('Silakan pilih nama jalan terlebih dahulu.', 'warning', 'Nama Jalan Kosong');
         return false;
     }
 
@@ -190,7 +190,7 @@ function validateForm() {
     const pwdConfirm = document.getElementById('password_confirm').value;
 
     if (pwd !== pwdConfirm) {
-        alert('Konfirmasi password tidak cocok dengan password yang dimasukkan.');
+        showAppToast('Konfirmasi password tidak cocok dengan kata sandi yang dimasukkan.', 'danger', 'Password Tidak Cocok');
         document.getElementById('password_confirm').focus();
         return false;
     }
