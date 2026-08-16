@@ -103,7 +103,7 @@
                                 <td class="text-nowrap">01 Januari 2026</td>
                                 <td class="text-nowrap">
                                     <span class="text-dark fw-medium">Agus Hariyanto</span>
-                                    <small class="text-muted d-block font-11">Ketua RT 04</small>
+                                    <small class="text-muted d-block font-11">Pengurus RT</small>
                                 </td>
                                 <td class="text-center text-nowrap"><span class="badge bg-success">Aktif</span></td>
                             </tr>
@@ -113,7 +113,7 @@
                                 <td class="text-nowrap">01 Januari 2025</td>
                                 <td class="text-nowrap">
                                     <span class="text-dark fw-medium">Agus Hariyanto</span>
-                                    <small class="text-muted d-block font-11">Ketua RT 04</small>
+                                    <small class="text-muted d-block font-11">Pengurus RT</small>
                                 </td>
                                 <td class="text-center text-nowrap"><span class="badge bg-secondary">Arsip</span></td>
                             </tr>
@@ -121,7 +121,7 @@
                     </table>
                 </div>
                 <div class="pt-2 mt-2 border-top">
-                    <small class="text-muted font-11">Nama pengurus dicatat otomatis oleh sistem dari sesi login akun yang aktif saat menyimpan perubahan.</small>
+                    <small class="text-muted font-11">Nama pengurus dicatat otomatis dari relasi Foreign Key <code>users.id</code> (Role: <code>pengurus</code>) saat menyimpan data.</small>
                 </div>
             </div>
         </div>
