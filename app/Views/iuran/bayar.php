@@ -68,11 +68,11 @@
                         <div class="row g-2 small">
                             <div class="col-sm-6">
                                 <strong>Bank BCA:</strong> 123-456-7890<br>
-                                a.n. Kas RT 03 RW 05
+                                a.n. Kas RT 04 RW 12
                             </div>
                             <div class="col-sm-6">
                                 <strong>Bank Mandiri:</strong> 987-654-3210<br>
-                                a.n. Kas RT 03 RW 05
+                                a.n. Kas RT 04 RW 12
                             </div>
                         </div>
                     </div>
