@@ -172,36 +172,51 @@
                         </div>
 
                         <!-- ============================================================== -->
-                        <!-- MANAJER BLOK RUMAH (INTERACTIVE CHIPS UI) -->
+                        <!-- MANAJER BLOK RUMAH & MAKSIMAL NOMOR RUMAH -->
                         <!-- ============================================================== -->
                         <div class="col-12 pt-2 border-top">
                             <label class="form-label text-dark fw-bold small mb-2 d-flex justify-content-between align-items-center">
-                                <span>Daftar Pilihan Blok Rumah</span>
+                                <span>Daftar Blok &amp; Kapasitas Nomor Rumah</span>
                                 <span class="badge bg-light text-muted font-11">Pilihan Registrasi</span>
                             </label>
                             
-                            <!-- Container Badge Chips Blok -->
-                            <div id="containerChipsBlok" class="d-flex flex-wrap gap-2 mb-2 p-2 bg-light rounded border">
-                                <span class="badge bg-white text-dark border px-2 py-2 d-inline-flex align-items-center gap-1 font-12 shadow-sm chip-item">
-                                    Blok A <a href="javascript:void(0)" onclick="removeChip(this)" class="text-danger ms-1 text-decoration-none fw-bold">&times;</a>
+                            <!-- Container Badge Chips Blok dengan Kapasitas Nomor -->
+                            <div id="containerChipsBlok" class="d-flex flex-wrap gap-2 mb-3 p-2 bg-light rounded border">
+                                <span class="badge bg-white text-dark border px-2 py-2 d-inline-flex align-items-center gap-1 font-12 shadow-sm chip-item" data-blok="Blok A" data-max="15">
+                                    <strong>Blok A</strong> <span class="text-muted font-11">(No. 01 - 15)</span>
+                                    <a href="javascript:void(0)" onclick="removeChip(this, 'Master Blok Pemukiman')" class="text-danger ms-1 text-decoration-none fw-bold">&times;</a>
                                 </span>
-                                <span class="badge bg-white text-dark border px-2 py-2 d-inline-flex align-items-center gap-1 font-12 shadow-sm chip-item">
-                                    Blok B <a href="javascript:void(0)" onclick="removeChip(this)" class="text-danger ms-1 text-decoration-none fw-bold">&times;</a>
+                                <span class="badge bg-white text-dark border px-2 py-2 d-inline-flex align-items-center gap-1 font-12 shadow-sm chip-item" data-blok="Blok B" data-max="12">
+                                    <strong>Blok B</strong> <span class="text-muted font-11">(No. 01 - 12)</span>
+                                    <a href="javascript:void(0)" onclick="removeChip(this, 'Master Blok Pemukiman')" class="text-danger ms-1 text-decoration-none fw-bold">&times;</a>
                                 </span>
-                                <span class="badge bg-white text-dark border px-2 py-2 d-inline-flex align-items-center gap-1 font-12 shadow-sm chip-item">
-                                    Blok C <a href="javascript:void(0)" onclick="removeChip(this)" class="text-danger ms-1 text-decoration-none fw-bold">&times;</a>
+                                <span class="badge bg-white text-dark border px-2 py-2 d-inline-flex align-items-center gap-1 font-12 shadow-sm chip-item" data-blok="Blok C" data-max="13">
+                                    <strong>Blok C</strong> <span class="text-muted font-11">(No. 01 - 13)</span>
+                                    <a href="javascript:void(0)" onclick="removeChip(this, 'Master Blok Pemukiman')" class="text-danger ms-1 text-decoration-none fw-bold">&times;</a>
                                 </span>
-                                <span class="badge bg-white text-dark border px-2 py-2 d-inline-flex align-items-center gap-1 font-12 shadow-sm chip-item">
-                                    Blok D <a href="javascript:void(0)" onclick="removeChip(this)" class="text-danger ms-1 text-decoration-none fw-bold">&times;</a>
+                                <span class="badge bg-white text-dark border px-2 py-2 d-inline-flex align-items-center gap-1 font-12 shadow-sm chip-item" data-blok="Blok D" data-max="10">
+                                    <strong>Blok D</strong> <span class="text-muted font-11">(No. 01 - 10)</span>
+                                    <a href="javascript:void(0)" onclick="removeChip(this, 'Master Blok Pemukiman')" class="text-danger ms-1 text-decoration-none fw-bold">&times;</a>
                                 </span>
                             </div>
 
-                            <!-- Input Tambah Blok -->
-                            <div class="input-group input-group-sm">
-                                <input type="text" class="form-control" id="inputNewBlok" placeholder="Ketik nama blok baru (cth: Blok E)">
-                                <button class="btn btn-outline-success fw-semibold" type="button" onclick="addNewChip('inputNewBlok', 'containerChipsBlok')">
-                                    + Tambah Blok
-                                </button>
+                            <!-- Input Form Tambah Blok dengan Jumlah Nomor Rumah (Lega & Rapi) -->
+                            <div class="p-2 bg-light rounded border mb-2">
+                                <div class="row g-2 align-items-end">
+                                    <div class="col-6">
+                                        <label class="form-label text-dark fw-semibold font-11 mb-1" for="inputNewBlok">Nama Blok</label>
+                                        <input type="text" class="form-control form-control-sm" id="inputNewBlok" placeholder="Cth: Blok E">
+                                    </div>
+                                    <div class="col-3">
+                                        <label class="form-label text-dark fw-semibold font-11 mb-1" for="inputMaxNomor">Maks No.</label>
+                                        <input type="number" class="form-control form-control-sm" id="inputMaxNomor" placeholder="15" value="15" min="1" max="99">
+                                    </div>
+                                    <div class="col-3">
+                                        <button class="btn btn-sm btn-success fw-semibold w-100 font-12" type="button" onclick="addNewBlokWithCapacity()">
+                                            + Tambah
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
@@ -215,33 +230,40 @@
                             </label>
 
                             <!-- Container Badge Chips Jalan -->
-                            <div id="containerChipsJalan" class="d-flex flex-wrap gap-2 mb-2 p-2 bg-light rounded border">
+                            <div id="containerChipsJalan" class="d-flex flex-wrap gap-2 mb-3 p-2 bg-light rounded border">
                                 <span class="badge bg-white text-dark border px-2 py-2 d-inline-flex align-items-center gap-1 font-12 shadow-sm chip-item">
-                                    Jl. Mawar <a href="javascript:void(0)" onclick="removeChip(this)" class="text-danger ms-1 text-decoration-none fw-bold">&times;</a>
+                                    Jl. Mawar <a href="javascript:void(0)" onclick="removeChip(this, 'Master Nama Jalan')" class="text-danger ms-1 text-decoration-none fw-bold">&times;</a>
                                 </span>
                                 <span class="badge bg-white text-dark border px-2 py-2 d-inline-flex align-items-center gap-1 font-12 shadow-sm chip-item">
-                                    Jl. Melati <a href="javascript:void(0)" onclick="removeChip(this)" class="text-danger ms-1 text-decoration-none fw-bold">&times;</a>
+                                    Jl. Melati <a href="javascript:void(0)" onclick="removeChip(this, 'Master Nama Jalan')" class="text-danger ms-1 text-decoration-none fw-bold">&times;</a>
                                 </span>
                                 <span class="badge bg-white text-dark border px-2 py-2 d-inline-flex align-items-center gap-1 font-12 shadow-sm chip-item">
-                                    Jl. Anggrek <a href="javascript:void(0)" onclick="removeChip(this)" class="text-danger ms-1 text-decoration-none fw-bold">&times;</a>
+                                    Jl. Anggrek <a href="javascript:void(0)" onclick="removeChip(this, 'Master Nama Jalan')" class="text-danger ms-1 text-decoration-none fw-bold">&times;</a>
                                 </span>
                                 <span class="badge bg-white text-dark border px-2 py-2 d-inline-flex align-items-center gap-1 font-12 shadow-sm chip-item">
-                                    Jl. Kenanga <a href="javascript:void(0)" onclick="removeChip(this)" class="text-danger ms-1 text-decoration-none fw-bold">&times;</a>
+                                    Jl. Kenanga <a href="javascript:void(0)" onclick="removeChip(this, 'Master Nama Jalan')" class="text-danger ms-1 text-decoration-none fw-bold">&times;</a>
                                 </span>
                             </div>
 
-                            <!-- Input Tambah Jalan -->
-                            <div class="input-group input-group-sm">
-                                <input type="text" class="form-control" id="inputNewJalan" placeholder="Ketik nama jalan baru (cth: Jl. Dahlia)">
-                                <button class="btn btn-outline-success fw-semibold" type="button" onclick="addNewChip('inputNewJalan', 'containerChipsJalan')">
-                                    + Tambah Jalan
-                                </button>
+                            <!-- Input Form Tambah Jalan (Lega & Rapi) -->
+                            <div class="p-2 bg-light rounded border">
+                                <div class="row g-2 align-items-end">
+                                    <div class="col-8">
+                                        <label class="form-label text-dark fw-semibold font-11 mb-1" for="inputNewJalan">Nama Jalan Baru</label>
+                                        <input type="text" class="form-control form-control-sm" id="inputNewJalan" placeholder="Cth: Jl. Cempaka">
+                                    </div>
+                                    <div class="col-4">
+                                        <button class="btn btn-sm btn-success fw-semibold w-100 font-12" type="button" onclick="addNewChip('inputNewJalan', 'containerChipsJalan')">
+                                            + Tambah
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
 
                     <div class="d-flex justify-content-end mt-4 pt-3 border-top">
-                        <button type="button" class="btn btn-success fw-semibold px-4" onclick="alert('Demo: Data wilayah & daftar blok/jalan berhasil disimpan!')">
+                        <button type="button" class="btn btn-success fw-semibold px-4" onclick="showAppToast('Data wilayah dan master blok/jalan berhasil disimpan!', 'success', 'Pengaturan Tersimpan')">
                             Simpan Data Wilayah
                         </button>
                     </div>
@@ -392,34 +414,127 @@
     </div>
 </div>
 
+<!-- ============================================================== -->
+<!-- MODAL KONFIRMASI HAPUS MASTER BLOK / JALAN -->
+<!-- ============================================================== -->
+<div class="modal fade" id="modalKonfirmasiHapusWilayah" tabindex="-1" aria-labelledby="modalKonfirmasiHapusWilayahLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow">
+            <div class="modal-header bg-danger text-white py-3">
+                <h5 class="modal-title fw-bold text-white" id="modalKonfirmasiHapusWilayahLabel">
+                    <i data-feather="alert-triangle" class="feather-icon me-2 text-white" style="width: 18px; height: 18px;"></i>
+                    Konfirmasi Hapus Data Master
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-4">
+                <p class="mb-2 text-dark">Apakah Anda yakin ingin menghapus data master berikut dari pilihan registrasi warga?</p>
+                <div class="p-3 bg-light rounded border mb-3">
+                    <span class="badge bg-secondary mb-1" id="modalHapusWilayahJenis">Master Blok Pemukiman</span>
+                    <h6 class="fw-bold text-dark mb-0 fs-6" id="modalHapusWilayahNama">Blok A (No. 01 - 15)</h6>
+                </div>
+                <div class="alert alert-warning font-12 py-2 px-3 mb-0">
+                    <i data-feather="info" class="feather-icon me-1" style="width: 14px; height: 14px;"></i>
+                    Catatan: Data warga yang sudah terdaftar tidak akan hilang, namun opsi ini tidak akan muncul pada formulir pendaftaran warga baru.
+                </div>
+            </div>
+            <div class="modal-footer bg-light py-2">
+                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Batal</button>
+                <button type="button" class="btn btn-danger fw-semibold px-4" onclick="eksekusiHapusChipWilayah()">
+                    Ya, Hapus Data
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Script Tambah & Hapus Chip Blok & Jalan -->
 <script>
+let chipTargetToRemove = null;
+
+function addNewBlokWithCapacity() {
+    const inputBlok = document.getElementById('inputNewBlok');
+    const inputMax = document.getElementById('inputMaxNomor');
+    const blokVal = inputBlok.value.trim();
+    const maxVal = inputMax.value.trim() || '15';
+
+    if (!blokVal) {
+        showAppToast('Silakan ketikkan nama blok terlebih dahulu.', 'warning', 'Nama Blok Kosong');
+        return;
+    }
+
+    const container = document.getElementById('containerChipsBlok');
+    const newSpan = document.createElement('span');
+    newSpan.className = 'badge bg-white text-dark border px-2 py-2 d-inline-flex align-items-center gap-1 font-12 shadow-sm chip-item';
+    newSpan.setAttribute('data-blok', blokVal);
+    newSpan.setAttribute('data-max', maxVal);
+    
+    const formattedMax = String(maxVal).padStart(2, '0');
+    newSpan.innerHTML = `<strong>${blokVal}</strong> <span class="text-muted font-11">(No. 01 - ${formattedMax})</span> <a href="javascript:void(0)" onclick="removeChip(this, 'Master Blok Pemukiman')" class="text-danger ms-1 text-decoration-none fw-bold">&times;</a>`;
+
+    container.appendChild(newSpan);
+    inputBlok.value = '';
+    inputMax.value = '';
+    showAppToast(`Master blok ${blokVal} berhasil ditambahkan ke sistem.`, 'success', 'Blok Ditambahkan');
+}
+
 function addNewChip(inputId, containerId) {
     const input = document.getElementById(inputId);
     const value = input.value.trim();
     if (!value) {
-        alert('Silakan ketikkan nama terlebih dahulu.');
+        showAppToast('Silakan ketikkan nama jalan terlebih dahulu.', 'warning', 'Nama Jalan Kosong');
         return;
     }
 
     const container = document.getElementById(containerId);
     const newSpan = document.createElement('span');
     newSpan.className = 'badge bg-white text-dark border px-2 py-2 d-inline-flex align-items-center gap-1 font-12 shadow-sm chip-item';
-    newSpan.innerHTML = value + ' <a href="javascript:void(0)" onclick="removeChip(this)" class="text-danger ms-1 text-decoration-none fw-bold">&times;</a>';
+    newSpan.innerHTML = value + ` <a href="javascript:void(0)" onclick="removeChip(this, 'Master Nama Jalan')" class="text-danger ms-1 text-decoration-none fw-bold">&times;</a>`;
 
     container.appendChild(newSpan);
     input.value = '';
+    showAppToast(`Master nama jalan ${value} berhasil ditambahkan.`, 'success', 'Jalan Ditambahkan');
 }
 
-function removeChip(element) {
+function removeChip(element, jenis) {
     const chip = element.closest('.chip-item');
-    if (chip) {
-        chip.remove();
+    if (!chip) return;
+    
+    chipTargetToRemove = chip;
+    
+    // Ambil teks label dari chip (hilangkan tanda x)
+    const labelClone = chip.cloneNode(true);
+    const closeBtn = labelClone.querySelector('a');
+    if (closeBtn) closeBtn.remove();
+    const cleanText = labelClone.textContent.trim();
+
+    document.getElementById('modalHapusWilayahJenis').textContent = jenis || 'Data Master Wilayah';
+    document.getElementById('modalHapusWilayahNama').textContent = cleanText;
+
+    const modalEl = document.getElementById('modalKonfirmasiHapusWilayah');
+    const modal = new bootstrap.Modal(modalEl);
+    modal.show();
+    
+    if (typeof feather !== 'undefined') {
+        feather.replace();
+    }
+}
+
+function eksekusiHapusChipWilayah() {
+    if (chipTargetToRemove) {
+        chipTargetToRemove.remove();
+        chipTargetToRemove = null;
+        showAppToast('Data master wilayah berhasil dihapus.', 'info', 'Data Terhapus');
+    }
+    const modalEl = document.getElementById('modalKonfirmasiHapusWilayah');
+    const modal = bootstrap.Modal.getInstance(modalEl);
+    if (modal) {
+        modal.hide();
     }
 }
 
 function savePaymentSettings() {
-    alert('Demo: Pengaturan Rekening Bank & QRIS Kas RT berhasil diperbarui!');
+    showAppToast('Pengaturan Rekening Bank & QRIS Kas RT berhasil diperbarui!', 'success', 'Metode Bayar Disimpan');
     const modalEl = document.getElementById('modalKelolaRekening');
     const modal = bootstrap.Modal.getInstance(modalEl);
     if (modal) {
