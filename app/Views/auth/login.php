@@ -19,6 +19,14 @@
                 <p class="text-muted small">Silakan masuk menggunakan akun Anda</p>
             </div>
 
+            <!-- Flash Success Notification -->
+            <?php if (session()->getFlashdata('success')) : ?>
+                <div class="alert alert-success alert-dismissible fade show small py-2" role="alert">
+                    <?= session()->getFlashdata('success') ?>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            <?php endif; ?>
+
             <!-- Flash Error Notification -->
             <?php if (session()->getFlashdata('error')) : ?>
                 <div class="alert alert-danger alert-dismissible fade show small py-2" role="alert">
@@ -41,6 +49,10 @@
                 </div>
                 <div class="d-grid mb-3">
                     <button type="submit" class="btn btn-success fw-semibold py-2">Masuk ke Sistem</button>
+                </div>
+
+                <div class="text-center small text-muted mb-3">
+                    Belum punya akun warga? <a href="<?= base_url('register') ?>" class="text-success fw-bold text-decoration-none">Daftar di sini</a>
                 </div>
 
                 <div class="p-3 bg-light rounded text-center small text-muted">

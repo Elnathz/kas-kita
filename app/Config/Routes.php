@@ -7,6 +7,8 @@ use CodeIgniter\Router\RouteCollection;
 // Auth routes
 $routes->get('/login', 'AuthController::index');
 $routes->post('/login', 'AuthController::login');
+$routes->get('/register', 'AuthController::register');
+$routes->post('/register', 'AuthController::prosesRegister');
 $routes->get('/logout', 'AuthController::logout');
 
 // Dashboard routes

@@ -45,4 +45,19 @@ class AuthController extends BaseController
         session()->destroy();
         return redirect()->to('/login');
     }
+
+    public function register()
+    {
+        if (session()->get('logged_in')) {
+            return redirect()->to('/dashboard');
+        }
+
+        return view('auth/register');
+    }
+
+    public function prosesRegister()
+    {
+        // Pada UTS, dummy sukses registrasi
+        return redirect()->to('/login')->with('success', 'Pendaftaran berhasil! Akun Anda sedang menunggu persetujuan dari pengurus RT.');
+    }
 }
