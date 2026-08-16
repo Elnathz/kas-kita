@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 205 46" width="100%" height="100%" fill="none">
+    <defs>
+        <!-- Gradients -->
+        <linearGradient id="kkFullBgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#059669" />
+            <stop offset="50%" stop-color="#10b981" />
+            <stop offset="100%" stop-color="#34d399" />
+        </linearGradient>
+        <linearGradient id="kkFullTextGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#064e3b" />
+            <stop offset="40%" stop-color="#059669" />
+            <stop offset="100%" stop-color="#10b981" />
+        </linearGradient>
+        <linearGradient id="kkCoinGrad" x1="0%" y1="100%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#34d399" />
+            <stop offset="100%" stop-color="#a7f3d0" />
+        </linearGradient>
+        <filter id="kkShadow" x="-10%" y="-10%" width="130%" height="130%">
+            <feDropShadow dx="0" dy="2" stdDeviation="2.5" flood-color="#047857" flood-opacity="0.28" />
+        </filter>
+    </defs>
+
+    <!-- Icon Mark (Left) -->
+    <g transform="translate(1, 1)">
+        <!-- Base Rounded Emblem -->
+        <rect x="0" y="0" width="44" height="44" rx="13" fill="url(#kkFullBgGrad)" filter="url(#kkShadow)" />
+
+        <!-- Inner Vault Arch -->
+        <path d="M22 7.5L9.5 17V33.5C9.5 35.8 11.4 37.5 13.8 37.5H30.2C32.6 37.5 34.5 35.8 34.5 33.5V17L22 7.5Z" fill="white" fill-opacity="0.18" />
+
+        <!-- Outer Ring -->
+        <circle cx="22" cy="22.5" r="10" stroke="#ffffff" stroke-width="2" fill="none" stroke-opacity="0.9" />
+
+        <!-- Kas 'K' Symbol -->
+        <path d="M19 16.5V28.5" stroke="#ffffff" stroke-width="2.6" stroke-linecap="round" />
+        <path d="M26.5 17.5L19.5 22.5L26.5 28.5" stroke="#ffffff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" />
+
+        <!-- Decorative Growth Dot -->
+        <circle cx="27.5" cy="16.5" r="1.6" fill="url(#kkCoinGrad)" />
+    </g>
+
+    <!-- Wordmark & Tagline (Right) -->
+    <g transform="translate(52, 0)">
+        <text x="0" y="27" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="24" font-weight="900" fill="url(#kkFullTextGrad)" letter-spacing="-0.5">Kas Kita</text>
+        <text x="1" y="40.5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="9" font-weight="800" fill="#059669" letter-spacing="1.8">MANAJEMEN KAS RT</text>
+    </g>
+</svg>

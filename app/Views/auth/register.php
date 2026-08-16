@@ -4,8 +4,8 @@
     style="background: url(<?= base_url('FreeDash/src/assets/images/big/auth-bg.jpg') ?>) no-repeat center center; background-size: cover;">
     <div class="auth-box row shadow-lg rounded overflow-hidden" style="max-width: 960px; width: 95%;">
         <!-- Side Banner Image -->
-        <div class="col-lg-5 d-none d-lg-block modal-bg-img p-0" style="background-image: url(<?= base_url('FreeDash/src/assets/images/big/3.jpg') ?>); background-size: cover; background-position: center;">
-            <div class="h-100 w-100 d-flex flex-column justify-content-end p-4" style="background: linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(4,120,87,0.88) 100%);">
+        <div class="col-lg-5 d-none d-lg-block modal-bg-img p-0" style="background-image: url(<?= base_url('assets/images/auth-banner.jpg') ?>); background-size: cover; background-position: center;">
+            <div class="h-100 w-100 d-flex flex-column justify-content-end p-4" style="background: linear-gradient(180deg, rgba(0,0,0,0.05) 0%, rgba(4,120,87,0.92) 100%);">
                 <h3 class="text-white fw-bold mb-1">Kas Kita</h3>
                 <p class="text-white-50 mb-0">Daftarkan diri Anda sebagai warga untuk kemudahan pemantauan dan pembayaran iuran kas RT secara transparan.</p>
             </div>
@@ -13,9 +13,9 @@
 
         <!-- Form Section -->
         <div class="col-lg-7 bg-white p-4 p-md-5">
-            <div class="text-center mb-4">
-                <img src="<?= base_url('FreeDash/src/assets/images/logo-icon.png') ?>" alt="Logo Kas Kita" class="img-fluid mb-2" style="max-height: 42px;">
-                <h3 class="fw-bold mb-1" style="background: linear-gradient(135deg, #059669 0%, #10b981 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Pendaftaran Warga Baru</h3>
+            <div class="text-center mb-3">
+                <img src="<?= base_url('assets/images/logo-vertical.svg') ?>" alt="Logo Kas Kita" class="img-fluid mb-2" style="height: 105px; width: auto;">
+                <h4 class="fw-bold text-dark mb-1">Form Pendaftaran Warga</h4>
                 <p class="text-muted small mb-0">Lengkapi data akun Anda di bawah ini</p>
             </div>
 

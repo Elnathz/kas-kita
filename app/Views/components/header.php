@@ -9,11 +9,10 @@
                 <i data-feather="menu" class="feather-icon"></i>
             </a>
             
-            <!-- Brand Logo & Name -->
-            <div class="navbar-brand">
-                <a href="<?= base_url('dashboard') ?>" class="d-flex align-items-center text-decoration-none">
-                    <img src="<?= base_url('FreeDash/src/assets/images/logo-icon.png') ?>" alt="Logo Kas Kita" class="img-fluid me-2" style="max-height: 38px;">
-                    <span class="logo-text fw-bolder mb-0" style="font-size: 1.65rem; background: linear-gradient(135deg, #059669 0%, #10b981 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: -0.5px;">Kas Kita</span>
+            <!-- Brand Logo with Wordmark -->
+            <div class="navbar-brand py-0">
+                <a href="<?= base_url('dashboard') ?>" class="d-flex align-items-center text-decoration-none py-1">
+                    <img src="<?= base_url('assets/images/logo-full.svg') ?>" alt="Kas Kita - Manajemen Kas RT" class="img-fluid" style="height: 52px; width: auto;">
                 </a>
             </div>
 

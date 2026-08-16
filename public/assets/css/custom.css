@@ -1,0 +1,137 @@
+/* ==============================================================
+   Kas Kita - Fresh Emerald & Mint Green Theme Customization
+   ============================================================== */
+
+:root {
+    --kk-green-50: #ecfdf5;
+    --kk-green-100: #d1fae5;
+    --kk-green-200: #a7f3d0;
+    --kk-green-300: #6ee7b7;
+    --kk-green-400: #34d399;
+    --kk-green-500: #10b981;
+    --kk-green-600: #059669;
+    --kk-green-700: #047857;
+    --kk-green-800: #065f46;
+    --kk-green-900: #064e3b;
+    --kk-gradient: linear-gradient(135deg, #059669 0%, #10b981 100%);
+    --kk-gradient-hover: linear-gradient(135deg, #047857 0%, #059669 100%);
+}
+
+/* Sidebar Active & Hover Styling */
+.sidebar-nav ul .sidebar-item.selected > .sidebar-link,
+.sidebar-nav ul .sidebar-item.active > .sidebar-link {
+    background: linear-gradient(135deg, #059669 0%, #10b981 100%) !important;
+    color: #ffffff !important;
+    font-weight: 600 !important;
+    box-shadow: 0 4px 12px rgba(5, 150, 105, 0.28) !important;
+    border-radius: 0 60px 60px 0 !important;
+    opacity: 1 !important;
+}
+
+.sidebar-nav ul .sidebar-item.selected > .sidebar-link .hide-menu,
+.sidebar-nav ul .sidebar-item.active > .sidebar-link .hide-menu,
+.sidebar-nav ul .sidebar-item.selected > .sidebar-link span,
+.sidebar-nav ul .sidebar-item.active > .sidebar-link span {
+    color: #ffffff !important;
+    opacity: 1 !important;
+}
+
+.sidebar-nav ul .sidebar-item.selected > .sidebar-link i,
+.sidebar-nav ul .sidebar-item.active > .sidebar-link i,
+.sidebar-nav ul .sidebar-item.selected > .sidebar-link svg,
+.sidebar-nav ul .sidebar-item.active > .sidebar-link svg {
+    color: #ffffff !important;
+    stroke: #ffffff !important;
+    opacity: 1 !important;
+}
+
+/* Sidebar Hover for non-active items */
+.sidebar-nav ul .sidebar-item:not(.selected) .sidebar-link:hover {
+    background: #f0fdf4 !important;
+    color: #059669 !important;
+}
+
+.sidebar-nav ul .sidebar-item:not(.selected) .sidebar-link:hover .hide-menu,
+.sidebar-nav ul .sidebar-item:not(.selected) .sidebar-link:hover span {
+    color: #059669 !important;
+}
+
+.sidebar-nav ul .sidebar-item:not(.selected) .sidebar-link:hover i,
+.sidebar-nav ul .sidebar-item:not(.selected) .sidebar-link:hover svg {
+    color: #059669 !important;
+    stroke: #059669 !important;
+}
+
+/* Fresh Green Buttons */
+.btn-success {
+    background: var(--kk-gradient) !important;
+    border-color: var(--kk-green-600) !important;
+    color: #ffffff !important;
+    transition: all 0.2s ease-in-out;
+}
+
+.btn-success:hover,
+.btn-success:focus {
+    background: var(--kk-gradient-hover) !important;
+    border-color: var(--kk-green-700) !important;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.25) !important;
+    transform: translateY(-1px);
+}
+
+.btn-outline-success {
+    border-color: var(--kk-green-500) !important;
+    color: var(--kk-green-600) !important;
+}
+
+.btn-outline-success:hover {
+    background: var(--kk-gradient) !important;
+    border-color: var(--kk-green-600) !important;
+    color: #ffffff !important;
+}
+
+/* Badges & Alerts */
+.badge.bg-success {
+    background-color: var(--kk-green-500) !important;
+}
+
+.alert-success {
+    background-color: var(--kk-green-50) !important;
+    border-color: var(--kk-green-200) !important;
+    color: var(--kk-green-800) !important;
+}
+
+/* Card Accents */
+.border-success {
+    border-color: var(--kk-green-500) !important;
+}
+
+.text-success {
+    color: var(--kk-green-600) !important;
+}
+
+.bg-light-success {
+    background-color: var(--kk-green-50) !important;
+    color: var(--kk-green-700) !important;
+}
+
+/* Table Row Hover Highlight */
+.table-hover > tbody > tr:hover {
+    background-color: rgba(236, 253, 245, 0.5) !important;
+}
+
+/* Brand Text Animation & Quality */
+.logo-text {
+    background: var(--kk-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transition: opacity 0.2s;
+}
+
+.logo-text:hover {
+    opacity: 0.92;
+}
+
+/* Header Navbar Subtle Shadow */
+.topbar {
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+}
