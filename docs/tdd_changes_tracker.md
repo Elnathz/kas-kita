@@ -30,3 +30,9 @@ Log perubahan terhadap Technical Design Document (TDD).
 - **Alasan**: Kebutuhan pengurus untuk mengetahui warga yang pembayarannya macet
 - **Dampak**: Section 6.3 (Daftar Warga), Section 6.4 (Validasi Pembayaran), Section 6.2 (Dashboard Pengurus), Section 8.2 (Alur Deteksi Tunggakan)
 
+### 16 Agustus 2026 - Penggabungan Tagihan & Opsi Pembayaran Fleksibel
+- **Sebelum**: Halaman Tagihan dan Bayar Iuran dipisah tanpa mekanisme pemilihan bulan tunggakan
+- **Sesudah**: Halaman disatukan (Tagihan & Pembayaran) dengan opsi pembayaran fleksibel: warga bisa memilih bayar satu per satu (wajib melunasi bulan paling lama/FIFO terlebih dahulu) atau bayar seluruh tunggakan sekaligus dengan 1 bukti transfer
+- **Alasan**: Efisiensi UX (mobile-first) dan fleksibilitas keuangan warga yang ingin menyicil tunggakan
+- **Dampak**: Section 6.4 (Tagihan & Bayar Iuran), Section 8.1 (Alur Pembayaran Iuran), View `app/Views/iuran/tagihan.php` & `app/Views/iuran/bayar.php`
+

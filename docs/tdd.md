@@ -247,17 +247,15 @@ pengaturan_iuran (standalone config)
 - **Aksi**: Lihat bukti transfer, terima atau tolak dengan catatan
 - **Info tambahan**: Jika warga berstatus "macet", tampilkan alert banner di atas halaman sebagai konteks bagi pengurus
 
-#### Tagihan Saya (Warga)
+#### Tagihan & Bayar Iuran (Warga)
 
-- **URL**: `/iuran/tagihan`
-- **Method**: GET
-- **Menampilkan**: Daftar tagihan (bulan ini + tunggakan)
-
-#### Bayar Iuran (Warga)
-
-- **URL**: `/iuran/bayar` (form), `/iuran/bayar/proses` (proses)
-- **Method**: GET (form), POST (proses)
-- **Input**: Pilih periode bulan, upload bukti transfer
+- **URL**: `/iuran/tagihan` atau `/iuran/bayar`
+- **Method**: GET (daftar tagihan + form pembayaran), POST (`/iuran/bayar/proses`)
+- **Menampilkan**: Rincian tagihan bulan berjalan dan tunggakan bulan sebelumnya (jika ada)
+- **Mekanisme Pilihan Pembayaran**:
+  - **Opsi Bayar Semua Sekaligus**: Warga melunasi seluruh tunggakan + bulan berjalan sekaligus dengan 1 bukti transfer.
+  - **Opsi Bayar Sebagian (Satu per Satu)**: Warga dapat memilih bulan tertentu yang ingin dibayar terlebih dahulu. Sistem mewajibkan pelunasan dengan prinsip **FIFO (First In, First Out)**, yaitu melunasi tunggakan bulan paling lama terlebih dahulu sebelum membayar bulan berikutnya.
+- **Input**: Checkbox pilihan bulan tagihan yang ingin dibayar, nominal otomatis terakumulasi, upload bukti transfer.
 
 #### Riwayat Pembayaran (Warga)
 
