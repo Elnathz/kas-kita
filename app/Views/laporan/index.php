@@ -221,19 +221,23 @@
                         <p class="text-muted small mb-0">Statistik kepatuhan warga dan monitoring penagihan iuran kas RT.</p>
                     </div>
 
-                    <!-- Nav Tabs (Hanya Tampil di Layar, Bukan Saat Print) -->
-                    <ul class="nav nav-pills nav-fill d-print-none" id="laporanTab" role="tablist">
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link active fw-semibold btn-sm py-1 px-3" id="publik-tab" data-bs-toggle="tab" data-bs-target="#publik" type="button" role="tab">
-                                Statistik per Blok (Publik)
-                            </button>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link fw-semibold btn-sm py-1 px-3" id="internal-tab" data-bs-toggle="tab" data-bs-target="#internal" type="button" role="tab">
-                                Data Lengkap Warga (Internal Pengurus)
-                            </button>
-                        </li>
-                    </ul>
+                    <!-- Segmented Glassmorphism Tab Navigasi -->
+                    <div class="nav-segment-container d-inline-flex p-1 rounded-pill d-print-none">
+                        <ul class="nav nav-pills border-0 gap-1" id="laporanTab" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active fw-bold btn-sm py-2 px-3 rounded-pill d-flex align-items-center gap-1" id="publik-tab" data-bs-toggle="tab" data-bs-target="#publik" type="button" role="tab">
+                                    <i data-feather="bar-chart-2" class="feather-icon" style="width: 14px; height: 14px;"></i>
+                                    <span>Statistik per Blok (Publik)</span>
+                                </button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link fw-semibold btn-sm py-2 px-3 rounded-pill d-flex align-items-center gap-1" id="internal-tab" data-bs-toggle="tab" data-bs-target="#internal" type="button" role="tab">
+                                    <i data-feather="lock" class="feather-icon" style="width: 14px; height: 14px;"></i>
+                                    <span>Data Lengkap Warga (Internal)</span>
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
 
                 <div class="tab-content" id="laporanTabContent">
@@ -241,31 +245,67 @@
                     <div class="tab-pane fade show active" id="publik" role="tabpanel">
                         <div class="row g-3 mb-4">
                             <div class="col-md-3 col-sm-6">
-                                <div class="p-3 bg-light rounded border text-center">
-                                    <span class="text-muted small d-block mb-1">Blok A (15 Rumah)</span>
-                                    <h4 class="fw-bold text-success mb-1">87% Lunas</h4>
-                                    <small class="text-muted font-12">13 Lunas • 1 Belum • 1 Macet</small>
+                                <div class="p-3 bg-white rounded-3 border shadow-sm h-100">
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <h6 class="fw-bold text-dark mb-0 font-14">Blok A</h6>
+                                        <span class="badge bg-light text-dark border font-11">15 Rumah</span>
+                                    </div>
+                                    <h3 class="fw-bold text-success mb-2">87% <span class="fs-6 fw-normal text-muted font-12">Lunas</span></h3>
+                                    <div class="d-flex align-items-center gap-1 font-12 pt-2 border-top">
+                                        <span class="text-success fw-bold">13 Lunas</span>
+                                        <span class="text-muted">•</span>
+                                        <span class="text-warning fw-bold text-dark">1 Belum</span>
+                                        <span class="text-muted">•</span>
+                                        <span class="text-danger fw-bold">1 Macet</span>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-md-3 col-sm-6">
-                                <div class="p-3 bg-light rounded border text-center">
-                                    <span class="text-muted small d-block mb-1">Blok B (12 Rumah)</span>
-                                    <h4 class="fw-bold text-success mb-1">92% Lunas</h4>
-                                    <small class="text-muted font-12">11 Lunas • 1 Belum • 0 Macet</small>
+                                <div class="p-3 bg-white rounded-3 border shadow-sm h-100">
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <h6 class="fw-bold text-dark mb-0 font-14">Blok B</h6>
+                                        <span class="badge bg-light text-dark border font-11">12 Rumah</span>
+                                    </div>
+                                    <h3 class="fw-bold text-success mb-2">92% <span class="fs-6 fw-normal text-muted font-12">Lunas</span></h3>
+                                    <div class="d-flex align-items-center gap-1 font-12 pt-2 border-top">
+                                        <span class="text-success fw-bold">11 Lunas</span>
+                                        <span class="text-muted">•</span>
+                                        <span class="text-warning fw-bold text-dark">1 Belum</span>
+                                        <span class="text-muted">•</span>
+                                        <span class="text-muted fw-semibold">0 Macet</span>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-md-3 col-sm-6">
-                                <div class="p-3 bg-light rounded border text-center">
-                                    <span class="text-muted small d-block mb-1">Blok C (13 Rumah)</span>
-                                    <h4 class="fw-bold text-success mb-1">85% Lunas</h4>
-                                    <small class="text-muted font-12">11 Lunas • 2 Belum • 0 Macet</small>
+                                <div class="p-3 bg-white rounded-3 border shadow-sm h-100">
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <h6 class="fw-bold text-dark mb-0 font-14">Blok C</h6>
+                                        <span class="badge bg-light text-dark border font-11">13 Rumah</span>
+                                    </div>
+                                    <h3 class="fw-bold text-success mb-2">85% <span class="fs-6 fw-normal text-muted font-12">Lunas</span></h3>
+                                    <div class="d-flex align-items-center gap-1 font-12 pt-2 border-top">
+                                        <span class="text-success fw-bold">11 Lunas</span>
+                                        <span class="text-muted">•</span>
+                                        <span class="text-warning fw-bold text-dark">2 Belum</span>
+                                        <span class="text-muted">•</span>
+                                        <span class="text-muted fw-semibold">0 Macet</span>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-md-3 col-sm-6">
-                                <div class="p-3 bg-light rounded border text-center">
-                                    <span class="text-muted small d-block mb-1">Blok D (10 Rumah)</span>
-                                    <h4 class="fw-bold text-success mb-1">90% Lunas</h4>
-                                    <small class="text-muted font-12">9 Lunas • 1 Belum • 0 Macet</small>
+                                <div class="p-3 bg-white rounded-3 border shadow-sm h-100">
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <h6 class="fw-bold text-dark mb-0 font-14">Blok D</h6>
+                                        <span class="badge bg-light text-dark border font-11">10 Rumah</span>
+                                    </div>
+                                    <h3 class="fw-bold text-success mb-2">90% <span class="fs-6 fw-normal text-muted font-12">Lunas</span></h3>
+                                    <div class="d-flex align-items-center gap-1 font-12 pt-2 border-top">
+                                        <span class="text-success fw-bold">9 Lunas</span>
+                                        <span class="text-muted">•</span>
+                                        <span class="text-warning fw-bold text-dark">1 Belum</span>
+                                        <span class="text-muted">•</span>
+                                        <span class="text-muted fw-semibold">0 Macet</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>

@@ -124,6 +124,38 @@ ul.first-level .sidebar-item .sidebar-link:hover {
 }
 
 /* ==============================================================
+   Segmented Glassmorphism Tab
+   ============================================================== */
+.nav-segment-container {
+    background: rgba(241, 245, 249, 0.95);
+    border: 1px solid rgba(226, 232, 240, 0.8);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+.nav-segment-container .nav-link {
+    color: #475569 !important;
+    background: transparent;
+    transition: all 0.25s ease-in-out;
+}
+
+.nav-segment-container .nav-link:hover {
+    color: #0f172a !important;
+    background: rgba(255, 255, 255, 0.6);
+}
+
+.nav-segment-container .nav-link.active {
+    color: #ffffff !important;
+    background: var(--kk-green-600) !important;
+    box-shadow: 0 2px 8px rgba(5, 150, 105, 0.3) !important;
+}
+
+.nav-segment-container .nav-link.active .feather-icon {
+    stroke: #ffffff !important;
+}
+
+/* ==============================================================
    BUTTONS, BADGES, AND COMPONENTS
    ============================================================== */
 
