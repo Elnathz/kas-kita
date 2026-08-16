@@ -1,14 +1,27 @@
 <?= $this->extend('layouts/app') ?>
 <?= $this->section('content') ?>
+
+<!-- ============================================================== -->
+<!-- KOP SURAT FORMAL (Hanya Tampil Saat Cetak / Print) -->
+<!-- ============================================================== -->
+<div class="d-none d-print-block mb-4 pb-3 border-bottom text-center">
+    <h3 class="fw-bold mb-0 text-uppercase" style="letter-spacing: 1px;">RUKUN TETANGGA 04 / RUKUN WARGA 12</h3>
+    <h5 class="fw-bold mb-1 text-uppercase">KELURAHAN SUKAMAJU, KECAMATAN COBLONG</h5>
+    <p class="mb-0 small text-muted">Sekretariat: Balai Pertemuan RT 04, Jl. Mawar No. 01 • Telp/WA: 081234567890</p>
+    <div class="mt-3 pt-2 border-top border-dark border-2">
+        <h4 class="fw-bold mb-0 text-uppercase">LAPORAN PERTANGGUNGJAWABAN KAS BULAN AGUSTUS 2026</h4>
+    </div>
+</div>
+
 <div class="row g-4">
-    <!-- Header & Filter Periode Laporan -->
-    <div class="col-12">
+    <!-- Header & Filter Periode Laporan (Disembunyikan saat cetak) -->
+    <div class="col-12 d-print-none">
         <div class="card border-0 shadow-sm">
             <div class="card-body p-4">
                 <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3">
                     <div>
                         <h4 class="card-title fw-bold mb-1">Laporan Rekapitulasi Kas RT</h4>
-                        <p class="text-muted small mb-0">Rekapitulasi pemasukan iuran warga, alokasi pengeluaran, surplus kas, dan status tunggakan.</p>
+                        <p class="text-muted small mb-0">Transparansi keuangan kas RT: alokasi pengeluaran, dokumentasi kegiatan, dan partisipasi iuran warga.</p>
                     </div>
 
                     <form class="d-flex flex-wrap align-items-center gap-2" method="get" action="<?= base_url('laporan') ?>">
@@ -27,7 +40,7 @@
                         </div>
                         <button type="button" class="btn btn-sm btn-outline-secondary d-flex align-items-center gap-1 ms-auto ms-md-2" onclick="window.print()">
                             <i data-feather="printer" class="feather-icon" style="width: 14px; height: 14px;"></i>
-                            <span>Cetak Laporan</span>
+                            <span>Cetak Laporan Resmi (PDF)</span>
                         </button>
                     </form>
                 </div>
@@ -42,9 +55,9 @@
                 <div>
                     <span class="text-muted small d-block mb-1">Pemasukan Iuran (Agt 2026)</span>
                     <h4 class="text-dark fw-bold mb-0 text-nowrap">Rp 4.500.000</h4>
-                    <small class="text-success font-12 fw-semibold">42 Transaksi Warga</small>
+                    <small class="text-success font-12 fw-semibold">42 Transaksi Warga Lunas</small>
                 </div>
-                <div class="bg-light rounded p-2 text-success d-flex align-items-center justify-content-center" style="width: 42px; height: 42px;">
+                <div class="bg-light rounded p-2 text-success d-flex align-items-center justify-content-center d-print-none" style="width: 42px; height: 42px;">
                     <i data-feather="trending-up" class="feather-icon text-success"></i>
                 </div>
             </div>
@@ -59,8 +72,24 @@
                     <h4 class="text-dark fw-bold mb-0 text-nowrap">Rp 1.850.000</h4>
                     <small class="text-danger font-12 fw-semibold">4 Kegiatan Lingkungan</small>
                 </div>
-                <div class="bg-light rounded p-2 text-danger d-flex align-items-center justify-content-center" style="width: 42px; height: 42px;">
+                <div class="bg-light rounded p-2 text-danger d-flex align-items-center justify-content-center d-print-none" style="width: 42px; height: 42px;">
                     <i data-feather="trending-down" class="feather-icon text-danger"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Surplus Kas (Dinamis: Hijau jika surplus, Merah jika defisit) -->
+    <div class="col-sm-6 col-xl-3">
+        <div class="card border-0 shadow-sm border-start border-success border-4 h-100 mb-0">
+            <div class="card-body p-3 d-flex align-items-center justify-content-between">
+                <div>
+                    <span class="text-muted small d-block mb-1">Arus Kas (Surplus)</span>
+                    <h4 class="text-success fw-bold mb-0 text-nowrap">+ Rp 2.650.000</h4>
+                    <small class="text-muted font-12">Surplus Kas Bulan Ini</small>
+                </div>
+                <div class="bg-light rounded p-2 text-success d-flex align-items-center justify-content-center d-print-none" style="width: 42px; height: 42px;">
+                    <i data-feather="plus-circle" class="feather-icon text-success"></i>
                 </div>
             </div>
         </div>
@@ -70,83 +99,105 @@
         <div class="card border-0 shadow-sm border-start border-primary border-4 h-100 mb-0">
             <div class="card-body p-3 d-flex align-items-center justify-content-between">
                 <div>
-                    <span class="text-muted small d-block mb-1">Surplus Bersih Bulan Ini</span>
-                    <h4 class="text-primary fw-bold mb-0 text-nowrap">+ Rp 2.650.000</h4>
-                    <small class="text-muted font-12">Pemasukan - Pengeluaran</small>
-                </div>
-                <div class="bg-light rounded p-2 text-primary d-flex align-items-center justify-content-center" style="width: 42px; height: 42px;">
-                    <i data-feather="dollar-sign" class="feather-icon text-primary"></i>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-sm-6 col-xl-3">
-        <div class="card border-0 shadow-sm border-start border-info border-4 h-100 mb-0">
-            <div class="card-body p-3 d-flex align-items-center justify-content-between">
-                <div>
                     <span class="text-muted small d-block mb-1">Total Saldo Kas RT Terkini</span>
                     <h4 class="text-dark fw-bold mb-0 text-nowrap">Rp 12.650.000</h4>
-                    <small class="text-info font-12 fw-semibold">Kas Kumulatif RT 04</small>
+                    <small class="text-primary font-12 fw-semibold">Kas Kumulatif RT 04</small>
                 </div>
-                <div class="bg-light rounded p-2 text-info d-flex align-items-center justify-content-center" style="width: 42px; height: 42px;">
-                    <i data-feather="shield" class="feather-icon text-info"></i>
+                <div class="bg-light rounded p-2 text-primary d-flex align-items-center justify-content-center d-print-none" style="width: 42px; height: 42px;">
+                    <i data-feather="shield" class="feather-icon text-primary"></i>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Rincian Pengeluaran Kas RT (Kiri) -->
-    <div class="col-lg-6">
-        <div class="card border-0 shadow-sm h-100">
-            <div class="card-body p-4 d-flex flex-column">
-                <div class="d-flex align-items-center justify-content-between mb-3">
+    <!-- ============================================================== -->
+    <!-- BAGIAN 1: RINCIAN PENGELUARAN KAS RT & BUKTI TRANSPARANSI (FULL-WIDTH) -->
+    <!-- ============================================================== -->
+    <div class="col-12">
+        <div class="card border-0 shadow-sm">
+            <div class="card-body p-4">
+                <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between mb-3 gap-2">
                     <div>
-                        <h4 class="card-title fw-bold mb-1">Rincian Pengeluaran Bulan Ini</h4>
-                        <p class="text-muted small mb-0">Alokasi dana kas RT untuk kegiatan dan sarana warga.</p>
+                        <h4 class="card-title fw-bold mb-1">1. Rincian Pengeluaran Kas RT &amp; Dokumentasi</h4>
+                        <p class="text-muted small mb-0">Pertanggungjawaban penggunaan dana kas RT untuk pemeliharaan fasilitas dan kegiatan warga.</p>
                     </div>
+                    <span class="badge bg-success-subtle text-success-emphasis border border-success px-3 py-2 d-print-none">
+                        Transparansi Terbuka Seluruh Warga
+                    </span>
                 </div>
 
-                <div class="table-responsive flex-grow-1">
+                <div class="table-responsive">
                     <table class="table table-hover align-middle mb-0">
                         <thead class="table-light">
                             <tr>
+                                <th class="text-nowrap" style="width: 50px;">No</th>
                                 <th class="text-nowrap">Tanggal</th>
-                                <th class="text-nowrap">Kategori</th>
-                                <th class="text-nowrap">Keterangan / Keperluan</th>
-                                <th class="text-end text-nowrap">Jumlah</th>
+                                <th class="text-nowrap">Pos Kategori</th>
+                                <th class="text-nowrap">Rincian Keperluan / Kegiatan</th>
+                                <th class="text-end text-nowrap">Nominal (Rp)</th>
+                                <th class="text-center text-nowrap d-print-none">Bukti Nota</th>
+                                <th class="text-center text-nowrap d-print-none">Foto Kegiatan</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
+                                <td class="text-nowrap">1</td>
                                 <td class="text-muted small text-nowrap">14 Agu 2026</td>
-                                <td class="text-nowrap text-dark fw-medium">Operasional</td>
-                                <td class="text-dark fw-medium text-nowrap">Lampu penerangan gang RT</td>
+                                <td class="text-nowrap text-dark fw-medium">Kas Operasional</td>
+                                <td class="text-dark fw-medium text-nowrap">Pembelian lampu penerangan jalan gang RT 03</td>
                                 <td class="text-end fw-bold text-dark text-nowrap">Rp 350.000</td>
+                                <td class="text-center text-nowrap d-print-none">
+                                    <button class="btn btn-sm btn-outline-secondary py-0 px-2" onclick="alert('Demo: Lihat Nota Lampu Gang')">Lihat Nota</button>
+                                </td>
+                                <td class="text-center text-nowrap d-print-none">
+                                    <button class="btn btn-sm btn-outline-success py-0 px-2" onclick="alert('Demo: Lihat Foto Lampu Gang Terpasang')">Foto Hasil</button>
+                                </td>
                             </tr>
                             <tr>
+                                <td class="text-nowrap">2</td>
                                 <td class="text-muted small text-nowrap">10 Agu 2026</td>
                                 <td class="text-nowrap text-dark fw-medium">Sosial</td>
                                 <td class="text-dark fw-medium text-nowrap">Santunan warga sakit (Bpk. Mulyono)</td>
                                 <td class="text-end fw-bold text-dark text-nowrap">Rp 500.000</td>
+                                <td class="text-center text-nowrap d-print-none">
+                                    <button class="btn btn-sm btn-outline-secondary py-0 px-2" onclick="alert('Demo: Lihat Kuitansi Santunan')">Lihat Kuitansi</button>
+                                </td>
+                                <td class="text-center text-nowrap d-print-none">
+                                    <button class="btn btn-sm btn-outline-success py-0 px-2" onclick="alert('Demo: Lihat Foto Penyerahan Santunan')">Foto Penyerahan</button>
+                                </td>
                             </tr>
                             <tr>
+                                <td class="text-nowrap">3</td>
                                 <td class="text-muted small text-nowrap">08 Agu 2026</td>
-                                <td class="text-nowrap text-dark fw-medium">Operasional</td>
-                                <td class="text-dark fw-medium text-nowrap">Kerja bakti &amp; perbaikan saluran gang</td>
+                                <td class="text-nowrap text-dark fw-medium">Kas Operasional</td>
+                                <td class="text-dark fw-medium text-nowrap">Kerja bakti &amp; perbaikan saluran gang Mawar</td>
                                 <td class="text-end fw-bold text-dark text-nowrap">Rp 750.000</td>
+                                <td class="text-center text-nowrap d-print-none">
+                                    <button class="btn btn-sm btn-outline-secondary py-0 px-2" onclick="alert('Demo: Lihat Nota Material Semen & Pasir')">Lihat Nota</button>
+                                </td>
+                                <td class="text-center text-nowrap d-print-none">
+                                    <button class="btn btn-sm btn-outline-success py-0 px-2" onclick="alert('Demo: Lihat Foto Warga Kerja Bakti')">Foto Kegiatan</button>
+                                </td>
                             </tr>
                             <tr>
+                                <td class="text-nowrap">4</td>
                                 <td class="text-muted small text-nowrap">05 Agu 2026</td>
                                 <td class="text-nowrap text-dark fw-medium">Konsumsi</td>
-                                <td class="text-dark fw-medium text-nowrap">Konsumsi rapat pengurus RT</td>
+                                <td class="text-dark fw-medium text-nowrap">Konsumsi snack rapat bulanan pengurus RT</td>
                                 <td class="text-end fw-bold text-dark text-nowrap">Rp 250.000</td>
+                                <td class="text-center text-nowrap d-print-none">
+                                    <button class="btn btn-sm btn-outline-secondary py-0 px-2" onclick="alert('Demo: Lihat Struk Belanja Snack')">Lihat Struk</button>
+                                </td>
+                                <td class="text-center text-nowrap d-print-none">
+                                    <span class="text-muted small">-</span>
+                                </td>
                             </tr>
                         </tbody>
                         <tfoot class="table-light">
                             <tr>
-                                <th colspan="3" class="text-end fw-bold text-dark">Total Pengeluaran Agustus 2026:</th>
+                                <th colspan="4" class="text-end fw-bold text-dark">Total Realisasi Pengeluaran Agustus 2026:</th>
                                 <th class="text-end fw-bold text-dark fs-6">Rp 1.850.000</th>
+                                <th colspan="2" class="d-print-none"></th>
                             </tr>
                         </tfoot>
                     </table>
@@ -155,69 +206,160 @@
         </div>
     </div>
 
-    <!-- Status Kepatuhan Pembayaran Warga (Kanan) -->
-    <div class="col-lg-6">
-        <div class="card border-0 shadow-sm h-100">
-            <div class="card-body p-4 d-flex flex-column">
-                <div class="d-flex align-items-center justify-content-between mb-3">
+    <!-- ============================================================== -->
+    <!-- BAGIAN 2: REKAPITULASI PARTISIPASI & KEPATUHAN IURAN WARGA -->
+    <!-- ============================================================== -->
+    <div class="col-12">
+        <div class="card border-0 shadow-sm">
+            <div class="card-body p-4">
+                <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between mb-4 gap-3">
                     <div>
-                        <h4 class="card-title fw-bold mb-1">Status Kepatuhan Warga</h4>
-                        <p class="text-muted small mb-0">Monitoring kelancaran dan tunggakan iuran kas RT.</p>
+                        <h4 class="card-title fw-bold mb-1">2. Rekapitulasi Partisipasi Iuran Warga</h4>
+                        <p class="text-muted small mb-0">Statistik kepatuhan warga dan monitoring penagihan iuran kas RT.</p>
                     </div>
-                    <span class="badge bg-danger">3 Warga Macet</span>
+
+                    <!-- Nav Tabs (Hanya Tampil di Layar, Bukan Saat Print) -->
+                    <ul class="nav nav-pills nav-fill d-print-none" id="laporanTab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active fw-semibold btn-sm py-1 px-3" id="publik-tab" data-bs-toggle="tab" data-bs-target="#publik" type="button" role="tab">
+                                Statistik per Blok (Publik)
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link fw-semibold btn-sm py-1 px-3" id="internal-tab" data-bs-toggle="tab" data-bs-target="#internal" type="button" role="tab">
+                                Data Lengkap Warga (Internal Pengurus)
+                            </button>
+                        </li>
+                    </ul>
                 </div>
 
-                <div class="table-responsive flex-grow-1">
-                    <table class="table table-hover align-middle mb-0">
-                        <thead class="table-light">
-                            <tr>
-                                <th class="text-nowrap">Nama Warga</th>
-                                <th class="text-nowrap">Alamat Rumah</th>
-                                <th class="text-center text-nowrap">Status</th>
-                                <th class="text-nowrap">Keterangan</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td class="fw-semibold text-dark text-nowrap">Farros Rifantiarno</td>
-                                <td class="text-nowrap text-dark fw-medium">Blok A / No. 01</td>
-                                <td class="text-center text-nowrap"><span class="badge bg-warning text-dark">Belum Bayar</span></td>
-                                <td class="text-muted small text-nowrap">Jatuh tempo 20 Agu</td>
-                            </tr>
-                            <tr>
-                                <td class="fw-semibold text-dark text-nowrap">Ahmad Fauzi</td>
-                                <td class="text-nowrap text-dark fw-medium">Blok A / No. 02</td>
-                                <td class="text-center text-nowrap"><span class="badge bg-success">Lunas</span></td>
-                                <td class="text-muted small text-nowrap">Tepat waktu (15 Agu)</td>
-                            </tr>
-                            <tr>
-                                <td class="fw-semibold text-dark text-nowrap">Rina Marlina</td>
-                                <td class="text-nowrap text-dark fw-medium">Blok B / No. 06</td>
-                                <td class="text-center text-nowrap"><span class="badge bg-success">Lunas</span></td>
-                                <td class="text-muted small text-nowrap">Pelunasan 2 bulan (10 Agu)</td>
-                            </tr>
-                            <tr>
-                                <td class="fw-semibold text-dark text-nowrap">Budi Santoso</td>
-                                <td class="text-nowrap text-dark fw-medium">Blok C / No. 10</td>
-                                <td class="text-center text-nowrap"><span class="badge bg-warning text-dark">Nunggak</span></td>
-                                <td class="text-danger small text-nowrap">1 bulan berjalan</td>
-                            </tr>
-                            <tr>
-                                <td class="fw-semibold text-dark text-nowrap">Bambang Susanto</td>
-                                <td class="text-nowrap text-dark fw-medium">Blok A / No. 04</td>
-                                <td class="text-center text-nowrap"><span class="badge bg-danger">Macet</span></td>
-                                <td class="text-danger small fw-semibold text-nowrap">3 bulan berturut</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+                <div class="tab-content" id="laporanTabContent">
+                    <!-- TAB 1: STATISTIK PARTISIPASI PER BLOK (TERBUKA & ETIS UNTUK PUBLIK WARGA) -->
+                    <div class="tab-pane fade show active" id="publik" role="tabpanel">
+                        <div class="row g-3 mb-4">
+                            <div class="col-md-3 col-sm-6">
+                                <div class="p-3 bg-light rounded border text-center">
+                                    <span class="text-muted small d-block mb-1">Blok A (15 Rumah)</span>
+                                    <h4 class="fw-bold text-success mb-1">87% Lunas</h4>
+                                    <small class="text-muted font-12">13 Lunas • 1 Belum • 1 Macet</small>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <div class="p-3 bg-light rounded border text-center">
+                                    <span class="text-muted small d-block mb-1">Blok B (12 Rumah)</span>
+                                    <h4 class="fw-bold text-success mb-1">92% Lunas</h4>
+                                    <small class="text-muted font-12">11 Lunas • 1 Belum • 0 Macet</small>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <div class="p-3 bg-light rounded border text-center">
+                                    <span class="text-muted small d-block mb-1">Blok C (13 Rumah)</span>
+                                    <h4 class="fw-bold text-success mb-1">85% Lunas</h4>
+                                    <small class="text-muted font-12">11 Lunas • 2 Belum • 0 Macet</small>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <div class="p-3 bg-light rounded border text-center">
+                                    <span class="text-muted small d-block mb-1">Blok D (10 Rumah)</span>
+                                    <h4 class="fw-bold text-success mb-1">90% Lunas</h4>
+                                    <small class="text-muted font-12">9 Lunas • 1 Belum • 0 Macet</small>
+                                </div>
+                            </div>
+                        </div>
 
-                <div class="pt-3 border-top mt-3 d-flex justify-content-between align-items-center">
-                    <small class="text-muted">Partisipasi iuran bulan ini: <strong>84% (42/50 Warga)</strong></small>
-                    <a href="<?= base_url('iuran') ?>" class="btn btn-sm btn-outline-success fw-semibold">Kelola Iuran</a>
+                        <div class="alert alert-light border d-flex align-items-center justify-content-between p-3 mb-0">
+                            <div>
+                                <span class="fw-bold text-dark d-block">Tingkat Partisipasi Iuran Warga RT 04:</span>
+                                <small class="text-muted">Total 44 dari 50 Kepala Keluarga (88%) telah berpartisipasi dalam pembayaran iuran bulan ini.</small>
+                            </div>
+                            <span class="fs-4 fw-bold text-success">88%</span>
+                        </div>
+                    </div>
+
+                    <!-- TAB 2: DATA LENGKAP WARGA (KHUSUS ARSIP INTERNAL PENGURUS RT) -->
+                    <div class="tab-pane fade" id="internal" role="tabpanel">
+                        <div class="alert alert-warning py-2 px-3 small mb-3 d-flex align-items-center justify-content-between">
+                            <span><strong>Arsip Internal Pengurus:</strong> Data di bawah ini khusus digunakan untuk keperluan penagihan dan monitoring internal RT.</span>
+                            <span class="badge bg-danger">3 Warga Macet</span>
+                        </div>
+
+                        <div class="table-responsive">
+                            <table class="table table-hover align-middle mb-0">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th class="text-nowrap">Nama Kepala Keluarga</th>
+                                        <th class="text-nowrap">Alamat Rumah</th>
+                                        <th class="text-center text-nowrap">Status Pembayaran</th>
+                                        <th class="text-nowrap">Keterangan / Tindak Lanjut</th>
+                                        <th class="text-center text-nowrap" style="width: 120px;">Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="fw-semibold text-dark text-nowrap">Farros Rifantiarno</td>
+                                        <td class="text-nowrap text-dark fw-medium">Blok A / No. 01</td>
+                                        <td class="text-center text-nowrap"><span class="badge bg-warning text-dark">Belum Bayar</span></td>
+                                        <td class="text-muted small text-nowrap">Bulan berjalan (Jatuh tempo 20 Agu)</td>
+                                        <td class="text-center text-nowrap">
+                                            <a href="https://wa.me/6281234567890" target="_blank" class="btn btn-xs btn-outline-success">Tagih WA</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-semibold text-dark text-nowrap">Ahmad Fauzi</td>
+                                        <td class="text-nowrap text-dark fw-medium">Blok A / No. 02</td>
+                                        <td class="text-center text-nowrap"><span class="badge bg-success">Lunas</span></td>
+                                        <td class="text-muted small text-nowrap">Tepat waktu (15 Agu)</td>
+                                        <td class="text-center text-nowrap"><span class="text-muted small">-</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-semibold text-dark text-nowrap">Rina Marlina</td>
+                                        <td class="text-nowrap text-dark fw-medium">Blok B / No. 06</td>
+                                        <td class="text-center text-nowrap"><span class="badge bg-success">Lunas</span></td>
+                                        <td class="text-muted small text-nowrap">Pelunasan 2 bulan (10 Agu)</td>
+                                        <td class="text-center text-nowrap"><span class="text-muted small">-</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-semibold text-dark text-nowrap">Budi Santoso</td>
+                                        <td class="text-nowrap text-dark fw-medium">Blok C / No. 10</td>
+                                        <td class="text-center text-nowrap"><span class="badge bg-warning text-dark">Belum Bayar</span></td>
+                                        <td class="text-muted small text-nowrap">Bulan berjalan (Jatuh tempo 20 Agu)</td>
+                                        <td class="text-center text-nowrap">
+                                            <a href="https://wa.me/6281234567891" target="_blank" class="btn btn-xs btn-outline-success">Tagih WA</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-semibold text-dark text-nowrap">Bambang Susanto</td>
+                                        <td class="text-nowrap text-dark fw-medium">Blok A / No. 04</td>
+                                        <td class="text-center text-nowrap"><span class="badge bg-danger">Macet (3 Bln)</span></td>
+                                        <td class="text-danger small fw-semibold text-nowrap">Menunggak sejak Juni 2026</td>
+                                        <td class="text-center text-nowrap">
+                                            <a href="https://wa.me/6281234567892" target="_blank" class="btn btn-xs btn-outline-danger">Kirim SP</a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<!-- ============================================================== -->
+<!-- KOLOM TANDA TANGAN RESMI (Hanya Tampil Saat Cetak / Print) -->
+<!-- ============================================================== -->
+<div class="d-none d-print-block mt-5 pt-4">
+    <div class="d-flex justify-content-between px-4 text-center">
+        <div style="width: 250px;">
+            <p class="mb-5">Mengetahui,<br><strong>Ketua RT 04 RW 12</strong></p>
+            <p class="mb-0 fw-bold text-decoration-underline">( Agus Hariyanto )</p>
+        </div>
+        <div style="width: 250px;">
+            <p class="mb-5">Bandung, 31 Agustus 2026<br><strong>Bendahara RT 04 RW 12</strong></p>
+            <p class="mb-0 fw-bold text-decoration-underline">( Farros Rifantiarno )</p>
+        </div>
+    </div>
+</div>
+
 <?= $this->endSection() ?>

@@ -7,7 +7,7 @@
                 <div class="d-flex align-items-center justify-content-between mb-4 pb-2 border-bottom">
                     <div>
                         <h4 class="card-title fw-bold mb-1">Catat Pengeluaran Kas RT</h4>
-                        <p class="text-muted small mb-0">Dokumentasikan penggunaan dana kas RT beserta kategori dan unggah bukti nota belanja.</p>
+                        <p class="text-muted small mb-0">Dokumentasikan penggunaan dana kas RT beserta bukti nota dan foto kegiatan.</p>
                     </div>
                     <a href="<?= base_url('pengeluaran') ?>" class="btn btn-outline-secondary btn-sm">Kembali</a>
                 </div>
@@ -16,7 +16,7 @@
                     <?= csrf_field() ?>
                     <div class="row g-3 mb-4">
                         <div class="col-md-6">
-                            <label class="form-label text-dark fw-semibold small mb-1" for="kategori_id">Kategori Pengeluaran</label>
+                            <label class="form-label text-dark fw-semibold small mb-1" for="kategori_id">Kategori Pos Pengeluaran</label>
                             <select class="form-select" id="kategori_id" name="kategori_id" required>
                                 <option value="" disabled selected>Pilih Kategori Pos Kas...</option>
                                 <option value="1">Kas Operasional (Lampu, Kebersihan, Keamanan)</option>
@@ -30,18 +30,25 @@
                         </div>
                         <div class="col-12">
                             <label class="form-label text-dark fw-semibold small mb-1" for="nominal">Nominal Pengeluaran (Rp)</label>
-                            <input type="number" class="form-control" id="nominal" name="nominal" placeholder="Contoh: 250000" required>
+                            <input type="number" class="form-control" id="nominal" name="nominal" placeholder="Contoh: 350000" required>
                         </div>
                         <div class="col-12">
-                            <label class="form-label text-dark fw-semibold small mb-1" for="keterangan">Keterangan / Keperluan Lengkap</label>
-                            <textarea class="form-control" id="keterangan" name="keterangan" rows="3" placeholder="Jelaskan rincian keperluan pengeluaran..." required></textarea>
+                            <label class="form-label text-dark fw-semibold small mb-1" for="keterangan">Keterangan / Rincian Kegiatan Lengkap</label>
+                            <textarea class="form-control" id="keterangan" name="keterangan" rows="3" placeholder="Contoh: Pembelian 5 unit lampu LED Philips dan kabel untuk gang RT 03..." required></textarea>
                         </div>
 
-                        <!-- Upload Bukti Nota / Kuitansi -->
-                        <div class="col-12">
-                            <label class="form-label text-dark fw-semibold small mb-1" for="bukti_nota">Upload Bukti Nota / Kuitansi (Opsional)</label>
+                        <!-- 1. Upload Bukti Nota / Kuitansi -->
+                        <div class="col-md-6">
+                            <label class="form-label text-dark fw-semibold small mb-1" for="bukti_nota">Upload Bukti Nota / Kuitansi</label>
                             <input type="file" class="form-control" id="bukti_nota" name="bukti_nota" accept="image/png, image/jpeg, image/jpg, application/pdf">
-                            <span class="text-muted font-12 d-block mt-1">Format: JPG, PNG, atau PDF (Maks. 2MB). Foto nota atau kuitansi fisik untuk transparansi audit kas.</span>
+                            <span class="text-muted font-12 d-block mt-1">Struk belanja atau nota toko fisik (Maks. 2MB).</span>
+                        </div>
+
+                        <!-- 2. Upload Foto Dokumentasi Kegiatan / Hasil Kerja -->
+                        <div class="col-md-6">
+                            <label class="form-label text-dark fw-semibold small mb-1" for="foto_kegiatan">Upload Foto Dokumentasi Hasil / Kegiatan</label>
+                            <input type="file" class="form-control" id="foto_kegiatan" name="foto_kegiatan" accept="image/png, image/jpeg, image/jpg">
+                            <span class="text-muted font-12 d-block mt-1">Foto lampu terpasang, kerja bakti, dll.</span>
                         </div>
                     </div>
 
