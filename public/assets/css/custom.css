@@ -232,3 +232,145 @@ ul.first-level .sidebar-item .sidebar-link:hover {
 .topbar {
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
 }
+
+/* ==============================================================
+   PRINT & PDF EXPORT STYLING (A4 Clean Official Document)
+   ============================================================== */
+@media print {
+    /* 1. Sembunyikan seluruh UI Chrome aplikasi */
+    .left-sidebar,
+    .topbar,
+    header.topbar,
+    aside.left-sidebar,
+    .page-breadcrumb,
+    footer.footer,
+    .nav-segment-container,
+    .d-print-none,
+    .btn,
+    .dropdown,
+    .navbar-header,
+    #navbarSupportedContent,
+    .navbar-collapse,
+    .sidebar-nav,
+    #sidebarnav,
+    #toolbarContainer,
+    .ci-toolbar-btn,
+    .debug-bar {
+        display: none !important;
+        visibility: hidden !important;
+        height: 0 !important;
+        width: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    /* 2. Reset lebar container agar 100% full-width di kertas */
+    html, body {
+        background: #ffffff !important;
+        color: #000000 !important;
+        font-size: 11pt !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 100% !important;
+    }
+
+    #main-wrapper {
+        display: block !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+
+    .page-wrapper {
+        margin-left: 0 !important;
+        margin-top: 0 !important;
+        padding: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        background: #ffffff !important;
+        min-height: auto !important;
+    }
+
+    .container-fluid {
+        padding: 0 !important;
+        margin: 0 !important;
+        max-width: 100% !important;
+    }
+
+    /* 3. Tampilan Kartu & Border saat Cetak */
+    .card {
+        border: 1px solid #cbd5e1 !important;
+        box-shadow: none !important;
+        margin-bottom: 16px !important;
+        page-break-inside: avoid;
+        break-inside: avoid;
+        background: #ffffff !important;
+    }
+
+    .card-body {
+        padding: 12px 16px !important;
+    }
+
+    /* 4. Format Tabel Cetak Resmi */
+    .table-responsive {
+        overflow: visible !important;
+        display: block !important;
+        width: 100% !important;
+    }
+
+    .table {
+        width: 100% !important;
+        border-collapse: collapse !important;
+        margin-bottom: 0 !important;
+    }
+
+    .table th,
+    .table td {
+        border: 1px solid #64748b !important;
+        padding: 5px 8px !important;
+        font-size: 10pt !important;
+        color: #000000 !important;
+    }
+
+    .table thead th,
+    .table-light {
+        background-color: #f1f5f9 !important;
+        color: #000000 !important;
+        font-weight: bold !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    /* 5. Pengaturan Grid 4 Kolom Stat Cards */
+    .row {
+        display: flex !important;
+        flex-wrap: wrap !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+
+    .col-sm-6.col-xl-3 {
+        width: 25% !important;
+        flex: 0 0 25% !important;
+        max-width: 25% !important;
+        padding: 0 4px !important;
+    }
+
+    .col-12 {
+        width: 100% !important;
+        flex: 0 0 100% !important;
+        max-width: 100% !important;
+    }
+
+    /* 6. Tampilkan elemen khusus cetak */
+    .d-print-block {
+        display: block !important;
+    }
+
+    /* 7. Pengaturan Page Setup */
+    @page {
+        size: A4 portrait;
+        margin: 1.2cm 1cm 1.5cm 1cm;
+    }
+}
