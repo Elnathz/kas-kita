@@ -36,3 +36,9 @@ Log perubahan terhadap Technical Design Document (TDD).
 - **Alasan**: Efisiensi UX (mobile-first) dan fleksibilitas keuangan warga yang ingin menyicil tunggakan
 - **Dampak**: Section 6.4 (Tagihan & Bayar Iuran), Section 8.1 (Alur Pembayaran Iuran), View `app/Views/iuran/tagihan.php` & `app/Views/iuran/bayar.php`
 
+### 16 Agustus 2026 - Penambahan Fitur Registrasi Mandiri Warga dengan Approval Pengurus (Branch Main)
+- **Sebelum**: Akun warga hanya dapat dibuatkan secara manual oleh pengurus melalui menu Tambah Warga
+- **Sesudah**: Warga dapat mendaftar mandiri via form `/register` dengan status awal `is_active = 0` (Menunggu Persetujuan). Pengurus memverifikasi dan menyetujui akun warga sebelum dapat login ke sistem
+- **Alasan**: Memudahkan warga menentukan username/password sendiri sekaligus menjaga keamanan data kas RT dari pengguna luar
+- **Dampak**: Section 6.1 (Registrasi Warga Baru), Section 8.4 (Alur Registrasi & Persetujuan), Route `/register`, Controller Auth & Warga (Branch Main)
+

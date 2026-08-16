@@ -173,6 +173,15 @@ pengaturan_iuran (standalone config)
 - **Branch UTS**: Hardcoded credentials (`admin` / md5 hash dari `admin123`), simpan di session native PHP
 - **Branch main**: Validasi dari database, session CI4, filter auth
 
+#### Registrasi Warga Baru (Branch Main)
+
+- **URL**: `/register`
+- **Method**: GET (form pendaftaran), POST (proses registrasi)
+- **Input**: Nama lengkap, username, password, nomor rumah, nomor telepon/WA, alamat
+- **Status Akun Awal**: `is_active = 0` (Menunggu Persetujuan Pengurus)
+- **Alur Persetujuan**: Pengurus dapat melihat daftar pendaftar baru di dashboard / menu Warga, lalu memilih **Setujui** (`is_active = 1`) atau **Tolak**.
+- **Login Guard**: Jika warga login saat status masih `is_active = 0`, sistem menampilkan pesan: *"Akun Anda sedang menunggu persetujuan dari pengurus RT."*
+
 #### Logout
 
 - **URL**: `/logout`
@@ -433,6 +442,18 @@ Template menggunakan FreeDash-lite dengan struktur:
 3. Pilih kategori, isi tanggal, nominal, keterangan
 4. Submit
 5. Pengeluaran tercatat dan masuk ke laporan
+```
+
+### 8.4 Alur Registrasi dan Persetujuan Warga Baru (Branch Main)
+
+```
+1. Warga buka halaman /register
+2. Warga mengisi form: Nama lengkap, No Rumah, No Telepon/WA, Username, Password
+3. Data tersimpan ke tabel users dengan role 'warga' dan is_active = 0 (Menunggu Persetujuan)
+4. Pengurus login dan melihat notifikasi/daftar pendaftar baru di menu Warga
+5. Pengurus memverifikasi identitas warga:
+   - Jika Disetujui -> is_active diubah menjadi 1 (Warga dapat login dan mengakses dashboard/iuran)
+   - Jika Ditolak -> data pendaftaran dihapus atau ditandai ditolak
 ```
 
 ---
