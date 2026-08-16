@@ -33,33 +33,65 @@
                                 pattern="[0-9]{10,15}" maxlength="15" oninput="this.value = this.value.replace(/[^0-9]/g, '')" required>
                         </div>
 
-                        <!-- Dropdown Wilayah RT -->
+                        <!-- Dropdown Blok Rumah -->
                         <div class="col-md-4">
-                            <label class="form-label text-dark fw-semibold small mb-1" for="blok_rumah">Blok Rumah</label>
-                            <select class="form-select" id="blok_rumah" name="blok_rumah" required>
-                                <option value="Blok A" selected>Blok A</option>
-                                <option value="Blok B">Blok B</option>
-                                <option value="Blok C">Blok C</option>
-                                <option value="Blok D">Blok D</option>
-                            </select>
+                            <label class="form-label text-dark fw-semibold small mb-1" for="dropdownBlokEdit">Blok Rumah</label>
+                            <div class="dropdown">
+                                <input type="hidden" name="blok_rumah" id="input_blok_edit" value="Blok A" required>
+                                <button class="form-select text-start d-flex justify-content-between align-items-center" type="button" id="dropdownBlokEdit" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <span id="selectedBlokEditText" class="text-dark fw-semibold">Blok A</span>
+                                </button>
+                                <ul class="dropdown-menu w-100 shadow border-0" aria-labelledby="dropdownBlokEdit" style="max-height: 180px; overflow-y: auto;">
+                                    <?php foreach (['Blok A', 'Blok B', 'Blok C', 'Blok D'] as $blok) : ?>
+                                        <li>
+                                            <a class="dropdown-item py-2" href="javascript:void(0)" onclick="selectOptionEdit('input_blok_edit', 'selectedBlokEditText', '<?= $blok ?>')">
+                                                <?= $blok ?>
+                                            </a>
+                                        </li>
+                                    <?php endforeach; ?>
+                                </ul>
+                            </div>
                         </div>
+
+                        <!-- Dropdown Nomor Rumah -->
                         <div class="col-md-4">
-                            <label class="form-label text-dark fw-semibold small mb-1" for="no_rumah">Nomor Rumah</label>
-                            <select class="form-select" id="no_rumah" name="no_rumah" required>
-                                <?php for ($i = 1; $i <= 30; $i++) : ?>
-                                    <?php $nomor = sprintf('%02d', $i); ?>
-                                    <option value="No. <?= $nomor ?>" <?= ($nomor === '01') ? 'selected' : '' ?>>No. <?= $nomor ?></option>
-                                <?php endfor; ?>
-                            </select>
+                            <label class="form-label text-dark fw-semibold small mb-1" for="dropdownNoRumahEdit">Nomor Rumah</label>
+                            <div class="dropdown">
+                                <input type="hidden" name="no_rumah" id="input_no_rumah_edit" value="No. 01" required>
+                                <button class="form-select text-start d-flex justify-content-between align-items-center" type="button" id="dropdownNoRumahEdit" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <span id="selectedNoRumahTextEdit" class="text-dark fw-semibold">No. 01</span>
+                                </button>
+                                <ul class="dropdown-menu w-100 shadow border-0" aria-labelledby="dropdownNoRumahEdit" style="max-height: 180px; overflow-y: auto;">
+                                    <?php for ($i = 1; $i <= 30; $i++) : ?>
+                                        <?php $nomor = sprintf('%02d', $i); ?>
+                                        <li>
+                                            <a class="dropdown-item py-2" href="javascript:void(0)" onclick="selectOptionEdit('input_no_rumah_edit', 'selectedNoRumahTextEdit', 'No. <?= $nomor ?>')">
+                                                No. <?= $nomor ?>
+                                            </a>
+                                        </li>
+                                    <?php endfor; ?>
+                                </ul>
+                            </div>
                         </div>
+
+                        <!-- Dropdown Nama Jalan -->
                         <div class="col-md-4">
-                            <label class="form-label text-dark fw-semibold small mb-1" for="nama_jalan">Nama Jalan</label>
-                            <select class="form-select" id="nama_jalan" name="nama_jalan" required>
-                                <option value="Jl. Mawar" selected>Jl. Mawar</option>
-                                <option value="Jl. Melati">Jl. Melati</option>
-                                <option value="Jl. Anggrek">Jl. Anggrek</option>
-                                <option value="Jl. Kenanga">Jl. Kenanga</option>
-                            </select>
+                            <label class="form-label text-dark fw-semibold small mb-1" for="dropdownJalanEdit">Nama Jalan</label>
+                            <div class="dropdown">
+                                <input type="hidden" name="nama_jalan" id="input_jalan_edit" value="Jl. Mawar" required>
+                                <button class="form-select text-start d-flex justify-content-between align-items-center" type="button" id="dropdownJalanEdit" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <span id="selectedJalanEditText" class="text-dark fw-semibold">Jl. Mawar</span>
+                                </button>
+                                <ul class="dropdown-menu w-100 shadow border-0" aria-labelledby="dropdownJalanEdit" style="max-height: 180px; overflow-y: auto;">
+                                    <?php foreach (['Jl. Mawar', 'Jl. Melati', 'Jl. Anggrek', 'Jl. Kenanga'] as $jalan) : ?>
+                                        <li>
+                                            <a class="dropdown-item py-2" href="javascript:void(0)" onclick="selectOptionEdit('input_jalan_edit', 'selectedJalanEditText', '<?= $jalan ?>')">
+                                                <?= $jalan ?>
+                                            </a>
+                                        </li>
+                                    <?php endforeach; ?>
+                                </ul>
+                            </div>
                         </div>
 
                         <div class="col-md-6">
@@ -87,4 +119,12 @@
         </div>
     </div>
 </div>
+
+<script>
+function selectOptionEdit(inputId, textId, val) {
+    document.getElementById(inputId).value = val;
+    const txt = document.getElementById(textId);
+    txt.innerText = val;
+}
+</script>
 <?= $this->endSection() ?>

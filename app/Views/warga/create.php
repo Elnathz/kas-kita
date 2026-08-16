@@ -12,7 +12,7 @@
                     <a href="<?= base_url('warga') ?>" class="btn btn-outline-secondary btn-sm">Kembali</a>
                 </div>
 
-                <form action="<?= base_url('warga/store') ?>" method="post">
+                <form action="<?= base_url('warga/store') ?>" method="post" onsubmit="return validateWargaCreate()">
                     <?= csrf_field() ?>
                     <div class="row g-3">
                         <div class="col-md-6">
@@ -34,36 +34,65 @@
                                 oninput="this.value = this.value.replace(/[^0-9]/g, '')" required>
                         </div>
 
-                        <!-- Dropdown Wilayah RT -->
+                        <!-- Dropdown Blok Rumah -->
                         <div class="col-md-4">
-                            <label class="form-label text-dark fw-semibold small mb-1" for="blok_rumah">Blok Rumah</label>
-                            <select class="form-select" id="blok_rumah" name="blok_rumah" required>
-                                <option value="" disabled selected>Pilih Blok...</option>
-                                <option value="Blok A">Blok A</option>
-                                <option value="Blok B">Blok B</option>
-                                <option value="Blok C">Blok C</option>
-                                <option value="Blok D">Blok D</option>
-                            </select>
+                            <label class="form-label text-dark fw-semibold small mb-1" for="dropdownBlokCreate">Blok Rumah</label>
+                            <div class="dropdown">
+                                <input type="hidden" name="blok_rumah" id="input_blok_create" value="" required>
+                                <button class="form-select text-start d-flex justify-content-between align-items-center" type="button" id="dropdownBlokCreate" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <span id="selectedBlokCreateText" class="text-muted">Pilih Blok...</span>
+                                </button>
+                                <ul class="dropdown-menu w-100 shadow border-0" aria-labelledby="dropdownBlokCreate" style="max-height: 180px; overflow-y: auto;">
+                                    <?php foreach (['Blok A', 'Blok B', 'Blok C', 'Blok D'] as $blok) : ?>
+                                        <li>
+                                            <a class="dropdown-item py-2" href="javascript:void(0)" onclick="selectOptionCreate('input_blok_create', 'selectedBlokCreateText', '<?= $blok ?>')">
+                                                <?= $blok ?>
+                                            </a>
+                                        </li>
+                                    <?php endforeach; ?>
+                                </ul>
+                            </div>
                         </div>
+                        
+                        <!-- Dropdown Nomor Rumah -->
                         <div class="col-md-4">
-                            <label class="form-label text-dark fw-semibold small mb-1" for="no_rumah">Nomor Rumah</label>
-                            <select class="form-select" id="no_rumah" name="no_rumah" required>
-                                <option value="" disabled selected>Pilih No...</option>
-                                <?php for ($i = 1; $i <= 30; $i++) : ?>
-                                    <?php $nomor = sprintf('%02d', $i); ?>
-                                    <option value="No. <?= $nomor ?>">No. <?= $nomor ?></option>
-                                <?php endfor; ?>
-                            </select>
+                            <label class="form-label text-dark fw-semibold small mb-1" for="dropdownNoRumahCreate">Nomor Rumah</label>
+                            <div class="dropdown">
+                                <input type="hidden" name="no_rumah" id="input_no_rumah_create" value="" required>
+                                <button class="form-select text-start d-flex justify-content-between align-items-center" type="button" id="dropdownNoRumahCreate" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <span id="selectedNoRumahTextCreate" class="text-muted">Pilih No...</span>
+                                </button>
+                                <ul class="dropdown-menu w-100 shadow border-0" aria-labelledby="dropdownNoRumahCreate" style="max-height: 180px; overflow-y: auto;">
+                                    <?php for ($i = 1; $i <= 30; $i++) : ?>
+                                        <?php $nomor = sprintf('%02d', $i); ?>
+                                        <li>
+                                            <a class="dropdown-item py-2" href="javascript:void(0)" onclick="selectOptionCreate('input_no_rumah_create', 'selectedNoRumahTextCreate', 'No. <?= $nomor ?>')">
+                                                No. <?= $nomor ?>
+                                            </a>
+                                        </li>
+                                    <?php endfor; ?>
+                                </ul>
+                            </div>
                         </div>
+
+                        <!-- Dropdown Nama Jalan -->
                         <div class="col-md-4">
-                            <label class="form-label text-dark fw-semibold small mb-1" for="nama_jalan">Nama Jalan</label>
-                            <select class="form-select" id="nama_jalan" name="nama_jalan" required>
-                                <option value="" disabled selected>Pilih Jalan...</option>
-                                <option value="Jl. Mawar">Jl. Mawar</option>
-                                <option value="Jl. Melati">Jl. Melati</option>
-                                <option value="Jl. Anggrek">Jl. Anggrek</option>
-                                <option value="Jl. Kenanga">Jl. Kenanga</option>
-                            </select>
+                            <label class="form-label text-dark fw-semibold small mb-1" for="dropdownJalanCreate">Nama Jalan</label>
+                            <div class="dropdown">
+                                <input type="hidden" name="nama_jalan" id="input_jalan_create" value="" required>
+                                <button class="form-select text-start d-flex justify-content-between align-items-center" type="button" id="dropdownJalanCreate" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <span id="selectedJalanCreateText" class="text-muted">Pilih Jalan...</span>
+                                </button>
+                                <ul class="dropdown-menu w-100 shadow border-0" aria-labelledby="dropdownJalanCreate" style="max-height: 180px; overflow-y: auto;">
+                                    <?php foreach (['Jl. Mawar', 'Jl. Melati', 'Jl. Anggrek', 'Jl. Kenanga'] as $jalan) : ?>
+                                        <li>
+                                            <a class="dropdown-item py-2" href="javascript:void(0)" onclick="selectOptionCreate('input_jalan_create', 'selectedJalanCreateText', '<?= $jalan ?>')">
+                                                <?= $jalan ?>
+                                            </a>
+                                        </li>
+                                    <?php endforeach; ?>
+                                </ul>
+                            </div>
                         </div>
 
                         <div class="col-12">
@@ -84,4 +113,26 @@
         </div>
     </div>
 </div>
+
+<script>
+function selectOptionCreate(inputId, textId, val) {
+    document.getElementById(inputId).value = val;
+    const txt = document.getElementById(textId);
+    txt.innerText = val;
+    txt.classList.remove('text-muted');
+    txt.classList.add('text-dark', 'fw-semibold');
+}
+
+function validateWargaCreate() {
+    const blok = document.getElementById('input_blok_create').value;
+    const noRumah = document.getElementById('input_no_rumah_create').value;
+    const jalan = document.getElementById('input_jalan_create').value;
+
+    if (!blok || !noRumah || !jalan) {
+        alert('Silakan lengkapi pilihan Blok, Nomor Rumah, dan Nama Jalan warga.');
+        return false;
+    }
+    return true;
+}
+</script>
 <?= $this->endSection() ?>

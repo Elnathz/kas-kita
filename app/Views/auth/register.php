@@ -39,45 +39,70 @@
                         </div>
                     </div>
 
-                    <!-- Pilihan Blok Rumah -->
+                    <!-- Pilihan Blok Rumah (Custom Dropdown) -->
                     <div class="col-sm-4">
                         <div class="form-group mb-0">
-                            <label class="form-label text-dark fw-semibold small mb-1" for="blok_rumah">Blok Rumah</label>
-                            <select class="form-select" id="blok_rumah" name="blok_rumah" required>
-                                <option value="" disabled selected>Pilih Blok...</option>
-                                <option value="Blok A">Blok A</option>
-                                <option value="Blok B">Blok B</option>
-                                <option value="Blok C">Blok C</option>
-                                <option value="Blok D">Blok D</option>
-                            </select>
+                            <label class="form-label text-dark fw-semibold small mb-1" for="dropdownBlokRumah">Blok Rumah</label>
+                            <div class="dropdown">
+                                <input type="hidden" name="blok_rumah" id="input_blok_rumah" value="" required>
+                                <button class="form-select text-start d-flex justify-content-between align-items-center" type="button" id="dropdownBlokRumah" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <span id="selectedBlokText" class="text-muted">Pilih Blok...</span>
+                                </button>
+                                <ul class="dropdown-menu w-100 shadow border-0" aria-labelledby="dropdownBlokRumah" style="max-height: 180px; overflow-y: auto;">
+                                    <?php foreach (['Blok A', 'Blok B', 'Blok C', 'Blok D'] as $blok) : ?>
+                                        <li>
+                                            <a class="dropdown-item py-2" href="javascript:void(0)" onclick="selectOption('input_blok_rumah', 'selectedBlokText', '<?= $blok ?>')">
+                                                <?= $blok ?>
+                                            </a>
+                                        </li>
+                                    <?php endforeach; ?>
+                                </ul>
+                            </div>
                         </div>
                     </div>
 
-                    <!-- Pilihan Nomor Rumah -->
+                    <!-- Pilihan Nomor Rumah (Custom Scrollable Dropdown) -->
                     <div class="col-sm-4">
                         <div class="form-group mb-0">
-                            <label class="form-label text-dark fw-semibold small mb-1" for="no_rumah">Nomor Rumah</label>
-                            <select class="form-select" id="no_rumah" name="no_rumah" required>
-                                <option value="" disabled selected>Pilih No...</option>
-                                <?php for ($i = 1; $i <= 30; $i++) : ?>
-                                    <?php $nomor = sprintf('%02d', $i); ?>
-                                    <option value="No. <?= $nomor ?>">No. <?= $nomor ?></option>
-                                <?php endfor; ?>
-                            </select>
+                            <label class="form-label text-dark fw-semibold small mb-1" for="dropdownNoRumah">Nomor Rumah</label>
+                            <div class="dropdown">
+                                <input type="hidden" name="no_rumah" id="input_no_rumah" value="" required>
+                                <button class="form-select text-start d-flex justify-content-between align-items-center" type="button" id="dropdownNoRumah" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <span id="selectedNoRumahText" class="text-muted">Pilih No...</span>
+                                </button>
+                                <ul class="dropdown-menu w-100 shadow border-0" aria-labelledby="dropdownNoRumah" style="max-height: 180px; overflow-y: auto;">
+                                    <?php for ($i = 1; $i <= 30; $i++) : ?>
+                                        <?php $nomor = sprintf('%02d', $i); ?>
+                                        <li>
+                                            <a class="dropdown-item py-2" href="javascript:void(0)" onclick="selectOption('input_no_rumah', 'selectedNoRumahText', 'No. <?= $nomor ?>')">
+                                                No. <?= $nomor ?>
+                                            </a>
+                                        </li>
+                                    <?php endfor; ?>
+                                </ul>
+                            </div>
                         </div>
                     </div>
 
-                    <!-- Pilihan Nama Jalan -->
+                    <!-- Pilihan Nama Jalan (Custom Dropdown) -->
                     <div class="col-sm-4">
                         <div class="form-group mb-0">
-                            <label class="form-label text-dark fw-semibold small mb-1" for="nama_jalan">Nama Jalan</label>
-                            <select class="form-select" id="nama_jalan" name="nama_jalan" required>
-                                <option value="" disabled selected>Pilih Jalan...</option>
-                                <option value="Jl. Mawar">Jl. Mawar</option>
-                                <option value="Jl. Melati">Jl. Melati</option>
-                                <option value="Jl. Anggrek">Jl. Anggrek</option>
-                                <option value="Jl. Kenanga">Jl. Kenanga</option>
-                            </select>
+                            <label class="form-label text-dark fw-semibold small mb-1" for="dropdownNamaJalan">Nama Jalan</label>
+                            <div class="dropdown">
+                                <input type="hidden" name="nama_jalan" id="input_nama_jalan" value="" required>
+                                <button class="form-select text-start d-flex justify-content-between align-items-center" type="button" id="dropdownNamaJalan" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <span id="selectedJalanText" class="text-muted">Pilih Jalan...</span>
+                                </button>
+                                <ul class="dropdown-menu w-100 shadow border-0" aria-labelledby="dropdownNamaJalan" style="max-height: 180px; overflow-y: auto;">
+                                    <?php foreach (['Jl. Mawar', 'Jl. Melati', 'Jl. Anggrek', 'Jl. Kenanga'] as $jalan) : ?>
+                                        <li>
+                                            <a class="dropdown-item py-2" href="javascript:void(0)" onclick="selectOption('input_nama_jalan', 'selectedJalanText', '<?= $jalan ?>')">
+                                                <?= $jalan ?>
+                                            </a>
+                                        </li>
+                                    <?php endforeach; ?>
+                                </ul>
+                            </div>
                         </div>
                     </div>
 
@@ -135,7 +160,32 @@
 </div>
 
 <script>
+function selectOption(inputId, textId, val) {
+    document.getElementById(inputId).value = val;
+    const txt = document.getElementById(textId);
+    txt.innerText = val;
+    txt.classList.remove('text-muted');
+    txt.classList.add('text-dark', 'fw-semibold');
+}
+
 function validateForm() {
+    const blok = document.getElementById('input_blok_rumah').value;
+    const noRumah = document.getElementById('input_no_rumah').value;
+    const jalan = document.getElementById('input_nama_jalan').value;
+
+    if (!blok) {
+        alert('Silakan pilih blok rumah terlebih dahulu.');
+        return false;
+    }
+    if (!noRumah) {
+        alert('Silakan pilih nomor rumah terlebih dahulu.');
+        return false;
+    }
+    if (!jalan) {
+        alert('Silakan pilih nama jalan terlebih dahulu.');
+        return false;
+    }
+
     const pwd = document.getElementById('password').value;
     const pwdConfirm = document.getElementById('password_confirm').value;
 
