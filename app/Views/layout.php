@@ -1,3 +1,10 @@
+<?php
+$hlm = "Home";
+if (uri_string() != "") {
+    $hlm = ucwords(uri_string());
+}
+
+?>
 <!DOCTYPE html>
 <html dir="ltr" lang="en">
 
@@ -10,7 +17,7 @@
     <meta name="author" content="">
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="<?= base_url() ?>FreeDash/src/assets/images/favicon.png">
-    <title>Freedash Template - The Ultimate Multipurpose admin template</title>
+    <title>Kas Kita | <?= $hlm ?></title>
     <!-- Custom CSS -->
     <link href="<?= base_url() ?>FreeDash/src/assets/extra-libs/c3/c3.min.css" rel="stylesheet">
     <link href="<?= base_url() ?>FreeDash/src/assets/libs/chartist/dist/chartist.min.css" rel="stylesheet">
@@ -61,7 +68,27 @@
             <!-- ============================================================== -->
             <!-- Bread crumb and right sidebar toggle -->
             <!-- ============================================================== -->
-            <?= $this->include('components/breadcrumb') ?>
+            <div class="page-breadcrumb">
+                <div class="row">
+                    <div class="col-7 align-self-center">
+                        <h3 class="page-title text-truncate text-dark font-weight-medium mb-1"><?= $hlm ?></h3>
+                        <div class="d-flex align-items-center">
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb m-0 p-0">
+                                    <li class="breadcrumb-item">Home</li>
+                                    <?php
+                                    if ($hlm != "Home") {
+                                    ?>
+                                        <li class="breadcrumb-item text-muted active" aria-current="page"><?= $hlm ?></li>
+                                    <?php
+                                    }
+                                    ?>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <!-- ============================================================== -->
             <!-- End Bread crumb and right sidebar toggle -->
             <!-- ============================================================== -->
