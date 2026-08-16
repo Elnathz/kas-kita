@@ -40,4 +40,9 @@ class IuranController extends BaseController
     {
         return redirect()->to('/iuran');
     }
+
+    public function kuitansi($id = 1)
+    {
+        return view('iuran/kuitansi', ['id' => $id]);
+    }
 }

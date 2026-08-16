@@ -32,6 +32,7 @@ $routes->post('/iuran/bayar/proses', 'IuranController::prosesBayar');
 $routes->get('/iuran/riwayat', 'IuranController::riwayat');
 $routes->get('/iuran/verifikasi/(:num)', 'IuranController::verifikasi/$1');
 $routes->post('/iuran/verifikasi/proses/(:num)', 'IuranController::prosesVerifikasi/$1');
+$routes->get('/iuran/kuitansi/(:num)', 'IuranController::kuitansi/$1');
 
 // Pengeluaran routes
 $routes->get('/pengeluaran', 'PengeluaranController::index');
