@@ -139,7 +139,7 @@
                                 <th class="text-nowrap">Rincian Keperluan / Kegiatan</th>
                                 <th class="text-end text-nowrap">Nominal (Rp)</th>
                                 <th class="text-center text-nowrap d-print-none">Bukti Nota</th>
-                                <th class="text-center text-nowrap d-print-none">Foto Kegiatan</th>
+                                <th class="text-center text-nowrap d-print-none">Dokumentasi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -150,10 +150,10 @@
                                 <td class="text-dark fw-medium text-nowrap">Pembelian lampu penerangan jalan gang RT 03</td>
                                 <td class="text-end fw-bold text-dark text-nowrap">Rp 350.000</td>
                                 <td class="text-center text-nowrap d-print-none">
-                                    <button class="btn btn-sm btn-outline-secondary py-0 px-2" onclick="alert('Demo: Lihat Nota Lampu Gang')">Lihat Nota</button>
+                                    <button class="btn btn-xs btn-outline-secondary" onclick="previewLampiranLaporan('nota', 'Pembelian Lampu Penerangan Gang', 'Rp 350.000', 'nota_lampu_jalan.jpg')">Lihat Nota</button>
                                 </td>
                                 <td class="text-center text-nowrap d-print-none">
-                                    <button class="btn btn-sm btn-outline-success py-0 px-2" onclick="alert('Demo: Lihat Foto Lampu Gang Terpasang')">Foto Hasil</button>
+                                    <button class="btn btn-xs btn-outline-success" onclick="previewLampiranLaporan('kegiatan', 'Dokumentasi Lampu Penerangan Terpasang', 'Gang RT 03', 'foto_lampu_terpasang.jpg')">Dokumentasi</button>
                                 </td>
                             </tr>
                             <tr>
@@ -163,10 +163,10 @@
                                 <td class="text-dark fw-medium text-nowrap">Santunan warga sakit (Bpk. Mulyono)</td>
                                 <td class="text-end fw-bold text-dark text-nowrap">Rp 500.000</td>
                                 <td class="text-center text-nowrap d-print-none">
-                                    <button class="btn btn-sm btn-outline-secondary py-0 px-2" onclick="alert('Demo: Lihat Kuitansi Santunan')">Lihat Kuitansi</button>
+                                    <button class="btn btn-xs btn-outline-secondary" onclick="previewLampiranLaporan('nota', 'Kuitansi Santunan Warga Sakit', 'Rp 500.000', 'kuitansi_santunan_mulyono.jpg')">Lihat Nota</button>
                                 </td>
                                 <td class="text-center text-nowrap d-print-none">
-                                    <button class="btn btn-sm btn-outline-success py-0 px-2" onclick="alert('Demo: Lihat Foto Penyerahan Santunan')">Foto Penyerahan</button>
+                                    <button class="btn btn-xs btn-outline-success" onclick="previewLampiranLaporan('kegiatan', 'Dokumentasi Penyerahan Santunan Warga', 'Bpk. Mulyono (Blok A / No. 05)', 'foto_penyerahan_santunan.jpg')">Dokumentasi</button>
                                 </td>
                             </tr>
                             <tr>
@@ -176,10 +176,10 @@
                                 <td class="text-dark fw-medium text-nowrap">Kerja bakti &amp; perbaikan saluran gang Mawar</td>
                                 <td class="text-end fw-bold text-dark text-nowrap">Rp 750.000</td>
                                 <td class="text-center text-nowrap d-print-none">
-                                    <button class="btn btn-sm btn-outline-secondary py-0 px-2" onclick="alert('Demo: Lihat Nota Material Semen & Pasir')">Lihat Nota</button>
+                                    <button class="btn btn-xs btn-outline-secondary" onclick="previewLampiranLaporan('nota', 'Nota Toko Bangunan Saluran Air', 'Rp 750.000', 'nota_semen_pasir.jpg')">Lihat Nota</button>
                                 </td>
                                 <td class="text-center text-nowrap d-print-none">
-                                    <button class="btn btn-sm btn-outline-success py-0 px-2" onclick="alert('Demo: Lihat Foto Warga Kerja Bakti')">Foto Kegiatan</button>
+                                    <button class="btn btn-xs btn-outline-success" onclick="previewLampiranLaporan('kegiatan', 'Dokumentasi Kerja Bakti Saluran Gang Mawar', 'Minggu Pagi, 08 Agustus 2026', 'foto_kerja_bakti_saluran.jpg')">Dokumentasi</button>
                                 </td>
                             </tr>
                             <tr>
@@ -189,7 +189,7 @@
                                 <td class="text-dark fw-medium text-nowrap">Konsumsi snack rapat bulanan pengurus RT</td>
                                 <td class="text-end fw-bold text-dark text-nowrap">Rp 250.000</td>
                                 <td class="text-center text-nowrap d-print-none">
-                                    <button class="btn btn-sm btn-outline-secondary py-0 px-2" onclick="alert('Demo: Lihat Struk Belanja Snack')">Lihat Struk</button>
+                                    <button class="btn btn-xs btn-outline-secondary" onclick="previewLampiranLaporan('nota', 'Struk Belanja Snack Bakery', 'Rp 250.000', 'struk_snack_rapat.jpg')">Lihat Nota</button>
                                 </td>
                                 <td class="text-center text-nowrap d-print-none">
                                     <span class="text-muted small">-</span>
@@ -390,17 +390,119 @@
 </div>
 
 <!-- ============================================================== -->
-<!-- KOLOM TANDA TANGAN RESMI (Hanya Tampil Saat Cetak / Print) -->
+<!-- MODAL PREVIEW LAMPIRAN LAPORAN (NOTA & FOTO KEGIATAN) -->
+<!-- ============================================================== -->
+<div class="modal fade" id="modalPreviewLampiranLaporan" tabindex="-1" aria-labelledby="modalPreviewLampiranLaporanLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow">
+            <div class="modal-header bg-light py-3 border-bottom">
+                <h5 class="modal-title fw-bold text-dark" id="modalPreviewLampiranLaporanLabel">
+                    <span id="previewLaporanHeaderTitle">Lampiran Laporan Pengeluaran</span>
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-4 text-center">
+                <div class="p-4 bg-light rounded-3 border d-flex flex-column align-items-center justify-content-center mb-3" style="min-height: 220px;">
+                    <div id="previewLaporanIconContainer" class="mb-2">
+                        <i data-feather="image" class="text-success" style="width: 48px; height: 48px;"></i>
+                    </div>
+                    <h6 class="fw-bold text-dark mb-1" id="previewLaporanItemTitle">-</h6>
+                    <span class="text-muted font-12 d-block mb-2" id="previewLaporanItemSubtitle">-</span>
+                    <span class="badge bg-white text-dark border font-11 px-2 py-1" id="previewLaporanItemFilename">file.jpg</span>
+                </div>
+                <p class="text-muted font-12 mb-0">
+                    File bukti transparansi tersimpan dalam arsip pembukuan digital Kas-Kita RT 04.
+                </p>
+            </div>
+            <div class="modal-footer bg-light py-2">
+                <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Tutup</button>
+                <button type="button" class="btn btn-success btn-sm fw-semibold" onclick="showAppToast('File lampiran bukti transparansi berhasil diunduh ke perangkat Anda.', 'success', 'Unduhan Berhasil')">
+                    Unduh Gambar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function previewLampiranLaporan(tipe, judul, subjudul, namaFile) {
+    const modalHeaderTitle = document.getElementById('previewLaporanHeaderTitle');
+    const previewTitle = document.getElementById('previewLaporanItemTitle');
+    const previewSubtitle = document.getElementById('previewLaporanItemSubtitle');
+    const previewFilename = document.getElementById('previewLaporanItemFilename');
+    const iconContainer = document.getElementById('previewLaporanIconContainer');
+    
+    if (tipe === 'kegiatan') {
+        modalHeaderTitle.innerHTML = '<i data-feather="image" class="feather-icon text-success me-2" style="width: 16px; height: 16px;"></i> Foto Dokumentasi Kegiatan';
+        iconContainer.innerHTML = '<i data-feather="image" class="text-success" style="width: 48px; height: 48px;"></i>';
+    } else {
+        modalHeaderTitle.innerHTML = '<i data-feather="file-text" class="feather-icon text-secondary me-2" style="width: 16px; height: 16px;"></i> Bukti Nota / Struk Fisik';
+        iconContainer.innerHTML = '<i data-feather="file-text" class="text-secondary" style="width: 48px; height: 48px;"></i>';
+    }
+
+    previewTitle.textContent = judul;
+    previewSubtitle.textContent = subjudul;
+    previewFilename.textContent = namaFile;
+
+    const modalEl = document.getElementById('modalPreviewLampiranLaporan');
+    const modal = new bootstrap.Modal(modalEl);
+    modal.show();
+    
+    if (typeof feather !== 'undefined') {
+        feather.replace();
+    }
+}
+</script>
+
+<!-- ============================================================== -->
+<!-- KOLOM TANDA TANGAN RESMI (Hanya Tampil Saat Cetak / Print Mode) -->
 <!-- ============================================================== -->
 <div class="d-none d-print-block mt-5 pt-4">
     <div class="d-flex justify-content-between px-4 text-center">
+        <!-- Ketua RT -->
         <div style="width: 250px;">
-            <p class="mb-5">Mengetahui,<br><strong>Ketua RT 04 RW 12</strong></p>
-            <p class="mb-0 fw-bold text-decoration-underline">( Agus Hariyanto )</p>
+            <p class="mb-1 text-dark">Mengetahui,<br><strong>Ketua RT 04 RW 12</strong></p>
+            
+            <!-- Digital Signature & RT Stamp Overlay -->
+            <div class="position-relative d-inline-block my-2" style="height: 65px; width: 170px;">
+                <div class="position-absolute top-50 start-50 translate-middle opacity-50" style="pointer-events: none; z-index: 1;">
+                    <div class="rounded-circle border border-2 border-primary d-flex flex-column align-items-center justify-content-center text-primary fw-bold" style="width: 70px; height: 70px; transform: rotate(-10deg); border-style: dashed !important;">
+                        <span style="font-size: 7px;" class="text-uppercase">PENGURUS RT</span>
+                        <span class="fw-bolder font-10">RT 04</span>
+                        <span style="font-size: 7px;">RW 12</span>
+                    </div>
+                </div>
+                <!-- Tanda Tangan Agus Hariyanto SVG -->
+                <svg class="position-relative" style="z-index: 2;" width="150" height="60" viewBox="0 0 160 65" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M25 48 C20 30, 30 15, 42 18 C52 20, 48 45, 38 52 C30 58, 45 35, 60 28 C72 22, 75 42, 85 30 C95 18, 102 38, 118 25 C130 15, 138 35, 150 20 M20 38 L75 35 M22 55 Q80 50, 145 45" stroke="#0c2d6b" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </div>
+
+            <p class="mb-0 fw-bold text-dark text-decoration-underline">( Agus Hariyanto )</p>
+            <small class="text-muted font-11">NIP. RT-04-12-001</small>
         </div>
+
+        <!-- Bendahara RT -->
         <div style="width: 250px;">
-            <p class="mb-5">Bandung, 31 Agustus 2026<br><strong>Bendahara RT 04 RW 12</strong></p>
-            <p class="mb-0 fw-bold text-decoration-underline">( Farros Rifantiarno )</p>
+            <p class="mb-1 text-dark">Bandung, 31 Agustus 2026<br><strong>Bendahara RT 04 RW 12</strong></p>
+            
+            <!-- Digital Signature & RT Stamp Overlay -->
+            <div class="position-relative d-inline-block my-2" style="height: 65px; width: 170px;">
+                <div class="position-absolute top-50 start-50 translate-middle opacity-50" style="pointer-events: none; z-index: 1;">
+                    <div class="rounded-circle border border-2 border-primary d-flex flex-column align-items-center justify-content-center text-primary fw-bold" style="width: 70px; height: 70px; transform: rotate(-15deg); border-style: dashed !important;">
+                        <span style="font-size: 7px;" class="text-uppercase">PENGURUS RT</span>
+                        <span class="fw-bolder font-10">RT 04</span>
+                        <span style="font-size: 7px;">RW 12</span>
+                    </div>
+                </div>
+                <!-- Tanda Tangan Farros Rifantiarno SVG -->
+                <svg class="position-relative" style="z-index: 2;" width="150" height="60" viewBox="0 0 160 65" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20 45 C35 15, 45 10, 50 25 C55 40, 40 55, 30 50 C20 45, 45 20, 65 30 C75 35, 80 48, 90 35 C98 25, 105 40, 115 32 C125 25, 135 38, 145 28 M40 32 L85 30 M15 52 Q70 48, 150 42" stroke="#0c2d6b" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </div>
+
+            <p class="mb-0 fw-bold text-dark text-decoration-underline">( Farros Rifantiarno )</p>
+            <small class="text-muted font-11">NIP. RT-04-12-002</small>
         </div>
     </div>
 </div>
