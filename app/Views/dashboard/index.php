@@ -3,70 +3,62 @@
 <!-- ============================================================== -->
 <!-- Kartu Ringkasan Statistik Kas RT -->
 <!-- ============================================================== -->
-<div class="row">
+<div class="row g-3 mb-4">
     <!-- Saldo Kas RT -->
-    <div class="col-sm-6 col-lg-3">
-        <div class="card border-0 shadow-sm border-start border-success border-4">
-            <div class="card-body">
-                <div class="d-flex align-items-center">
-                    <div>
-                        <h2 class="text-dark mb-1 font-weight-medium">Rp 12.650.000</h2>
-                        <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">Total Saldo Kas RT</h6>
-                    </div>
-                    <div class="ms-auto mt-md-3 mt-lg-0">
-                        <span class="opacity-7 text-muted"><i data-feather="dollar-sign" class="feather-icon text-success"></i></span>
-                    </div>
+    <div class="col-sm-6 col-xl-3">
+        <div class="card border-0 shadow-sm border-start border-success border-4 h-100 mb-0">
+            <div class="card-body p-3 d-flex align-items-center justify-content-between">
+                <div>
+                    <span class="text-muted small d-block mb-1">Total Saldo Kas RT</span>
+                    <h4 class="text-dark fw-bold mb-0 text-nowrap">Rp 12.650.000</h4>
+                </div>
+                <div class="bg-light rounded p-2 text-success d-flex align-items-center justify-content-center" style="width: 42px; height: 42px;">
+                    <i data-feather="dollar-sign" class="feather-icon text-success"></i>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- Pemasukan Bulan Ini -->
-    <div class="col-sm-6 col-lg-3">
-        <div class="card border-0 shadow-sm border-start border-primary border-4">
-            <div class="card-body">
-                <div class="d-flex align-items-center">
-                    <div>
-                        <h2 class="text-dark mb-1 font-weight-medium">Rp 4.500.000</h2>
-                        <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">Pemasukan Bulan Ini</h6>
-                    </div>
-                    <div class="ms-auto mt-md-3 mt-lg-0">
-                        <span class="opacity-7 text-muted"><i data-feather="trending-up" class="feather-icon text-primary"></i></span>
-                    </div>
+    <div class="col-sm-6 col-xl-3">
+        <div class="card border-0 shadow-sm border-start border-primary border-4 h-100 mb-0">
+            <div class="card-body p-3 d-flex align-items-center justify-content-between">
+                <div>
+                    <span class="text-muted small d-block mb-1">Pemasukan Bulan Ini</span>
+                    <h4 class="text-dark fw-bold mb-0 text-nowrap">Rp 4.500.000</h4>
+                </div>
+                <div class="bg-light rounded p-2 text-primary d-flex align-items-center justify-content-center" style="width: 42px; height: 42px;">
+                    <i data-feather="trending-up" class="feather-icon text-primary"></i>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- Pengeluaran Bulan Ini -->
-    <div class="col-sm-6 col-lg-3">
-        <div class="card border-0 shadow-sm border-start border-danger border-4">
-            <div class="card-body">
-                <div class="d-flex align-items-center">
-                    <div>
-                        <h2 class="text-dark mb-1 font-weight-medium">Rp 1.850.000</h2>
-                        <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">Pengeluaran Bulan Ini</h6>
-                    </div>
-                    <div class="ms-auto mt-md-3 mt-lg-0">
-                        <span class="opacity-7 text-muted"><i data-feather="trending-down" class="feather-icon text-danger"></i></span>
-                    </div>
+    <div class="col-sm-6 col-xl-3">
+        <div class="card border-0 shadow-sm border-start border-danger border-4 h-100 mb-0">
+            <div class="card-body p-3 d-flex align-items-center justify-content-between">
+                <div>
+                    <span class="text-muted small d-block mb-1">Pengeluaran Bulan Ini</span>
+                    <h4 class="text-dark fw-bold mb-0 text-nowrap">Rp 1.850.000</h4>
+                </div>
+                <div class="bg-light rounded p-2 text-danger d-flex align-items-center justify-content-center" style="width: 42px; height: 42px;">
+                    <i data-feather="trending-down" class="feather-icon text-danger"></i>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- Partisipasi Iuran Warga -->
-    <div class="col-sm-6 col-lg-3">
-        <div class="card border-0 shadow-sm border-start border-info border-4">
-            <div class="card-body">
-                <div class="d-flex align-items-center">
-                    <div>
-                        <h2 class="text-dark mb-1 font-weight-medium">42 / 50</h2>
-                        <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">Warga Sudah Bayar</h6>
-                    </div>
-                    <div class="ms-auto mt-md-3 mt-lg-0">
-                        <span class="opacity-7 text-muted"><i data-feather="users" class="feather-icon text-info"></i></span>
-                    </div>
+    <div class="col-sm-6 col-xl-3">
+        <div class="card border-0 shadow-sm border-start border-info border-4 h-100 mb-0">
+            <div class="card-body p-3 d-flex align-items-center justify-content-between">
+                <div>
+                    <span class="text-muted small d-block mb-1">Warga Sudah Bayar</span>
+                    <h4 class="text-dark fw-bold mb-0 text-nowrap">42 <span class="fs-6 text-muted fw-normal">/ 50 Warga</span></h4>
+                </div>
+                <div class="bg-light rounded p-2 text-info d-flex align-items-center justify-content-center" style="width: 42px; height: 42px;">
+                    <i data-feather="users" class="feather-icon text-info"></i>
                 </div>
             </div>
         </div>
