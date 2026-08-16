@@ -7,7 +7,10 @@ $isWargaMode = ($seg1 === 'dashboard-warga' || ($seg1 === 'iuran' && in_array($s
 <!-- ============================================================== -->
 <!-- Left Sidebar - style you can find in sidebar.scss  -->
 <!-- ============================================================== -->
-<aside class="left-sidebar" data-sidebarbg="skin6">
+<aside class="left-sidebar position-fixed" data-sidebarbg="skin6">
+    <!-- Resizer Handle on Right Edge -->
+    <div class="sidebar-resizer d-none d-lg-block" id="sidebarResizer" title="Geser untuk mengatur lebar sidebar"></div>
+    
     <!-- Sidebar scroll-->
     <div class="scroll-sidebar" data-sidebarbg="skin6">
         <!-- Sidebar navigation-->

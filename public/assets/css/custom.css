@@ -15,11 +15,200 @@
     --kk-green-900: #064e3b;
     --kk-gradient: linear-gradient(135deg, #059669 0%, #10b981 100%);
     --kk-gradient-hover: linear-gradient(135deg, #047857 0%, #059669 100%);
+    
+    /* Dynamic Resizable Sidebar Variables */
+    --sidebar-width: 275px;
+    --sidebar-mini-width: 72px;
 }
 
 /* ==============================================================
-   SIDEBAR NAVIGATION STYLING (FIX OVERLAP & CLEAN SUBMENUS)
+   COMPACT MICRO BUTTONS (.btn-xs) FOR CLEAN TABLE ACTIONS
    ============================================================== */
+.btn-xs {
+    padding: 4px 8px !important;
+    font-size: 0.75rem !important;
+    line-height: 1.3 !important;
+    border-radius: 6px !important;
+    font-weight: 600 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 4px !important;
+}
+
+.btn-xs .feather-icon {
+    width: 11px !important;
+    height: 11px !important;
+}
+
+/* ==============================================================
+   COMPACT & SLEEK USER PROFILE DROPDOWN (.user-dd)
+   ============================================================== */
+.user-dd {
+    min-width: 195px !important;
+    max-width: 220px !important;
+    padding: 0 !important;
+    border-radius: 12px !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.14) !important;
+    overflow: hidden;
+    border: 1px solid rgba(226, 232, 240, 0.8) !important;
+}
+
+.user-dd .dropdown-item {
+    padding: 7px 12px !important;
+    font-size: 0.82rem !important;
+    line-height: 1.35 !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    color: #334155 !important;
+    transition: background 0.15s ease, color 0.15s ease !important;
+}
+
+.user-dd .dropdown-item:hover {
+    background-color: #f1f5f9 !important;
+    color: #0f172a !important;
+}
+
+.user-dd .dropdown-item i,
+.user-dd .dropdown-item svg,
+.user-dd .dropdown-item .svg-icon {
+    width: 14px !important;
+    height: 14px !important;
+    margin: 0 !important;
+    flex-shrink: 0;
+}
+
+.user-dd .dropdown-divider {
+    margin: 2px 0 !important;
+    border-color: #e2e8f0 !important;
+}
+
+/* ==============================================================
+   RESIZABLE & STRETCHABLE SIDEBAR WITH MIN & MAX CONSTRAINTS
+   ============================================================== */
+@media (min-width: 992px) {
+    #main-wrapper:not(.mini-sidebar) .left-sidebar {
+        width: var(--sidebar-width) !important;
+        transition: width 0.15s ease-out;
+    }
+    #main-wrapper:not(.mini-sidebar) .topbar .top-navbar .navbar-header {
+        width: var(--sidebar-width) !important;
+        transition: width 0.15s ease-out;
+    }
+    #main-wrapper:not(.mini-sidebar) .page-wrapper {
+        margin-left: var(--sidebar-width) !important;
+        transition: margin-left 0.15s ease-out;
+    }
+}
+
+/* Resizer Handle Bar */
+.sidebar-resizer {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 6px;
+    height: 100%;
+    cursor: col-resize;
+    z-index: 1050;
+    background: transparent;
+    transition: background 0.2s ease;
+}
+.sidebar-resizer:hover,
+body.is-resizing-sidebar .sidebar-resizer {
+    background: rgba(5, 150, 105, 0.4) !important;
+}
+body.is-resizing-sidebar {
+    user-select: none !important;
+    cursor: col-resize !important;
+}
+body.is-resizing-sidebar .left-sidebar,
+body.is-resizing-sidebar .topbar .top-navbar .navbar-header,
+body.is-resizing-sidebar .page-wrapper {
+    transition: none !important;
+}
+
+/* ==============================================================
+   FIX TEXT OVERFLOW ON SIDEBAR MENU (PENGATURAN WILAYAH & IURAN)
+   ============================================================== */
+#sidebarnav .sidebar-link {
+    white-space: normal !important;
+    word-break: normal !important;
+    line-height: 1.35 !important;
+    display: flex !important;
+    align-items: center !important;
+    padding: 10px 16px !important;
+}
+#sidebarnav .sidebar-link .hide-menu {
+    white-space: normal !important;
+    overflow: visible !important;
+    text-overflow: clip !important;
+    flex: 1;
+    font-size: 0.9rem;
+}
+
+/* ==============================================================
+   MINI SIDEBAR (ICON-ONLY MODE WHEN COLLAPSED)
+   ============================================================== */
+@media (min-width: 992px) {
+    #main-wrapper.mini-sidebar .left-sidebar {
+        width: var(--sidebar-mini-width) !important;
+    }
+    #main-wrapper.mini-sidebar .topbar .top-navbar .navbar-header {
+        width: var(--sidebar-mini-width) !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        justify-content: center !important;
+    }
+    #main-wrapper.mini-sidebar .page-wrapper {
+        margin-left: var(--sidebar-mini-width) !important;
+    }
+    #main-wrapper.mini-sidebar .sidebar-resizer {
+        display: none !important;
+    }
+    #main-wrapper.mini-sidebar .hide-menu,
+    #main-wrapper.mini-sidebar .nav-small-cap,
+    #main-wrapper.mini-sidebar .list-divider,
+    #main-wrapper.mini-sidebar .sidebar-link.has-arrow::after,
+    #main-wrapper.mini-sidebar ul.first-level {
+        display: none !important;
+    }
+    #main-wrapper.mini-sidebar .sidebar-link {
+        justify-content: center !important;
+        padding: 12px 0 !important;
+        border-radius: 12px !important;
+        margin: 4px 8px !important;
+        text-align: center;
+    }
+    #main-wrapper.mini-sidebar .sidebar-link i,
+    #main-wrapper.mini-sidebar .sidebar-link svg {
+        margin: 0 !important;
+    }
+    #main-wrapper.mini-sidebar #toggleSidebarDesktop {
+        display: none !important;
+    }
+}
+
+/* ==============================================================
+   SIDEBAR NAVIGATION STYLING (FIX OVERLAP, MARGIN & CLEAN PILLS)
+   ============================================================== */
+
+/* Beri Jarak Vertikal Antar Setiap Menu Item Sidebar */
+#sidebarnav > .sidebar-item {
+    margin-bottom: 8px !important;
+    position: relative;
+}
+
+#sidebarnav .nav-small-cap {
+    margin-top: 14px !important;
+    margin-bottom: 8px !important;
+    padding: 0 16px !important;
+}
+
+#sidebarnav .list-divider {
+    margin: 12px 16px !important;
+    border-color: #e2e8f0 !important;
+}
 
 /* Top-level Single Items without Submenu (Active State) */
 #sidebarnav > .sidebar-item:not(.has-arrow).selected > .sidebar-link,
@@ -28,7 +217,8 @@
     color: #ffffff !important;
     font-weight: 600 !important;
     box-shadow: 0 4px 12px rgba(5, 150, 105, 0.28) !important;
-    border-radius: 0 60px 60px 0 !important;
+    border-radius: 0 50px 50px 0 !important;
+    margin-right: 12px !important;
     opacity: 1 !important;
 }
 
@@ -78,6 +268,12 @@
 ul.first-level {
     padding-left: 0 !important;
     background: transparent !important;
+    margin-top: 4px !important;
+    margin-bottom: 6px !important;
+}
+
+ul.first-level .sidebar-item {
+    margin-bottom: 4px !important;
 }
 
 ul.first-level .sidebar-item .sidebar-link {
@@ -115,6 +311,8 @@ ul.first-level .sidebar-item .sidebar-link:hover {
 #sidebarnav > .sidebar-item:not(.selected) > .sidebar-link:hover {
     background: #f0fdf4 !important;
     color: var(--kk-green-600) !important;
+    border-radius: 0 50px 50px 0 !important;
+    margin-right: 12px !important;
 }
 
 #sidebarnav > .sidebar-item:not(.selected) > .sidebar-link:hover i,
@@ -153,6 +351,145 @@ ul.first-level .sidebar-item .sidebar-link:hover {
 
 .nav-segment-container .nav-link.active .feather-icon {
     stroke: #ffffff !important;
+}
+
+/* Contextual Tab Colors on Active */
+.nav-segment-container .tab-verif.active {
+    background: #d97706 !important;
+    color: #ffffff !important;
+    box-shadow: 0 2px 8px rgba(217, 119, 6, 0.35) !important;
+}
+.nav-segment-container .tab-verif.active .badge {
+    background: #ffffff !important;
+    color: #d97706 !important;
+}
+
+.nav-segment-container .tab-tunggakan.active {
+    background: #dc2626 !important;
+    color: #ffffff !important;
+    box-shadow: 0 2px 8px rgba(220, 38, 38, 0.35) !important;
+}
+.nav-segment-container .tab-tunggakan.active .badge {
+    background: #ffffff !important;
+    color: #dc2626 !important;
+}
+
+.nav-segment-container .tab-lunas.active {
+    background: var(--kk-green-600) !important;
+    color: #ffffff !important;
+    box-shadow: 0 2px 8px rgba(5, 150, 105, 0.35) !important;
+}
+.nav-segment-container .tab-lunas.active .badge {
+    background: #ffffff !important;
+    color: var(--kk-green-700) !important;
+}
+
+.nav-segment-container .tab-semua.active {
+    background: #1e293b !important;
+    color: #ffffff !important;
+    box-shadow: 0 2px 8px rgba(30, 41, 59, 0.35) !important;
+}
+
+/* ==============================================================
+   MOBILE-FIRST RESPONSIVENESS & OVERFLOW PREVENTION (< 768px)
+   ============================================================== */
+@media (max-width: 767.98px) {
+    /* 1. Nav Segment Container Responsive (Perbaikan Lingkaran Cacat) */
+    .nav-segment-container {
+        display: flex !important;
+        width: 100% !important;
+        border-radius: 14px !important;
+        padding: 6px !important;
+        margin-bottom: 1.25rem !important;
+    }
+    
+    .nav-segment-container .nav-pills {
+        display: flex !important;
+        flex-direction: column !important;
+        width: 100% !important;
+        gap: 6px !important;
+    }
+    
+    .nav-segment-container .nav-item {
+        width: 100% !important;
+    }
+    
+    .nav-segment-container .nav-link {
+        width: 100% !important;
+        border-radius: 10px !important;
+        padding: 10px 14px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: flex-start !important;
+        font-size: 0.88rem !important;
+    }
+    
+    .nav-segment-container .nav-link span:first-of-type {
+        flex: 1;
+        text-align: left;
+        margin-left: 8px;
+    }
+
+    .nav-segment-container .nav-link .badge {
+        margin-left: auto;
+    }
+
+    /* 2. Container, Page Wrapper, dan Card Mobile Padding */
+    .page-wrapper > .container-fluid {
+        padding: 12px 10px !important;
+    }
+
+    .card-body {
+        padding: 14px 12px !important;
+    }
+
+    .page-breadcrumb {
+        padding: 12px 12px 2px !important;
+    }
+
+    .page-breadcrumb .page-title {
+        font-size: 1.25rem !important;
+    }
+
+    /* 3. Header Navbar Mobile */
+    .topbar .top-navbar .navbar-header {
+        height: 56px !important;
+        padding: 0 10px !important;
+    }
+
+    .topbar .navbar-brand img {
+        height: 38px !important;
+        max-width: 130px;
+    }
+
+    /* 4. Tabel Mobile Scrolling & Compact Padding */
+    .table-responsive {
+        -webkit-overflow-scrolling: touch;
+        border-radius: 8px;
+        margin-bottom: 0.5rem;
+    }
+
+    .table-responsive table th,
+    .table-responsive table td {
+        padding: 8px 10px !important;
+        font-size: 0.82rem !important;
+    }
+
+    /* 5. Alert & Filter Button Wraps */
+    .alert {
+        padding: 10px 12px !important;
+        font-size: 0.85rem !important;
+    }
+
+    .filter-blok-btn {
+        font-size: 0.78rem !important;
+        padding: 6px 10px !important;
+        flex: 1 1 auto;
+    }
+}
+.nav-segment-container .tab-semua.active .badge {
+    background: #ffffff !important;
+    color: #0f172a !important;
 }
 
 /* ==============================================================
