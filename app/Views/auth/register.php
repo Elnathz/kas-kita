@@ -14,9 +14,9 @@
         <!-- Form Section -->
         <div class="col-lg-7 bg-white p-4 p-md-5">
             <div class="text-center mb-3">
-                <img src="<?= base_url('assets/images/logo-vertical.svg') ?>" alt="Logo Kas Kita" class="img-fluid mb-2" style="height: 105px; width: auto;">
+                <img src="<?= base_url('assets/images/logo-vertical.svg') ?>" alt="Logo Kas Kita" class="img-fluid mb-2" style="height: 95px; width: auto;">
                 <h4 class="fw-bold text-dark mb-1">Form Pendaftaran Warga</h4>
-                <p class="text-muted small mb-0">Lengkapi data akun Anda di bawah ini</p>
+                <p class="text-muted small mb-0">Pilih identitas rumah dan lengkapi akun Anda</p>
             </div>
 
             <!-- Flash Error Notification -->
@@ -32,18 +32,52 @@
 
                 <div class="row g-3">
                     <!-- Nama Kepala Keluarga -->
-                    <div class="col-sm-6">
+                    <div class="col-12">
                         <div class="form-group mb-0">
                             <label class="form-label text-dark fw-semibold small mb-1" for="nama">Nama Kepala Keluarga</label>
                             <input class="form-control" id="nama" name="nama" type="text" placeholder="Contoh: Ahmad Fauzi" maxlength="100" required autofocus>
                         </div>
                     </div>
 
-                    <!-- Nomor / Blok Rumah -->
-                    <div class="col-sm-6">
+                    <!-- Pilihan Blok Rumah -->
+                    <div class="col-sm-4">
                         <div class="form-group mb-0">
-                            <label class="form-label text-dark fw-semibold small mb-1" for="no_rumah">Nomor / Blok Rumah</label>
-                            <input class="form-control" id="no_rumah" name="no_rumah" type="text" placeholder="Contoh: Blok A / 05" maxlength="30" required>
+                            <label class="form-label text-dark fw-semibold small mb-1" for="blok_rumah">Blok Rumah</label>
+                            <select class="form-select" id="blok_rumah" name="blok_rumah" required>
+                                <option value="" disabled selected>Pilih Blok...</option>
+                                <option value="Blok A">Blok A</option>
+                                <option value="Blok B">Blok B</option>
+                                <option value="Blok C">Blok C</option>
+                                <option value="Blok D">Blok D</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Pilihan Nomor Rumah -->
+                    <div class="col-sm-4">
+                        <div class="form-group mb-0">
+                            <label class="form-label text-dark fw-semibold small mb-1" for="no_rumah">Nomor Rumah</label>
+                            <select class="form-select" id="no_rumah" name="no_rumah" required>
+                                <option value="" disabled selected>Pilih No...</option>
+                                <?php for ($i = 1; $i <= 30; $i++) : ?>
+                                    <?php $nomor = sprintf('%02d', $i); ?>
+                                    <option value="No. <?= $nomor ?>">No. <?= $nomor ?></option>
+                                <?php endfor; ?>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Pilihan Nama Jalan -->
+                    <div class="col-sm-4">
+                        <div class="form-group mb-0">
+                            <label class="form-label text-dark fw-semibold small mb-1" for="nama_jalan">Nama Jalan</label>
+                            <select class="form-select" id="nama_jalan" name="nama_jalan" required>
+                                <option value="" disabled selected>Pilih Jalan...</option>
+                                <option value="Jl. Mawar">Jl. Mawar</option>
+                                <option value="Jl. Melati">Jl. Melati</option>
+                                <option value="Jl. Anggrek">Jl. Anggrek</option>
+                                <option value="Jl. Kenanga">Jl. Kenanga</option>
+                            </select>
                         </div>
                     </div>
 
@@ -81,19 +115,11 @@
                             <input class="form-control" id="password_confirm" name="password_confirm" type="password" minlength="6" maxlength="50" placeholder="Ulangi password" required>
                         </div>
                     </div>
-
-                    <!-- Alamat Lengkap -->
-                    <div class="col-12">
-                        <div class="form-group mb-0">
-                            <label class="form-label text-dark fw-semibold small mb-1" for="alamat">Alamat Lengkap</label>
-                            <textarea class="form-control" id="alamat" name="alamat" rows="2" maxlength="255" placeholder="Jl. Mawar No. 12 RT 03 RW 05"></textarea>
-                        </div>
-                    </div>
                 </div>
 
                 <div class="alert alert-info border-0 p-2 mt-3 mb-3 small d-flex align-items-center">
                     <i data-feather="info" class="feather-icon text-info me-2 flex-shrink-0"></i>
-                    <span>Akun Anda akan diverifikasi oleh pengurus RT sebelum dapat digunakan untuk login.</span>
+                    <span>Wilayah: <strong>RT 04 / RW 12</strong>. Akun akan diverifikasi pengurus RT sebelum aktif.</span>
                 </div>
 
                 <div class="d-grid mb-3">

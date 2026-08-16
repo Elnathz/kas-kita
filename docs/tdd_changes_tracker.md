@@ -42,3 +42,9 @@ Log perubahan terhadap Technical Design Document (TDD).
 - **Alasan**: Memudahkan warga menentukan username/password sendiri sekaligus menjaga keamanan data kas RT dari pengguna luar
 - **Dampak**: Section 6.1 (Registrasi Warga Baru), Section 8.4 (Alur Registrasi & Persetujuan), Route `/register`, Controller Auth & Warga (Branch Main)
 
+### 16 Agustus 2026 - Standarisasi Dropdown Identitas Rumah & Wilayah RT
+- **Sebelum**: Input alamat dan nomor rumah berupa teks bebas manual yang rentan format tidak seragam
+- **Sesudah**: Input alamat distandarisasi menggunakan pilihan dropdown: Blok Rumah (Blok A-D), Nomor Rumah (No. 01-30), dan Nama Jalan Lingkungan. Pengurus dapat mengelola daftar pilihan ini di menu Pengaturan
+- **Alasan**: Menghindari kesalahan ketik, menjaga konsistensi format data warga 100% rapi, dan mempermudah pencarian/filter
+- **Dampak**: View `auth/register.php`, `warga/create.php`, `warga/edit.php`, `pengaturan/iuran.php`, Section 6.1 & 6.3 TDD
+

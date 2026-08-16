@@ -177,7 +177,13 @@ pengaturan_iuran (standalone config)
 
 - **URL**: `/register`
 - **Method**: GET (form pendaftaran), POST (proses registrasi)
-- **Input**: Nama lengkap, username, password, nomor rumah, nomor telepon/WA, alamat
+- **Input Terstandar**:
+  - Nama Lengkap Kepala Keluarga
+  - Blok Rumah *(Dropdown terstandar: Blok A, Blok B, dll)*
+  - Nomor Rumah *(Dropdown terstandar: No. 01 s/d No. 30)*
+  - Nama Jalan *(Dropdown terstandar: Jl. Mawar, Jl. Melati, dll)*
+  - Nomor Telepon / WA (numerik)
+  - Username (maks 20 karakter) & Password
 - **Status Akun Awal**: `is_active = 0` (Menunggu Persetujuan Pengurus)
 - **Alur Persetujuan**: Pengurus dapat melihat daftar pendaftar baru di dashboard / menu Warga, lalu memilih **Setujui** (`is_active = 1`) atau **Tolak**.
 - **Login Guard**: Jika warga login saat status masih `is_active = 0`, sistem menampilkan pesan: *"Akun Anda sedang menunggu persetujuan dari pengurus RT."*
