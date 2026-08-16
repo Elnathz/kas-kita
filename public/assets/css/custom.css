@@ -17,10 +17,14 @@
     --kk-gradient-hover: linear-gradient(135deg, #047857 0%, #059669 100%);
 }
 
-/* Sidebar Active & Hover Styling */
-.sidebar-nav ul .sidebar-item.selected > .sidebar-link,
-.sidebar-nav ul .sidebar-item.active > .sidebar-link {
-    background: linear-gradient(135deg, #059669 0%, #10b981 100%) !important;
+/* ==============================================================
+   SIDEBAR NAVIGATION STYLING (FIX OVERLAP & CLEAN SUBMENUS)
+   ============================================================== */
+
+/* Top-level Single Items without Submenu (Active State) */
+#sidebarnav > .sidebar-item:not(.has-arrow).selected > .sidebar-link,
+#sidebarnav > .sidebar-item:not(.has-arrow) > .sidebar-link.active {
+    background: var(--kk-gradient) !important;
     color: #ffffff !important;
     font-weight: 600 !important;
     box-shadow: 0 4px 12px rgba(5, 150, 105, 0.28) !important;
@@ -28,39 +32,100 @@
     opacity: 1 !important;
 }
 
-.sidebar-nav ul .sidebar-item.selected > .sidebar-link .hide-menu,
-.sidebar-nav ul .sidebar-item.active > .sidebar-link .hide-menu,
-.sidebar-nav ul .sidebar-item.selected > .sidebar-link span,
-.sidebar-nav ul .sidebar-item.active > .sidebar-link span {
+#sidebarnav > .sidebar-item:not(.has-arrow).selected > .sidebar-link span,
+#sidebarnav > .sidebar-item:not(.has-arrow) > .sidebar-link.active span {
     color: #ffffff !important;
-    opacity: 1 !important;
 }
 
-.sidebar-nav ul .sidebar-item.selected > .sidebar-link i,
-.sidebar-nav ul .sidebar-item.active > .sidebar-link i,
-.sidebar-nav ul .sidebar-item.selected > .sidebar-link svg,
-.sidebar-nav ul .sidebar-item.active > .sidebar-link svg {
+#sidebarnav > .sidebar-item:not(.has-arrow).selected > .sidebar-link i,
+#sidebarnav > .sidebar-item:not(.has-arrow) > .sidebar-link.active i,
+#sidebarnav > .sidebar-item:not(.has-arrow).selected > .sidebar-link svg,
+#sidebarnav > .sidebar-item:not(.has-arrow) > .sidebar-link.active svg {
     color: #ffffff !important;
     stroke: #ffffff !important;
-    opacity: 1 !important;
 }
 
-/* Sidebar Hover for non-active items */
-.sidebar-nav ul .sidebar-item:not(.selected) .sidebar-link:hover {
+/* Top-level Parent Items WITH Submenu (Expanded State) */
+#sidebarnav > .sidebar-item > .sidebar-link.has-arrow.active,
+#sidebarnav > .sidebar-item.selected > .sidebar-link.has-arrow {
+    background: transparent !important;
+    color: var(--kk-green-800) !important;
+    font-weight: 700 !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+}
+
+#sidebarnav > .sidebar-item > .sidebar-link.has-arrow.active span,
+#sidebarnav > .sidebar-item.selected > .sidebar-link.has-arrow span,
+#sidebarnav > .sidebar-item > .sidebar-link.has-arrow.active .hide-menu,
+#sidebarnav > .sidebar-item.selected > .sidebar-link.has-arrow .hide-menu {
+    color: var(--kk-green-800) !important;
+}
+
+#sidebarnav > .sidebar-item > .sidebar-link.has-arrow.active i,
+#sidebarnav > .sidebar-item.selected > .sidebar-link.has-arrow i,
+#sidebarnav > .sidebar-item > .sidebar-link.has-arrow.active svg,
+#sidebarnav > .sidebar-item.selected > .sidebar-link.has-arrow svg {
+    color: var(--kk-green-600) !important;
+    stroke: var(--kk-green-600) !important;
+}
+
+#sidebarnav > .sidebar-item > .sidebar-link.has-arrow::after {
+    border-color: var(--kk-green-600) !important;
+}
+
+/* Submenu Items inside Dropdown (.first-level) */
+ul.first-level {
+    padding-left: 0 !important;
+    background: transparent !important;
+}
+
+ul.first-level .sidebar-item .sidebar-link {
+    padding: 8px 15px 8px 48px !important;
+    border-radius: 8px !important;
+    margin: 2px 12px !important;
+    color: #4b5563 !important;
+    font-size: 0.9rem !important;
+    font-weight: 500 !important;
+    transition: all 0.15s ease-in-out;
+}
+
+/* Submenu Item ACTIVE State */
+ul.first-level .sidebar-item.active > .sidebar-link,
+ul.first-level .sidebar-item > .sidebar-link.active {
+    background: var(--kk-green-50) !important;
+    color: var(--kk-green-700) !important;
+    font-weight: 700 !important;
+    border-left: 3px solid var(--kk-green-600) !important;
+    box-shadow: none !important;
+}
+
+ul.first-level .sidebar-item.active > .sidebar-link span,
+ul.first-level .sidebar-item > .sidebar-link.active span {
+    color: var(--kk-green-700) !important;
+}
+
+/* Submenu Item HOVER State */
+ul.first-level .sidebar-item .sidebar-link:hover {
+    background: #f8fafc !important;
+    color: var(--kk-green-600) !important;
+}
+
+/* Top-level Item Hover */
+#sidebarnav > .sidebar-item:not(.selected) > .sidebar-link:hover {
     background: #f0fdf4 !important;
-    color: #059669 !important;
+    color: var(--kk-green-600) !important;
 }
 
-.sidebar-nav ul .sidebar-item:not(.selected) .sidebar-link:hover .hide-menu,
-.sidebar-nav ul .sidebar-item:not(.selected) .sidebar-link:hover span {
-    color: #059669 !important;
+#sidebarnav > .sidebar-item:not(.selected) > .sidebar-link:hover i,
+#sidebarnav > .sidebar-item:not(.selected) > .sidebar-link:hover svg {
+    color: var(--kk-green-600) !important;
+    stroke: var(--kk-green-600) !important;
 }
 
-.sidebar-nav ul .sidebar-item:not(.selected) .sidebar-link:hover i,
-.sidebar-nav ul .sidebar-item:not(.selected) .sidebar-link:hover svg {
-    color: #059669 !important;
-    stroke: #059669 !important;
-}
+/* ==============================================================
+   BUTTONS, BADGES, AND COMPONENTS
+   ============================================================== */
 
 /* Fresh Green Buttons */
 .btn-success {
