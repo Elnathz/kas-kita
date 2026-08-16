@@ -34,12 +34,12 @@
                 </div>
             <?php endif; ?>
 
-            <form class="mt-3" action="<?= base_url('login') ?>" method="post">
+            <form class="mt-3" action="<?= base_url('login') ?>" method="post" id="formLogin">
                 <?= csrf_field() ?>
                 <div class="form-group mb-3">
                     <label class="form-label text-dark fw-semibold small" for="username">Username</label>
                     <input class="form-control" id="username" name="username" type="text"
-                        placeholder="Contoh: admin" required autofocus>
+                        placeholder="Contoh: admin / farros" required autofocus>
                 </div>
                 <div class="form-group mb-4">
                     <label class="form-label text-dark fw-semibold small" for="password">Password</label>
@@ -54,12 +54,28 @@
                     Belum punya akun warga? <a href="<?= base_url('register') ?>" class="text-success fw-bold text-decoration-none">Daftar di sini</a>
                 </div>
 
-                <div class="p-3 bg-light rounded text-center small text-muted">
-                    <strong>Demo Login (UTS):</strong><br>
-                    Username: <code>admin</code> | Password: <code>admin123</code>
+                <!-- Helper Demo UTS (2 Role) -->
+                <div class="p-3 bg-light rounded text-center small border">
+                    <span class="text-dark fw-semibold d-block mb-2 font-12">Pilih Cepat Akun Demo (UTS):</span>
+                    <div class="d-flex justify-content-center gap-2">
+                        <button type="button" class="btn btn-xs btn-outline-success font-12 py-1 px-2" onclick="setLogin('admin', 'admin123')">
+                            Pengurus (admin)
+                        </button>
+                        <button type="button" class="btn btn-xs btn-outline-primary font-12 py-1 px-2" onclick="setLogin('farros', 'warga123')">
+                            Warga (Farros)
+                        </button>
+                    </div>
                 </div>
             </form>
         </div>
     </div>
 </div>
+
+<script>
+function setLogin(u, p) {
+    document.getElementById('username').value = u;
+    document.getElementById('password').value = p;
+    document.getElementById('formLogin').submit();
+}
+</script>
 <?= $this->endSection() ?>

@@ -14,6 +14,7 @@ $routes->get('/logout', 'AuthController::logout');
 // Dashboard routes
 $routes->get('/', 'DashboardController::index');
 $routes->get('/dashboard', 'DashboardController::index');
+$routes->get('/dashboard-warga', 'DashboardController::warga');
 
 // Warga routes
 $routes->get('/warga', 'WargaController::index');
