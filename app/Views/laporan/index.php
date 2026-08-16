@@ -18,31 +18,34 @@
     <div class="col-12 d-print-none">
         <div class="card border-0 shadow-sm">
             <div class="card-body p-4">
-                <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3">
+                <div class="d-flex flex-column flex-lg-row align-items-lg-center justify-content-between gap-3">
                     <div>
                         <h4 class="card-title fw-bold mb-1">Laporan Rekapitulasi Kas RT</h4>
-                        <p class="text-muted small mb-0">Transparansi keuangan kas RT: alokasi pengeluaran, dokumentasi kegiatan, dan partisipasi iuran warga.</p>
+                        <p class="text-muted small mb-0">Transparansi alokasi pengeluaran, dokumentasi kegiatan, dan partisipasi iuran warga RT 04.</p>
                     </div>
 
-                    <form class="d-flex flex-wrap align-items-center gap-2" method="get" action="<?= base_url('laporan') ?>">
-                        <div class="d-flex align-items-center gap-2">
-                            <select class="form-select form-select-sm" name="bulan" style="width: auto;">
+                    <div class="d-flex flex-wrap align-items-center gap-2">
+                        <form class="d-flex align-items-center gap-2 m-0" method="get" action="<?= base_url('laporan') ?>">
+                            <select class="form-select form-select-sm" name="bulan" style="width: 110px;">
                                 <option value="8" selected>Agustus</option>
                                 <option value="7">Juli</option>
                                 <option value="6">Juni</option>
                                 <option value="5">Mei</option>
                             </select>
-                            <select class="form-select form-select-sm" name="tahun" style="width: auto;">
+                            <select class="form-select form-select-sm" name="tahun" style="width: 85px;">
                                 <option value="2026" selected>2026</option>
                                 <option value="2025">2025</option>
                             </select>
                             <button type="submit" class="btn btn-sm btn-success fw-semibold px-3">Filter</button>
-                        </div>
-                        <button type="button" class="btn btn-sm btn-outline-secondary d-flex align-items-center gap-1 ms-auto ms-md-2" onclick="window.print()">
+                        </form>
+
+                        <div class="vr mx-1 d-none d-sm-block"></div>
+
+                        <button type="button" class="btn btn-sm btn-outline-secondary d-flex align-items-center gap-1" onclick="window.print()">
                             <i data-feather="printer" class="feather-icon" style="width: 14px; height: 14px;"></i>
-                            <span>Cetak Laporan Resmi (PDF)</span>
+                            <span>Cetak PDF</span>
                         </button>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>
