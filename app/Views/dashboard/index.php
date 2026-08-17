@@ -67,6 +67,71 @@
 </div>
 
 <!-- ============================================================== -->
+<!-- Notifikasi Menunggu Persetujuan (Pendaftar Baru & Pengajuan) -->
+<!-- ============================================================== -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card border-0 shadow-sm overflow-hidden border-start border-warning border-4">
+            <div class="card-header bg-white border-bottom py-3 d-flex align-items-center justify-content-between">
+                <div class="d-flex align-items-center">
+                    <i data-feather="bell" class="text-warning me-2" style="width: 18px; height: 18px;"></i>
+                    <h5 class="card-title mb-0 fw-bold">Menunggu Persetujuan & Validasi</h5>
+                </div>
+                <span class="badge bg-warning text-dark">2 Menunggu</span>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th class="text-nowrap ps-4">Tipe Pengajuan</th>
+                                <th class="text-nowrap">Pemohon (Nama Kepala Keluarga)</th>
+                                <th class="text-nowrap">Detail Pengajuan</th>
+                                <th class="text-nowrap">Tanggal</th>
+                                <th class="text-nowrap text-center pe-4">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Contoh 1: Pendaftar Baru -->
+                            <tr>
+                                <td class="ps-4">
+                                    <span class="badge bg-primary-subtle text-primary border border-primary-subtle px-2 py-1 font-12 fw-semibold">
+                                        <i data-feather="user-plus" class="me-1" style="width: 12px; height: 12px;"></i> Pendaftar Baru
+                                    </span>
+                                </td>
+                                <td class="fw-semibold text-nowrap text-dark">Joko Widodo</td>
+                                <td>Pendaftaran akun baru di <span class="fw-bold text-dark">Blok D / No. 11</span></td>
+                                <td class="text-muted font-13 text-nowrap">17 Agu 2026</td>
+                                <td class="text-center pe-4 text-nowrap">
+                                    <button class="btn btn-sm btn-success fw-semibold me-1">Setujui</button>
+                                    <button class="btn btn-sm btn-outline-danger fw-semibold">Tolak</button>
+                                </td>
+                            </tr>
+                            
+                            <!-- Contoh 2: Pengajuan Pindah Rumah -->
+                            <tr>
+                                <td class="ps-4">
+                                    <span class="badge bg-info-subtle text-info border border-info-subtle px-2 py-1 font-12 fw-semibold">
+                                        <i data-feather="home" class="me-1" style="width: 12px; height: 12px;"></i> Pindah Rumah
+                                    </span>
+                                </td>
+                                <td class="fw-semibold text-nowrap text-dark">Farros Rifantiarno</td>
+                                <td>Mengajukan pindah dari <span class="text-muted text-decoration-line-through">Blok A / No. 01</span> ke <span class="fw-bold text-dark">Blok B / No. 05</span></td>
+                                <td class="text-muted font-13 text-nowrap">16 Agu 2026</td>
+                                <td class="text-center pe-4 text-nowrap">
+                                    <button class="btn btn-sm btn-success fw-semibold me-1">Setujui</button>
+                                    <button class="btn btn-sm btn-outline-danger fw-semibold">Tolak</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================================== -->
 <!-- Tabel Monitoring Macet & Verifikasi Pembayaran (Maks 5 Data) -->
 <!-- ============================================================== -->
 <div class="row g-4">
