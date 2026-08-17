@@ -72,7 +72,7 @@ Request -> Routes -> Filter (main only) -> Controller -> Model -> Database
 | Lihat riwayat bayar sendiri  | Tidak    | Ya    |
 | Catat pengeluaran            | Ya       | Tidak |
 | Kelola kategori pengeluaran  | Ya       | Tidak |
-| Lihat laporan bulanan        | Ya       | Tidak |
+| Lihat laporan bulanan        | Ya       | Ya (Statistik) |
 | Atur nominal iuran           | Ya       | Tidak |
 
 ---
@@ -207,6 +207,7 @@ pengaturan_iuran (standalone config)
   - Jumlah warga yang belum bayar bulan ini
   - Grafik pemasukan vs pengeluaran 6 bulan terakhir (branch main)
   - Daftar warga yang belum bayar bulan ini (branch main)
+  - Notifikasi/tabel Pendaftar Baru & Pengajuan Pindah Rumah yang Menunggu Persetujuan
 
 #### Dashboard Warga
 
@@ -334,9 +335,9 @@ pengaturan_iuran (standalone config)
 - **Input**: Nominal baru, tanggal berlaku
 - **Catatan**: Nominal lama tetap tersimpan untuk histori
 
-### 6.8 Laporan (Pengurus Only)
+### 6.8 Laporan
 
-#### Laporan Bulanan
+#### Laporan Bulanan (Pengurus)
 
 - **URL**: `/laporan`
 - **Method**: GET
@@ -348,6 +349,25 @@ pengaturan_iuran (standalone config)
   - Daftar warga yang sudah bayar
   - Daftar warga yang belum bayar
   - Daftar warga pembayaran macet (belum bayar > 2 bulan berturut)
+
+#### Laporan Bulanan (Warga)
+
+- **URL**: `/laporan-warga`
+- **Method**: GET
+- **Filter**: Bulan, tahun
+- **Menampilkan**:
+  - Tampilan yang sama dengan Pengurus, namun tanpa tab "Data Lengkap Warga (Internal)".
+  - Warga hanya dapat melihat rekap saldo, pengeluaran, bukti nota, dan tab "Statistik per Blok (Publik)".
+  - Daftar warga pembayaran macet (belum bayar > 2 bulan berturut)
+
+### 6.9 Profil Warga
+
+- **URL**: `/profil`
+- **Method**: GET (view), POST (proses ubah data)
+- **Aturan Perubahan Data**:
+  - Warga dapat langsung mengubah: Nama Lengkap, Username, Password, dan Nomor Telepon/WA (Perubahan langsung tersimpan).
+  - Warga tidak dapat langsung mengubah: Blok, Nomor Rumah, dan Nama Jalan. Jika diubah, akan berstatus "Pengajuan Perubahan" yang memerlukan Persetujuan Pengurus (muncul di Dashboard Pengurus).
+  - **Tampilan**: Form modern terpisah (Informasi Pribadi, Identitas Rumah, Keamanan Akun).
 
 ---
 

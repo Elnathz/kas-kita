@@ -10,4 +10,9 @@ class LaporanController extends BaseController
     {
         return view('laporan/index');
     }
+
+    public function warga()
+    {
+        return view('laporan/index');
+    }
 }

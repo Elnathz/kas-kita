@@ -2,7 +2,7 @@
 $uri = service('uri');
 $seg1 = $uri->getTotalSegments() >= 1 ? $uri->getSegment(1) : '';
 $seg2 = $uri->getTotalSegments() >= 2 ? $uri->getSegment(2) : '';
-$isWargaMode = ($seg1 === 'dashboard-warga' || ($seg1 === 'iuran' && in_array($seg2, ['tagihan', 'bayar', 'riwayat'])));
+$isWargaMode = ($seg1 === 'dashboard-warga' || $seg1 === 'laporan-warga' || $seg1 === 'profil' || ($seg1 === 'iuran' && in_array($seg2, ['tagihan', 'bayar', 'riwayat'])));
 ?>
 <!-- ============================================================== -->
 <!-- Left Sidebar - style you can find in sidebar.scss  -->
@@ -62,8 +62,8 @@ $isWargaMode = ($seg1 === 'dashboard-warga' || ($seg1 === 'iuran' && in_array($s
                 <li class="nav-small-cap"><span class="hide-menu">Transparansi</span></li>
 
                 <!-- Laporan Kas Terbuka -->
-                <li class="sidebar-item <?= ($seg1 === 'laporan') ? 'selected' : '' ?>">
-                    <a class="sidebar-link <?= ($seg1 === 'laporan') ? 'active' : '' ?>" href="<?= base_url('laporan') ?>" aria-expanded="false">
+                <li class="sidebar-item <?= ($seg1 === 'laporan-warga') ? 'selected' : '' ?>">
+                    <a class="sidebar-link <?= ($seg1 === 'laporan-warga') ? 'active' : '' ?>" href="<?= base_url('laporan-warga') ?>" aria-expanded="false">
                         <i data-feather="bar-chart-2" class="feather-icon"></i>
                         <span class="hide-menu">Laporan Kas RT</span>
                     </a>

@@ -48,3 +48,14 @@ Log perubahan terhadap Technical Design Document (TDD).
 - **Alasan**: Menghindari kesalahan ketik, menjaga konsistensi format data warga 100% rapi, dan mempermudah pencarian/filter
 - **Dampak**: View `auth/register.php`, `warga/create.php`, `warga/edit.php`, `pengaturan/iuran.php`, Section 6.1 & 6.3 TDD
 
+### 17 Agustus 2026 - Izin Akses Laporan Kas Bulanan untuk Warga (Transparansi Terbatas)
+- **Sebelum**: Warga sama sekali tidak diizinkan mengakses laporan kas bulanan (hanya Pengurus). Menu Laporan di sidebar juga membuat status mode berubah kembali menjadi Pengurus.
+- **Sesudah**: Warga diberikan hak akses untuk melihat Laporan Kas Bulanan dengan URL baru `/laporan-warga`. Tampilan untuk warga dibatasi; mereka hanya bisa melihat statistik ringkasan dan statistik partisipasi per blok (Tab Publik), tanpa bisa melihat Tab Internal yang berisi data detail keterlambatan per individu.
+- **Alasan**: Menjalankan core value aplikasi yaitu "Manajemen Kas RT yang Transparan" sehingga warga berhak mengetahui alokasi dana dan saldo RT, dengan tetap menjaga etika dan privasi data personal (tunggakan warga lain).
+- **Dampak**: Section 4.2 (Matriks Hak Akses), Section 6.8 (Laporan), Route `/laporan-warga`, `LaporanController`, `sidebar.php`, `header.php`, `dashboard/warga.php`, dan `laporan/index.php`.
+
+### 17 Agustus 2026 - Mekanisme Profil Warga & Dashboard Approval
+- **Sebelum**: Warga tidak bisa mengubah informasi apa pun, dan Pengurus tidak memiliki panel notifikasi pendaftar baru yang terpusat di Dashboard.
+- **Sesudah**: Dibuat rute /profil untuk warga. Perubahan data kontak (No WA), nama, dan password tersimpan langsung. Perubahan fisik rumah (Blok & Nomor) masuk ke status "Pengajuan". Di Dashboard Pengurus ditambahkan tabel _Menunggu Persetujuan_ untuk menyetujui akun baru dan pengajuan pindah rumah.
+- **Alasan**: Menjaga integritas data finansial rumah namun tetap memberikan kebebasan pada warga, serta mempercepat *awareness* pengurus.
+- **Dampak**: Section 6.2 (Dashboard Pengurus), Section 6.9 (Profil Warga baru), View dashboard/index.php, View profil/index.php.

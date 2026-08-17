@@ -184,8 +184,11 @@ body.is-resizing-sidebar .page-wrapper {
     #main-wrapper.mini-sidebar .sidebar-link svg {
         margin: 0 !important;
     }
-    #main-wrapper.mini-sidebar #toggleSidebarDesktop {
+    #main-wrapper.mini-sidebar .navbar-brand {
         display: none !important;
+    }
+    #main-wrapper.mini-sidebar #toggleSidebarDesktop {
+        display: inline-flex !important;
     }
 }
 

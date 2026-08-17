@@ -24,6 +24,11 @@ $routes->get('/warga/edit/(:num)', 'WargaController::edit/$1');
 $routes->post('/warga/update/(:num)', 'WargaController::update/$1');
 $routes->post('/warga/delete/(:num)', 'WargaController::delete/$1');
 
+// Profil Warga routes
+$routes->get('/profil', 'ProfilController::index');
+$routes->post('/profil/update', 'ProfilController::update');
+$routes->post('/profil/password', 'ProfilController::updatePassword');
+
 // Iuran routes
 $routes->get('/iuran', 'IuranController::index');
 $routes->get('/iuran/tagihan', 'IuranController::tagihan');
@@ -56,3 +61,4 @@ $routes->post('/pengaturan/iuran/update', 'PengaturanController::updateIuran');
 
 // Laporan routes
 $routes->get('/laporan', 'LaporanController::index');
+$routes->get('/laporan-warga', 'LaporanController::warga');
