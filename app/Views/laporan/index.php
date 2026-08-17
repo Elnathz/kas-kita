@@ -25,7 +25,7 @@
                     </div>
 
                     <div class="d-flex flex-wrap align-items-center gap-2">
-                        <form class="d-flex align-items-center gap-2 m-0" method="get" action="<?= base_url('laporan') ?>">
+                        <form class="d-flex align-items-center gap-2 m-0" method="get" action="<?= base_url(service('uri')->getSegment(1) === 'laporan-warga' ? 'laporan-warga' : 'laporan') ?>">
                             <select class="form-select form-select-sm" name="bulan" style="width: 110px;">
                                 <option value="8" selected>Agustus</option>
                                 <option value="7">Juli</option>
@@ -227,15 +227,17 @@
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link active fw-bold btn-sm py-2 px-3 rounded-pill d-flex align-items-center gap-1" id="publik-tab" data-bs-toggle="tab" data-bs-target="#publik" type="button" role="tab">
                                     <i data-feather="bar-chart-2" class="feather-icon" style="width: 14px; height: 14px;"></i>
-                                    <span>Statistik per Blok (Publik)</span>
+                                    <span>Statistik per Blok</span>
                                 </button>
                             </li>
+                            <?php if (service('uri')->getSegment(1) !== 'laporan-warga') : ?>
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link fw-semibold btn-sm py-2 px-3 rounded-pill d-flex align-items-center gap-1" id="internal-tab" data-bs-toggle="tab" data-bs-target="#internal" type="button" role="tab">
                                     <i data-feather="lock" class="feather-icon" style="width: 14px; height: 14px;"></i>
-                                    <span>Data Lengkap Warga (Internal)</span>
+                                    <span>Data Lengkap Warga</span>
                                 </button>
                             </li>
+                            <?php endif; ?>
                         </ul>
                     </div>
                 </div>
