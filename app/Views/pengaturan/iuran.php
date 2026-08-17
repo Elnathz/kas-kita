@@ -22,7 +22,7 @@
                         </div>
                         <div class="col-sm-4 border-end-sm">
                             <span class="text-dark fw-bold small d-block mb-1">Tanggal Jatuh Tempo</span>
-                            <h4 class="fw-bold text-dark mb-0">Tanggal 20 <span class="fs-6 text-dark fw-medium">/ bulan</span></h4>
+                            <h4 class="fw-bold text-warning mb-0">Tanggal 20 <span class="fs-6 text-dark fw-medium">/ bulan</span></h4>
                         </div>
                         <div class="col-sm-4">
                             <span class="text-dark fw-bold small d-block mb-1">Kategori Macet</span>
@@ -119,9 +119,6 @@
                             </tr>
                         </tbody>
                     </table>
-                </div>
-                <div class="pt-2 mt-2 border-top">
-                    <small class="text-muted font-11">Nama pengurus dicatat otomatis dari relasi Foreign Key <code>users.id</code> (Role: <code>pengurus</code>) saat menyimpan data.</small>
                 </div>
             </div>
         </div>

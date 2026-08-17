@@ -24,7 +24,7 @@
                             <tr>
                                 <td class="fw-semibold">Juli 2026</td>
                                 <td>Rp 50.000</td>
-                                <td><span class="badge bg-danger">Tunggakan (1 Bulan)</span></td>
+                                <td><span class="badge bg-danger">Tunggakan</span></td>
                                 <td class="text-end fw-bold text-dark">Rp 50.000</td>
                             </tr>
                             <tr>

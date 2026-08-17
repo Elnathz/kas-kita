@@ -5,20 +5,48 @@
 <!-- ============================================================== -->
 <div class="row mb-4">
     <div class="col-12">
-        <div class="card border-0 shadow-sm overflow-hidden" style="background: linear-gradient(135deg, #059669 0%, #10b981 100%);">
-            <div class="card-body p-4 text-white">
-                <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3">
-                    <div>
-                        <span class="badge bg-white text-success fw-bold px-3 py-1 mb-2">Akun Warga RT 04</span>
-                        <h3 class="fw-bold text-white mb-1">Selamat Datang, Farros Rifantiarno</h3>
-                        <p class="text-white-50 mb-0">Alamat: <strong>Blok A / No. 01, Jl. Mawar</strong> • No. Telepon: <strong>081234567890</strong></p>
+        <div class="card border-0 shadow-sm overflow-hidden position-relative" style="background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);">
+            <!-- Efek Cahaya / Glow -->
+            <div class="position-absolute" style="top: -50px; right: -50px; width: 300px; height: 300px; background: radial-gradient(circle, rgba(16,185,129,0.15) 0%, rgba(16,185,129,0) 70%); border-radius: 50%;"></div>
+            <div class="position-absolute" style="bottom: -50px; left: -50px; width: 250px; height: 250px; background: radial-gradient(circle, rgba(16,185,129,0.1) 0%, rgba(16,185,129,0) 70%); border-radius: 50%;"></div>
+            
+            <div class="card-body p-4 p-lg-5 position-relative z-1 text-white">
+                <div class="row align-items-center justify-content-between g-4">
+                    <!-- Sisi Kiri: Profil Singkat -->
+                    <div class="col-xl-7">
+                        <div class="d-inline-flex align-items-center bg-white bg-opacity-10 rounded-pill px-3 py-1 mb-3 border border-white border-opacity-25" style="backdrop-filter: blur(4px);">
+                            <div class="bg-success rounded-circle me-2" style="width: 8px; height: 8px; box-shadow: 0 0 8px #10b981;"></div>
+                            <span class="text-white font-11 fw-bold text-uppercase letter-spacing-1">Akun Warga RT 04</span>
+                        </div>
+                        <h2 class="fw-bold text-white mb-3">Selamat Datang, <span class="text-success">Farros Rifantiarno</span></h2>
+                        
+                        <div class="d-flex flex-wrap gap-4 text-white-50 font-14">
+                            <div class="d-flex align-items-center bg-black bg-opacity-25 rounded px-3 py-2 border border-white border-opacity-10">
+                                <i data-feather="map-pin" class="text-white-50 me-2" style="width: 16px; height: 16px;"></i>
+                                <span class="text-white fw-medium">Blok A / No. 01, Jl. Mawar</span>
+                            </div>
+                            <div class="d-flex align-items-center bg-black bg-opacity-25 rounded px-3 py-2 border border-white border-opacity-10">
+                                <i data-feather="phone" class="text-white-50 me-2" style="width: 16px; height: 16px;"></i>
+                                <span class="text-white fw-medium">081234567890</span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="d-flex flex-column align-items-md-end">
-                        <span class="text-white-50 small mb-1">Tagihan Bulan Berjalan:</span>
-                        <div class="d-flex align-items-center gap-3">
-                            <span class="fs-4 fw-bold text-white">Rp 50.000 <small class="fs-6 fw-normal text-white-50">(Agustus 2026)</small></span>
-                            <a href="<?= base_url('iuran/bayar') ?>" class="btn btn-light text-success fw-bold px-4 shadow-sm">
-                                <i data-feather="credit-card" class="feather-icon me-1"></i> Bayar Iuran
+                    
+                    <!-- Sisi Kanan: Tagihan Berjalan -->
+                    <div class="col-xl-4">
+                        <div class="bg-white bg-opacity-10 rounded-4 p-4 border border-white border-opacity-25 shadow" style="backdrop-filter: blur(8px);">
+                            <div class="d-flex align-items-start justify-content-between mb-3">
+                                <div>
+                                    <span class="text-white-50 small d-block mb-1">Tagihan Bulan Berjalan</span>
+                                    <h3 class="fw-bold text-white mb-0">Rp 50.000</h3>
+                                    <small class="text-success fw-semibold">Agustus 2026</small>
+                                </div>
+                                <div class="bg-success bg-opacity-25 border border-success border-opacity-25 text-success rounded-3 p-2">
+                                    <i data-feather="file-text" style="width: 24px; height: 24px;"></i>
+                                </div>
+                            </div>
+                            <a href="<?= base_url('iuran/bayar') ?>" class="btn btn-success w-100 fw-bold shadow-sm d-flex align-items-center justify-content-center py-2 transition-all">
+                                <i data-feather="credit-card" class="me-2" style="width: 16px; height: 16px;"></i> Bayar Iuran Sekarang
                             </a>
                         </div>
                     </div>
@@ -174,7 +202,7 @@
                         <h4 class="card-title mb-1 fw-bold">Transparansi Kas RT</h4>
                         <p class="text-muted small mb-0">Penggunaan dana kas RT terkini untuk lingkungan.</p>
                     </div>
-                    <a href="<?= base_url('laporan') ?>" class="btn btn-sm btn-outline-primary fw-semibold">Laporan</a>
+                    <a href="<?= base_url('laporan-warga') ?>" class="btn btn-sm btn-outline-primary fw-semibold">Laporan</a>
                 </div>
 
                 <div class="list-group list-group-flush flex-grow-1">
