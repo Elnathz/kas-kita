@@ -57,32 +57,31 @@
                         <!-- Telah Diterima Dari -->
                         <div class="col-sm-4 text-muted font-13">Telah Diterima Dari</div>
                         <div class="col-sm-8">
-                            <span class="fw-bold text-dark font-15 d-block">Rina Marlina</span>
-                            <span class="text-dark font-13">Blok B / No. 06 (Jl. Melati) • WA: 081234567893</span>
+                            <span class="fw-bold text-dark font-15 d-block"><?= esc($pembayaran['nama'] ?? 'N/A') ?></span>
+                            <span class="text-dark font-13"><?= esc($pembayaran['blok_rumah'] ?? '') ?> / No. <?= esc($pembayaran['no_rumah'] ?? '') ?> (<?= esc($pembayaran['nama_jalan'] ?? '') ?>)</span>
                         </div>
 
                         <!-- Untuk Pembayaran -->
                         <div class="col-sm-4 text-muted font-13">Untuk Pembayaran</div>
                         <div class="col-sm-8">
-                            <span class="text-dark fw-semibold font-14 d-block">Iuran Pengelolaan Kas RT 04 (2 Bulan)</span>
-                            <span class="text-muted font-12">Periode: Juli 2026 &amp; Agustus 2026</span>
+                            <span class="text-dark fw-semibold font-14 d-block">Iuran Pengelolaan Kas RT 04</span>
+                            <span class="text-muted font-12">Periode: <?= date('F Y', mktime(0, 0, 0, $pembayaran['periode_bulan'] ?? 1, 1, $pembayaran['periode_tahun'] ?? 2026)) ?></span>
                         </div>
 
                         <!-- Jumlah Uang -->
                         <div class="col-sm-4 text-muted font-13">Jumlah Pembayaran</div>
                         <div class="col-sm-8">
                             <div class="p-3 bg-light rounded-3 border">
-                                <span class="fw-bold text-success fs-4 d-block">Rp 100.000</span>
-                                <small class="text-muted fst-italic">Terbilang: # Seratus Ribu Rupiah #</small>
+                                <span class="fw-bold text-success fs-4 d-block">Rp <?= number_format($pembayaran['nominal'] ?? 0, 0, ',', '.') ?></span>
                             </div>
                         </div>
 
                         <!-- Metode & Waktu Verifikasi -->
                         <div class="col-sm-4 text-muted font-13">Metode &amp; Validasi</div>
                         <div class="col-sm-8 font-13 text-dark">
-                            <div>Metode: <strong>Transfer Bank BCA</strong></div>
-                            <div>Divalidasi Oleh: <strong>Pengurus RT (Agus Hariyanto)</strong></div>
-                            <div>Waktu Validasi: <span class="text-muted">10 Agustus 2026, Pukul 11:20 WIB</span></div>
+                            <div>Metode: <strong>Transfer</strong></div>
+                            <div>Divalidasi Oleh: <strong>Pengurus RT</strong></div>
+                            <div>Waktu Validasi: <span class="text-muted"><?= date('d F Y, H:i', strtotime($pembayaran['verified_at'] ?? 'now')) ?> WIB</span></div>
                         </div>
 
                     </div>
@@ -96,7 +95,7 @@
                             Kuitansi ini merupakan bukti pembayaran sah yang diterbitkan secara elektronik oleh Sistem Kas-Kita RT 04.
                         </div>
                         <div style="width: 220px;">
-                            <span class="font-12 text-muted d-block mb-1">Bandung, 10 Agustus 2026<br><strong>Bendahara RT 04</strong></span>
+                            <span class="font-12 text-muted d-block mb-1">Bandung, <?= date('d F Y', strtotime($pembayaran['verified_at'] ?? 'now')) ?><br><strong>Bendahara RT 04</strong></span>
                             
                             <!-- Digital Signature & RT Stamp Overlay -->
                             <div class="position-relative d-inline-block my-1" style="height: 65px; width: 170px;">
@@ -114,8 +113,8 @@
                                 </svg>
                             </div>
 
-                            <span class="fw-bold text-dark font-13 text-decoration-underline d-block">( Farros Rifantiarno )</span>
-                            <small class="text-muted font-11">NIP. RT-04-12-002</small>
+                            <span class="fw-bold text-dark font-13 text-decoration-underline d-block">( Bendahara )</span>
+                            <small class="text-muted font-11">Sistem Kas-Kita</small>
                         </div>
                     </div>
                 </div>

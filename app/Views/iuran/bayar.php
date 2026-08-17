@@ -43,34 +43,38 @@
                             </div>
 
                             <div class="p-3">
-                                <!-- Item Bulan 1 (Tunggakan Tertua) -->
-                                <div class="d-flex align-items-center justify-content-between mb-3 pb-3 border-bottom">
-                                    <div class="form-check mb-0">
-                                        <input class="form-check-input period-check" type="checkbox" name="periode[]" value="2026-07" id="p_jul" data-nominal="50000" checked onchange="handleCheck(0)">
-                                        <label class="form-check-label ms-2 cursor-pointer" for="p_jul">
-                                            <span class="d-block fw-semibold text-dark">Iuran Juli 2026</span>
-                                            <span class="badge bg-danger-subtle text-danger border border-danger-subtle font-11 mt-1">Tunggakan</span>
-                                        </label>
+                                <?php if (empty($tagihan_list)): ?>
+                                    <div class="text-center py-3">
+                                        <p class="mb-0 text-success fw-bold">Semua tagihan iuran Anda sudah lunas.</p>
                                     </div>
-                                    <span class="fw-bold text-dark">Rp 50.000</span>
-                                </div>
-
-                                <!-- Item Bulan 2 (Bulan Berjalan) -->
-                                <div class="d-flex align-items-center justify-content-between mb-2">
-                                    <div class="form-check mb-0">
-                                        <input class="form-check-input period-check" type="checkbox" name="periode[]" value="2026-08" id="p_agu" data-nominal="50000" checked onchange="handleCheck(1)">
-                                        <label class="form-check-label ms-2 cursor-pointer" for="p_agu">
-                                            <span class="d-block fw-semibold text-dark">Iuran Agustus 2026</span>
-                                            <span class="badge bg-warning-subtle text-warning-emphasis border border-warning-subtle font-11 mt-1">Bulan Berjalan</span>
-                                        </label>
+                                <?php else: ?>
+                                    <?php $i = 0; foreach ($tagihan_list as $t): ?>
+                                    <!-- Item Bulan <?= $i + 1 ?> -->
+                                    <div class="d-flex align-items-center justify-content-between mb-3 pb-3 border-bottom">
+                                        <div class="form-check mb-0">
+                                            <input class="form-check-input period-check" type="checkbox" name="periode[]" value="<?= $t['tahun'] . '-' . sprintf('%02d', $t['bulan']) ?>" id="p_<?= $t['bulan'] ?>" data-nominal="<?= $t['tarif'] ?>" checked onchange="handleCheck(<?= $i ?>)">
+                                            <!-- Kita sisipkan input tersembunyi agar form bayar mengambil periode dari yang dicheck (but the controller currently gets periode_bulan/tahun directly from post. We will modify the form to send an array and process it, but for now we just keep the checkbox logic and let JS calculate total) -->
+                                            <input type="hidden" name="periode_bulan" value="<?= $t['bulan'] ?>">
+                                            <input type="hidden" name="periode_tahun" value="<?= $t['tahun'] ?>">
+                                            <label class="form-check-label ms-2 cursor-pointer" for="p_<?= $t['bulan'] ?>">
+                                                <span class="d-block fw-semibold text-dark">Iuran <?= date('F Y', mktime(0, 0, 0, $t['bulan'], 1, $t['tahun'])) ?></span>
+                                                <?php if ($t['status'] == 'Tunggakan'): ?>
+                                                    <span class="badge bg-danger-subtle text-danger border border-danger-subtle font-11 mt-1">Tunggakan</span>
+                                                <?php else: ?>
+                                                    <span class="badge bg-warning-subtle text-warning-emphasis border border-warning-subtle font-11 mt-1">Bulan Berjalan</span>
+                                                <?php endif; ?>
+                                            </label>
+                                        </div>
+                                        <span class="fw-bold text-dark">Rp <?= number_format($t['tarif'], 0, ',', '.') ?></span>
                                     </div>
-                                    <span class="fw-bold text-dark">Rp 50.000</span>
-                                </div>
+                                    <?php $i++; endforeach; ?>
+                                <?php endif; ?>
                             </div>
 
                             <div class="bg-success-subtle bg-opacity-50 p-3 border-top d-flex justify-content-between align-items-center">
                                 <span class="fw-bold text-dark">Total Tagihan:</span>
-                                <span class="fw-bold text-success fs-4" id="displayTotal">Rp 100.000</span>
+                                <span class="fw-bold text-success fs-4" id="displayTotal">Rp 0</span>
+                                <input type="hidden" name="nominal" id="inputNominal" value="0">
                             </div>
                         </div>
                     </div>
@@ -90,7 +94,7 @@
                                         <i data-feather="copy" class="text-muted cursor-pointer" style="width: 16px; height: 16px;" title="Salin Rekening"></i>
                                     </div>
                                     <h4 class="fw-bold text-dark mb-1 font-monospace" style="letter-spacing: 1px;">8830-1234-5678</h4>
-                                    <span class="text-muted small">a.n. Kas RT 04 RW 12 Sukamaju</span>
+                                    <span class="text-muted small">a.n. Kas RT 06 RW 20 Purwodadi</span>
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -102,9 +106,13 @@
                                         </div>
                                     </div>
                                     <div class="d-flex align-items-center gap-3">
-                                        <img src="<?= base_url('assets/images/qris-rt.svg') ?>" alt="QRIS Kas RT" class="img-thumbnail p-1" style="width: 68px; height: auto;" onerror="this.outerHTML='<div class=\'border rounded d-flex align-items-center justify-content-center bg-light text-muted\' style=\'width: 68px; height: 68px;\'><i data-feather=\'maximize\'></i></div>'">
+                                        <div style="width: 68px; height: 68px; overflow: hidden; border-radius: 8px; border: 1px solid #ddd; position: relative;">
+                                            <div style="transform: scale(0.18); transform-origin: top left; width: 380px;">
+                                                <?= $this->include('components/qris_card') ?>
+                                            </div>
+                                        </div>
                                         <div>
-                                            <span class="fw-bold text-dark font-12 d-block">KAS RT 04 RW 12</span>
+                                            <span class="fw-bold text-dark font-12 d-block">KAS RT 06 RW 20</span>
                                             <small class="text-muted font-11 d-block mb-1">NMID: ID1024098234120</small>
                                             <a href="javascript:void(0)" class="text-danger font-11 fw-semibold text-decoration-none d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#modalQris">
                                                 <i data-feather="zoom-in" style="width: 12px; height: 12px;" class="me-1"></i> Perbesar QR
@@ -147,10 +155,12 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body text-center pb-4 pt-2">
-                <h5 class="fw-bold text-dark mb-1" id="modalQrisLabel">QRIS Kas RT 04</h5>
+                <h5 class="fw-bold text-dark mb-1" id="modalQrisLabel">QRIS Kas RT 06</h5>
                 <p class="text-muted small mb-3">Scan menggunakan M-Banking atau E-Wallet Anda</p>
-                <div class="p-2 rounded-3 d-inline-block mb-3" style="border: 2px dashed #cbd5e1; background-color: #f8fafc;">
-                    <img src="<?= base_url('assets/images/qris-rt.svg') ?>" alt="QRIS Kas RT Besar" class="img-fluid" style="max-width: 200px;" onerror="this.outerHTML='<div class=\'d-flex flex-column align-items-center justify-content-center text-muted\' style=\'width: 200px; height: 200px;\'><i data-feather=\'image\' class=\'mb-2\' style=\'width: 48px; height: 48px; opacity: 0.5;\'></i><span class=\'small fw-semibold\'>Belum ada QRIS</span></div>'">
+                <div class="mb-3 d-flex justify-content-center">
+                    <div style="transform: scale(0.7); transform-origin: center center; margin-bottom: -150px; margin-top: -30px;">
+                        <?= $this->include('components/qris_card') ?>
+                    </div>
                 </div>
                 <div class="bg-danger bg-opacity-10 text-danger rounded p-2 px-3 d-inline-block">
                     <span class="d-block font-11 fw-bold">NMID</span>
@@ -195,6 +205,7 @@ function calculateTotal() {
 
     // Format Rupiah
     document.getElementById('displayTotal').innerText = 'Rp ' + total.toLocaleString('id-ID');
+    document.getElementById('inputNominal').value = total;
     
     // Update Select All state
     const checkAll = document.getElementById('checkAll');
@@ -205,6 +216,14 @@ function calculateTotal() {
     // Disable submit if total is 0
     document.getElementById('btnSubmit').disabled = (checkedCount === 0);
 }
+
+// Set initial total on page load
+document.addEventListener('DOMContentLoaded', function() {
+    calculateTotal();
+    if (typeof feather !== 'undefined') {
+        feather.replace();
+    }
+});
 
 function toggleSelectAll(master) {
     const checks = document.querySelectorAll('.period-check');

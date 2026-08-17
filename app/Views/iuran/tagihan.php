@@ -21,23 +21,33 @@
                             </tr>
                         </thead>
                         <tbody>
+                            <?php if (empty($tagihan_list)): ?>
                             <tr>
-                                <td class="fw-semibold">Juli 2026</td>
-                                <td>Rp 50.000</td>
-                                <td><span class="badge bg-danger">Tunggakan</span></td>
-                                <td class="text-end fw-bold text-dark">Rp 50.000</td>
+                                <td colspan="4" class="text-center py-4 text-success fw-bold">
+                                    <i data-feather="check-circle" class="feather-icon me-2"></i>Semua tagihan Anda sudah lunas!
+                                </td>
                             </tr>
-                            <tr>
-                                <td class="fw-semibold">Agustus 2026</td>
-                                <td>Rp 50.000</td>
-                                <td><span class="badge bg-warning text-dark">Bulan Berjalan</span></td>
-                                <td class="text-end fw-bold text-dark">Rp 50.000</td>
-                            </tr>
+                            <?php else: ?>
+                                <?php foreach ($tagihan_list as $t): ?>
+                                <tr>
+                                    <td class="fw-semibold"><?= date('F Y', mktime(0, 0, 0, $t['bulan'], 1, $t['tahun'])) ?></td>
+                                    <td>Rp <?= number_format($t['tarif'], 0, ',', '.') ?></td>
+                                    <td>
+                                        <?php if ($t['status'] == 'Tunggakan'): ?>
+                                            <span class="badge bg-danger">Tunggakan</span>
+                                        <?php else: ?>
+                                            <span class="badge bg-warning text-dark">Bulan Berjalan</span>
+                                        <?php endif; ?>
+                                    </td>
+                                    <td class="text-end fw-bold text-dark">Rp <?= number_format($t['tarif'], 0, ',', '.') ?></td>
+                                </tr>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
                         </tbody>
                         <tfoot class="table-light">
                             <tr>
                                 <th colspan="3" class="text-end">Total Seluruh Tagihan:</th>
-                                <th class="text-end text-danger fw-bold fs-5">Rp 100.000</th>
+                                <th class="text-end text-danger fw-bold fs-5">Rp <?= number_format($total_tagihan, 0, ',', '.') ?></th>
                             </tr>
                         </tfoot>
                     </table>

@@ -2,7 +2,7 @@
 <?= $this->section('content') ?>
 
 <!-- ============================================================== -->
-<!-- 1. RINGKASAN STATUS KAS IURAN BULAN INI (AGUSTUS 2026) -->
+<!-- 1. RINGKASAN STATUS KAS IURAN BULAN INI -->
 <!-- ============================================================== -->
 <div class="row g-3 mb-4">
     <!-- Menunggu Verifikasi -->
@@ -11,8 +11,8 @@
             <div class="card-body p-3 d-flex align-items-center justify-content-between">
                 <div>
                     <span class="text-dark fw-semibold font-12 d-block mb-1">Menunggu Verifikasi</span>
-                    <h4 class="text-dark fw-bold mb-0">2 Warga</h4>
-                    <small class="text-warning fw-bold font-12">Total: Rp 200.000</small>
+                    <h4 class="text-dark fw-bold mb-0"><?= $menunggu_verifikasi ?> Warga</h4>
+                    <small class="text-warning fw-bold font-12">Total: Rp <?= number_format($total_verifikasi, 0, ',', '.') ?></small>
                 </div>
                 <div class="btn-group-vertical">
                     <button class="btn btn-sm btn-outline-warning fw-bold px-2 py-1 font-11" onclick="pilihTabIuran('pills-verif-tab')">
@@ -28,9 +28,9 @@
         <div class="card border-0 shadow-sm border-start border-success border-4 h-100 mb-0">
             <div class="card-body p-3 d-flex align-items-center justify-content-between">
                 <div>
-                    <span class="text-dark fw-semibold font-12 d-block mb-1">Sudah Lunas (Agt 2026)</span>
-                    <h4 class="text-success fw-bold mb-0">44 KK <span class="fs-6 text-muted fw-normal">(88%)</span></h4>
-                    <small class="text-success fw-semibold font-12">Terkumpul: Rp 2.200.000</small>
+                    <span class="text-dark fw-semibold font-12 d-block mb-1">Sudah Lunas (Bln Ini)</span>
+                    <h4 class="text-success fw-bold mb-0"><?= $lunas ?> KK <span class="fs-6 text-muted fw-normal">(<?= $total_warga > 0 ? round(($lunas / $total_warga) * 100) : 0 ?>%)</span></h4>
+                    <small class="text-success fw-semibold font-12">Terkumpul: Rp <?= number_format($total_lunas, 0, ',', '.') ?></small>
                 </div>
             </div>
         </div>
@@ -42,8 +42,8 @@
             <div class="card-body p-3 d-flex align-items-center justify-content-between">
                 <div>
                     <span class="text-dark fw-semibold font-12 d-block mb-1">Belum Bayar (Bulan Ini)</span>
-                    <h4 class="text-dark fw-bold mb-0">2 KK</h4>
-                    <small class="text-muted font-12">Jatuh tempo: 20 Agu 2026</small>
+                    <h4 class="text-dark fw-bold mb-0"><?= $belum_bayar ?> KK</h4>
+                    <small class="text-muted font-12">Jatuh tempo: 20 <?= date('M Y') ?></small>
                 </div>
             </div>
         </div>
@@ -55,8 +55,8 @@
             <div class="card-body p-3 d-flex align-items-center justify-content-between">
                 <div>
                     <span class="text-dark fw-semibold font-12 d-block mb-1">Macet (2 Bln Ke Atas)</span>
-                    <h4 class="text-danger fw-bold mb-0">2 KK</h4>
-                    <small class="text-danger fw-semibold font-12">Tunggakan: Rp 250.000</small>
+                    <h4 class="text-danger fw-bold mb-0"><?= $macet ?> KK</h4>
+                    <small class="text-danger fw-semibold font-12">Tunggakan: Rp <?= number_format($total_tunggakan, 0, ',', '.') ?></small>
                 </div>
                 <button class="btn btn-sm btn-outline-danger fw-bold px-2 py-1 font-11" onclick="pilihTabIuran('pills-tunggakan-tab')">
                     Tagih
@@ -143,7 +143,7 @@
                     <!-- ============================================================== -->
                     <div class="tab-pane fade show active" id="pills-verif" role="tabpanel">
                         <div class="alert alert-warning py-2 px-3 small mb-3 d-flex align-items-center justify-content-between">
-                            <span><i data-feather="info" class="feather-icon me-1" style="width: 14px; height: 14px;"></i> Ada <strong>2 bukti transfer warga</strong> yang perlu divalidasi oleh pengurus.</span>
+                            <span><i data-feather="info" class="feather-icon me-1" style="width: 14px; height: 14px;"></i> Ada <strong><?= $menunggu_verifikasi ?> bukti transfer warga</strong> yang perlu divalidasi oleh pengurus.</span>
                             <span class="badge bg-warning text-dark">Prioritas Verifikasi</span>
                         </div>
 
@@ -160,56 +160,41 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <!-- Blok B: Hendra Wijaya -->
-                                    <tr class="row-iuran" data-blok="Blok B">
-                                        <td class="fw-semibold text-dark text-nowrap">Hendra Wijaya</td>
-                                        <td class="text-nowrap">
-                                            <span class="text-dark fw-medium">Blok B / No. 12</span>
-                                            <small class="text-muted d-block">Jl. Melati</small>
-                                        </td>
-                                        <td class="text-nowrap">
-                                            <span class="text-dark fw-medium">Juni - Agustus 2026</span>
-                                            <small class="text-muted d-block">3 Bulan Sekaligus</small>
-                                        </td>
-                                        <td class="text-nowrap">
-                                            <span class="fw-bold text-dark fs-6">Rp 150.000</span>
-                                            <small class="text-muted d-block">Transfer BCA</small>
-                                        </td>
-                                        <td class="text-nowrap">
-                                            <span class="text-dark fw-medium">16 Agu 2026</span>
-                                            <small class="text-muted d-block font-11">09:15 WIB</small>
-                                        </td>
-                                        <td class="text-center text-nowrap">
-                                            <a href="<?= base_url('iuran/verifikasi/3') ?>" class="btn btn-sm btn-success fw-bold px-3 shadow-sm">
-                                                Verifikasi Sekarang
-                                            </a>
-                                        </td>
-                                    </tr>
-                                    <!-- Blok A: Ahmad Fauzi -->
-                                    <tr class="row-iuran" data-blok="Blok A">
-                                        <td class="fw-semibold text-dark text-nowrap">Ahmad Fauzi</td>
-                                        <td class="text-nowrap">
-                                            <span class="text-dark fw-medium">Blok A / No. 02</span>
-                                            <small class="text-muted d-block">Jl. Mawar</small>
-                                        </td>
-                                        <td class="text-nowrap">
-                                            <span class="text-dark fw-medium">Agustus 2026</span>
-                                            <small class="text-muted d-block">1 Bulan</small>
-                                        </td>
-                                        <td class="text-nowrap">
-                                            <span class="fw-bold text-dark fs-6">Rp 50.000</span>
-                                            <small class="text-muted d-block">Scan QRIS</small>
-                                        </td>
-                                        <td class="text-nowrap">
-                                            <span class="text-dark fw-medium">15 Agu 2026</span>
-                                            <small class="text-muted d-block font-11">14:30 WIB</small>
-                                        </td>
-                                        <td class="text-center text-nowrap">
-                                            <a href="<?= base_url('iuran/verifikasi/1') ?>" class="btn btn-sm btn-success fw-bold px-3 shadow-sm">
-                                                Verifikasi Sekarang
-                                            </a>
+                                    <?php foreach ($pembayaran as $p) : ?>
+                                        <?php if ($p['status'] == 'pending') : ?>
+                                        <tr class="row-iuran" data-blok="<?= esc($p['blok_rumah']) ?>">
+                                            <td class="fw-semibold text-dark text-nowrap"><?= esc($p['nama']) ?></td>
+                                            <td class="text-nowrap">
+                                                <span class="text-dark fw-medium"><?= esc($p['blok_rumah']) ?> / <?= esc($p['no_rumah']) ?></span>
+                                                <small class="text-muted d-block"><?= esc($p['nama_jalan']) ?></small>
+                                            </td>
+                                            <td class="text-nowrap">
+                                                <span class="text-dark fw-medium"><?= sprintf('%02d', $p['periode_bulan']) ?>/<?= $p['periode_tahun'] ?></span>
+                                            </td>
+                                            <td class="text-nowrap">
+                                                <span class="fw-bold text-dark fs-6">Rp <?= number_format($p['nominal'], 0, ',', '.') ?></span>
+                                                <small class="text-muted d-block">Transfer</small>
+                                            </td>
+                                            <td class="text-nowrap">
+                                                <span class="text-dark fw-medium"><?= date('d M Y', strtotime($p['created_at'])) ?></span>
+                                                <small class="text-muted d-block font-11"><?= date('H:i', strtotime($p['created_at'])) ?> WIB</small>
+                                            </td>
+                                            <td class="text-center text-nowrap">
+                                                <a href="<?= base_url('iuran/verifikasi/' . $p['id']) ?>" class="btn btn-sm btn-success fw-bold px-3 shadow-sm">
+                                                    Verifikasi Sekarang
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        <?php endif; ?>
+                                    <?php endforeach; ?>
+                                    
+                                    <?php if ($menunggu_verifikasi == 0): ?>
+                                    <tr>
+                                        <td colspan="6" class="text-center py-4 text-muted">
+                                            Tidak ada pembayaran yang menunggu verifikasi saat ini.
                                         </td>
                                     </tr>
+                                    <?php endif; ?>
                                 </tbody>
                             </table>
                         </div>
@@ -237,98 +222,33 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <!-- Blok A: Bambang Susanto (Macet 3 Bulan) -->
-                                    <tr class="row-iuran" data-blok="Blok A">
-                                        <td class="fw-semibold text-dark text-nowrap">Bambang Susanto</td>
-                                        <td class="text-nowrap">
-                                            <span class="text-dark fw-medium">Blok A / No. 04</span>
-                                            <small class="text-muted d-block">Jl. Mawar</small>
-                                        </td>
-                                        <td class="text-center text-nowrap">
-                                            <span class="badge bg-danger">Macet (3 Bulan)</span>
-                                        </td>
-                                        <td class="text-nowrap">
-                                            <span class="fw-bold text-danger fs-6">Rp 150.000</span>
-                                            <small class="text-muted d-block">Juni, Juli, Agustus</small>
-                                        </td>
-                                        <td class="text-nowrap text-muted font-12">
-                                            Menunggak 3 bulan berturut-turut
-                                        </td>
-                                        <td class="text-center text-nowrap">
-                                            <a href="https://wa.me/6281234567892?text=Halo%20Bapak%20Bambang%2C%20mohon%20konfirmasi%20pembayaran%20kas%20RT%2004." target="_blank" class="btn btn-sm btn-outline-danger fw-semibold">
-                                                Tagih WA
-                                            </a>
-                                        </td>
-                                    </tr>
-                                    <!-- Blok D: Eko Prasetyo (Macet 2 Bulan) -->
-                                    <tr class="row-iuran" data-blok="Blok D">
-                                        <td class="fw-semibold text-dark text-nowrap">Eko Prasetyo</td>
-                                        <td class="text-nowrap">
-                                            <span class="text-dark fw-medium">Blok D / No. 05</span>
-                                            <small class="text-muted d-block">Jl. Kenanga</small>
-                                        </td>
-                                        <td class="text-center text-nowrap">
-                                            <span class="badge bg-danger">Macet (2 Bulan)</span>
-                                        </td>
-                                        <td class="text-nowrap">
-                                            <span class="fw-bold text-danger fs-6">Rp 100.000</span>
-                                            <small class="text-muted d-block">Juli &amp; Agustus 2026</small>
-                                        </td>
-                                        <td class="text-nowrap text-muted font-12">
-                                            Menunggak 2 bulan
-                                        </td>
-                                        <td class="text-center text-nowrap">
-                                            <a href="https://wa.me/6281234567898?text=Halo%20Bapak%20Eko%2C%20mohon%20konfirmasi%20pembayaran%20kas%20RT%2004." target="_blank" class="btn btn-sm btn-outline-danger fw-semibold">
-                                                Tagih WA
-                                            </a>
-                                        </td>
-                                    </tr>
-                                    <!-- Blok A: Farros Rifantiarno (Belum Bayar Bulan Berjalan) -->
-                                    <tr class="row-iuran" data-blok="Blok A">
-                                        <td class="fw-semibold text-dark text-nowrap">Farros Rifantiarno</td>
-                                        <td class="text-nowrap">
-                                            <span class="text-dark fw-medium">Blok A / No. 01</span>
-                                            <small class="text-muted d-block">Jl. Mawar</small>
-                                        </td>
-                                        <td class="text-center text-nowrap">
-                                            <span class="badge bg-warning text-dark">Belum Bayar</span>
-                                        </td>
-                                        <td class="text-nowrap">
-                                            <span class="fw-bold text-dark fs-6">Rp 50.000</span>
-                                            <small class="text-muted d-block">Agustus 2026</small>
-                                        </td>
-                                        <td class="text-nowrap text-dark font-12">
-                                            Bulan berjalan (Jatuh tempo 20 Agu)
-                                        </td>
-                                        <td class="text-center text-nowrap">
-                                            <a href="https://wa.me/6281234567890?text=Halo%20Mas%20Farros%2C%20ini%20pengingat%20iuran%20kas%20RT%20bulan%20Agustus." target="_blank" class="btn btn-sm btn-outline-success fw-semibold">
-                                                Kirim WA
-                                            </a>
-                                        </td>
-                                    </tr>
-                                    <!-- Blok C: Budi Santoso (Belum Bayar Bulan Berjalan) -->
-                                    <tr class="row-iuran" data-blok="Blok C">
-                                        <td class="fw-semibold text-dark text-nowrap">Budi Santoso</td>
-                                        <td class="text-nowrap">
-                                            <span class="text-dark fw-medium">Blok C / No. 10</span>
-                                            <small class="text-muted d-block">Jl. Anggrek</small>
-                                        </td>
-                                        <td class="text-center text-nowrap">
-                                            <span class="badge bg-warning text-dark">Belum Bayar</span>
-                                        </td>
-                                        <td class="text-nowrap">
-                                            <span class="fw-bold text-dark fs-6">Rp 50.000</span>
-                                            <small class="text-muted d-block">Agustus 2026</small>
-                                        </td>
-                                        <td class="text-nowrap text-dark font-12">
-                                            Bulan berjalan (Jatuh tempo 20 Agu)
-                                        </td>
-                                        <td class="text-center text-nowrap">
-                                            <a href="https://wa.me/6281234567894" target="_blank" class="btn btn-sm btn-outline-success fw-semibold">
-                                                Kirim WA
-                                            </a>
-                                        </td>
-                                    </tr>
+                                    <?php foreach ($warga_per_blok as $nama_blok => $blok_data) : ?>
+                                        <?php foreach ($blok_data['warga'] as $w) : ?>
+                                            <?php if ($w['status'] == 'belum_bayar') : ?>
+                                            <tr class="row-iuran" data-blok="<?= esc($nama_blok) ?>">
+                                                <td class="fw-semibold text-dark text-nowrap"><?= esc($w['nama']) ?></td>
+                                                <td class="text-nowrap">
+                                                    <span class="text-dark fw-medium"><?= esc($nama_blok) ?> / <?= esc($w['no_rumah']) ?></span>
+                                                </td>
+                                                <td class="text-center text-nowrap">
+                                                    <span class="badge bg-warning text-dark">Belum Bayar</span>
+                                                </td>
+                                                <td class="text-nowrap">
+                                                    <span class="fw-bold text-dark fs-6">Rp <?= number_format($w['nominal'] ?: 50000, 0, ',', '.') ?></span>
+                                                    <small class="text-muted d-block"><?= date('F Y', mktime(0, 0, 0, $bulan_ini, 1, $tahun_ini)) ?></small>
+                                                </td>
+                                                <td class="text-nowrap text-dark font-12">
+                                                    <?= esc($w['keterangan']) ?>
+                                                </td>
+                                                <td class="text-center text-nowrap">
+                                                    <a href="https://wa.me/<?= preg_replace('/^0/', '62', $w['no_hp']) ?>?text=Halo%20<?= urlencode($w['nama']) ?>%2C%20ini%20pengingat%20iuran%20kas%20RT%20bulan%20<?= date('F') ?>." target="_blank" class="btn btn-sm btn-outline-success fw-semibold">
+                                                        Kirim WA
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            <?php endif; ?>
+                                        <?php endforeach; ?>
+                                    <?php endforeach; ?>
                                 </tbody>
                             </table>
                         </div>
@@ -356,78 +276,40 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <!-- Blok B: Rina Marlina -->
-                                    <tr class="row-iuran" data-blok="Blok B">
-                                        <td class="fw-semibold text-dark text-nowrap">Rina Marlina</td>
-                                        <td class="text-nowrap">
-                                            <span class="text-dark fw-medium">Blok B / No. 06</span>
-                                            <small class="text-muted d-block">Jl. Melati</small>
-                                        </td>
-                                        <td class="text-nowrap">
-                                            <span class="text-dark fw-medium">Juli &amp; Agustus 2026</span>
-                                            <small class="text-muted d-block">2 Bulan</small>
-                                        </td>
-                                        <td class="text-nowrap">
-                                            <span class="fw-bold text-success fs-6">Rp 100.000</span>
-                                            <span class="badge bg-success font-11 ms-1">Lunas</span>
-                                        </td>
-                                        <td class="text-nowrap text-dark font-12">
-                                            10 Agu 2026 (Pengurus RT)
-                                        </td>
-                                        <td class="text-center text-nowrap">
-                                            <a href="<?= base_url('iuran/kuitansi/2') ?>" class="btn btn-sm btn-outline-secondary">
-                                                Lihat Kuitansi
-                                            </a>
-                                        </td>
-                                    </tr>
-                                    <!-- Blok C: Siti Aminah -->
-                                    <tr class="row-iuran" data-blok="Blok C">
-                                        <td class="fw-semibold text-dark text-nowrap">Siti Aminah</td>
-                                        <td class="text-nowrap">
-                                            <span class="text-dark fw-medium">Blok C / No. 03</span>
-                                            <small class="text-muted d-block">Jl. Anggrek</small>
-                                        </td>
-                                        <td class="text-nowrap">
-                                            <span class="text-dark fw-medium">Agustus 2026</span>
-                                            <small class="text-muted d-block">1 Bulan</small>
-                                        </td>
-                                        <td class="text-nowrap">
-                                            <span class="fw-bold text-success fs-6">Rp 50.000</span>
-                                            <span class="badge bg-success font-11 ms-1">Lunas</span>
-                                        </td>
-                                        <td class="text-nowrap text-dark font-12">
-                                            08 Agu 2026 (Pengurus RT)
-                                        </td>
-                                        <td class="text-center text-nowrap">
-                                            <a href="<?= base_url('iuran/kuitansi/2') ?>" class="btn btn-sm btn-outline-secondary">
-                                                Lihat Kuitansi
-                                            </a>
+                                    <?php foreach ($pembayaran as $p) : ?>
+                                        <?php if ($p['status'] == 'lunas') : ?>
+                                        <tr class="row-iuran" data-blok="<?= esc($p['blok_rumah']) ?>">
+                                            <td class="fw-semibold text-dark text-nowrap"><?= esc($p['nama']) ?></td>
+                                            <td class="text-nowrap">
+                                                <span class="text-dark fw-medium"><?= esc($p['blok_rumah']) ?> / <?= esc($p['no_rumah']) ?></span>
+                                                <small class="text-muted d-block"><?= esc($p['nama_jalan']) ?></small>
+                                            </td>
+                                            <td class="text-nowrap">
+                                                <span class="text-dark fw-medium"><?= sprintf('%02d', $p['periode_bulan']) ?>/<?= $p['periode_tahun'] ?></span>
+                                            </td>
+                                            <td class="text-nowrap">
+                                                <span class="fw-bold text-success fs-6">Rp <?= number_format($p['nominal'], 0, ',', '.') ?></span>
+                                                <span class="badge bg-success font-11 ms-1">Lunas</span>
+                                            </td>
+                                            <td class="text-nowrap text-dark font-12">
+                                                <?= date('d M Y', strtotime($p['verified_at'] ?? $p['updated_at'])) ?>
+                                            </td>
+                                            <td class="text-center text-nowrap">
+                                                <a href="<?= base_url('iuran/kuitansi/' . $p['id']) ?>" class="btn btn-sm btn-outline-secondary">
+                                                    Lihat Kuitansi
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        <?php endif; ?>
+                                    <?php endforeach; ?>
+                                    
+                                    <?php if ($lunas == 0): ?>
+                                    <tr>
+                                        <td colspan="6" class="text-center py-4 text-muted">
+                                            Belum ada pembayaran yang lunas bulan ini.
                                         </td>
                                     </tr>
-                                    <!-- Blok D: Dedi Supardi -->
-                                    <tr class="row-iuran" data-blok="Blok D">
-                                        <td class="fw-semibold text-dark text-nowrap">Dedi Supardi</td>
-                                        <td class="text-nowrap">
-                                            <span class="text-dark fw-medium">Blok D / No. 02</span>
-                                            <small class="text-muted d-block">Jl. Kenanga</small>
-                                        </td>
-                                        <td class="text-nowrap">
-                                            <span class="text-dark fw-medium">Agustus 2026</span>
-                                            <small class="text-muted d-block">1 Bulan</small>
-                                        </td>
-                                        <td class="text-nowrap">
-                                            <span class="fw-bold text-success fs-6">Rp 50.000</span>
-                                            <span class="badge bg-success font-11 ms-1">Lunas</span>
-                                        </td>
-                                        <td class="text-nowrap text-dark font-12">
-                                            05 Agu 2026 (Pengurus RT)
-                                        </td>
-                                        <td class="text-center text-nowrap">
-                                            <a href="<?= base_url('iuran/kuitansi/2') ?>" class="btn btn-sm btn-outline-secondary">
-                                                Lihat Kuitansi
-                                            </a>
-                                        </td>
-                                    </tr>
+                                    <?php endif; ?>
                                 </tbody>
                             </table>
                         </div>
@@ -455,24 +337,19 @@
 
                         <!-- Accordion Buku Kas Iuran Per Blok -->
                         <div class="accordion d-flex flex-column gap-3" id="accordionIuranBukuKas">
-                            
-                            <!-- 1. BUKU KAS BLOK A -->
-                            <div class="accordion-item border rounded-3 overflow-hidden shadow-sm item-iuran-blok" id="iuran-blok-a">
-                                <h2 class="accordion-header" id="headingIuranBlokA">
-                                    <button class="accordion-button bg-white text-dark py-3 px-4 fw-bold d-flex justify-content-between align-items-center" type="button" data-bs-toggle="collapse" data-bs-target="#collapseIuranBlokA" aria-expanded="true">
+                            <?php $blokIndex = 1; ?>
+                            <?php foreach ($warga_per_blok as $nama_blok => $blok_data) : ?>
+                            <!-- BUKU KAS <?= esc($nama_blok) ?> -->
+                            <div class="accordion-item border rounded-3 overflow-hidden shadow-sm item-iuran-blok" id="iuran-blok-<?= strtolower(str_replace(' ', '-', $nama_blok)) ?>">
+                                <h2 class="accordion-header" id="headingIuranBlok<?= $blokIndex ?>">
+                                    <button class="accordion-button bg-white text-dark py-3 px-4 fw-bold d-flex justify-content-between align-items-center" type="button" data-bs-toggle="collapse" data-bs-target="#collapseIuranBlok<?= $blokIndex ?>" aria-expanded="true">
                                         <div class="d-flex flex-wrap align-items-center">
-                                            <span class="fw-bold text-dark fs-6">Blok A</span>
-                                            <span class="text-muted font-12 fw-normal ms-2">(15 Rumah • Terkumpul Rp 650.000 / Rp 750.000)</span>
-                                        </div>
-                                        <div class="ms-auto me-3 d-none d-md-flex align-items-center gap-1 font-12">
-                                            <span class="badge bg-warning text-dark">1 Verifikasi</span>
-                                            <span class="badge bg-warning text-dark">1 Belum</span>
-                                            <span class="badge bg-danger">1 Macet</span>
-                                            <span class="badge bg-success">12 Lunas</span>
+                                            <span class="fw-bold text-dark fs-6"><?= esc($nama_blok) ?></span>
+                                            <span class="text-muted font-12 fw-normal ms-2">(<?= count($blok_data['warga']) ?> Rumah Aktif • Terkumpul Rp <?= number_format($blok_data['terkumpul'], 0, ',', '.') ?> / Rp <?= number_format($blok_data['target'], 0, ',', '.') ?>)</span>
                                         </div>
                                     </button>
                                 </h2>
-                                <div id="collapseIuranBlokA" class="accordion-collapse collapse show">
+                                <div id="collapseIuranBlok<?= $blokIndex ?>" class="accordion-collapse collapse show">
                                     <div class="accordion-body p-0">
                                         <div class="table-responsive">
                                             <table class="table table-hover align-middle mb-0">
@@ -488,234 +365,51 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
+                                                    <?php foreach ($blok_data['warga'] as $w) : ?>
                                                     <tr>
-                                                        <td class="ps-4 fw-bold text-dark text-nowrap">No. 01</td>
-                                                        <td class="fw-semibold text-dark text-nowrap">Farros Rifantiarno</td>
-                                                        <td class="text-nowrap">Agustus 2026</td>
-                                                        <td class="fw-bold text-dark text-nowrap">Rp 50.000</td>
-                                                        <td class="text-center text-nowrap"><span class="badge bg-warning text-dark">Belum Bayar</span></td>
-                                                        <td class="text-muted font-12 text-nowrap">Jatuh tempo 20 Agu</td>
+                                                        <td class="ps-4 fw-bold text-dark text-nowrap"><?= esc($w['no_rumah']) ?></td>
+                                                        <td class="fw-semibold text-dark text-nowrap"><?= esc($w['nama']) ?></td>
+                                                        <td class="text-nowrap"><?= date('F Y', mktime(0, 0, 0, $bulan_ini, 1, $tahun_ini)) ?></td>
+                                                        <td class="fw-bold <?= $w['status'] == 'belum_bayar' ? 'text-dark' : ($w['status'] == 'pending' ? 'text-warning' : 'text-success') ?> text-nowrap">
+                                                            Rp <?= number_format($w['nominal'] ?: 50000, 0, ',', '.') ?>
+                                                        </td>
+                                                        <td class="text-center text-nowrap">
+                                                            <?php if ($w['status'] == 'belum_bayar'): ?>
+                                                                <span class="badge bg-warning text-dark">Belum Bayar</span>
+                                                            <?php elseif ($w['status'] == 'pending'): ?>
+                                                                <span class="badge bg-warning text-dark">Menunggu Verifikasi</span>
+                                                            <?php elseif ($w['status'] == 'lunas'): ?>
+                                                                <span class="badge bg-success">Lunas</span>
+                                                            <?php endif; ?>
+                                                        </td>
+                                                        <td class="<?= $w['status'] == 'belum_bayar' ? 'text-danger' : 'text-muted' ?> font-12 text-nowrap">
+                                                            <?= esc($w['keterangan']) ?>
+                                                        </td>
                                                         <td class="text-center text-nowrap pe-4">
-                                                            <a href="https://wa.me/6281234567890" target="_blank" class="btn btn-xs btn-outline-success">Kirim WA</a>
+                                                            <?php if ($w['status'] == 'belum_bayar'): ?>
+                                                                <a href="https://wa.me/<?= preg_replace('/^0/', '62', $w['no_hp']) ?>?text=Halo%20<?= urlencode($w['nama']) ?>%2C%20ini%20pengingat%20iuran%20kas%20RT%20bulan%20<?= date('F') ?>." target="_blank" class="btn btn-xs btn-outline-success">Kirim WA</a>
+                                                            <?php elseif ($w['status'] == 'pending'): ?>
+                                                                <button onclick="pilihTabIuran('pills-verif-tab')" class="btn btn-xs btn-success">Verifikasi</button>
+                                                            <?php elseif ($w['status'] == 'lunas'): ?>
+                                                                <button onclick="pilihTabIuran('pills-lunas-tab')" class="btn btn-xs btn-outline-secondary">Kuitansi</button>
+                                                            <?php endif; ?>
                                                         </td>
                                                     </tr>
+                                                    <?php endforeach; ?>
+                                                    
+                                                    <?php if (empty($blok_data['warga'])): ?>
                                                     <tr>
-                                                        <td class="ps-4 fw-bold text-dark text-nowrap">No. 02</td>
-                                                        <td class="fw-semibold text-dark text-nowrap">Ahmad Fauzi</td>
-                                                        <td class="text-nowrap">Agustus 2026</td>
-                                                        <td class="fw-bold text-dark text-nowrap">Rp 50.000</td>
-                                                        <td class="text-center text-nowrap"><span class="badge bg-warning text-dark">Menunggu Verifikasi</span></td>
-                                                        <td class="text-muted font-12 text-nowrap">Scan QRIS (15 Agu)</td>
-                                                        <td class="text-center text-nowrap pe-4">
-                                                            <a href="<?= base_url('iuran/verifikasi/1') ?>" class="btn btn-xs btn-success">Verifikasi</a>
-                                                        </td>
+                                                        <td colspan="7" class="text-center py-3 text-muted">Belum ada warga di blok ini.</td>
                                                     </tr>
-                                                    <tr>
-                                                        <td class="ps-4 fw-bold text-dark text-nowrap">No. 04</td>
-                                                        <td class="fw-semibold text-dark text-nowrap">Bambang Susanto</td>
-                                                        <td class="text-nowrap">Juni - Agt 2026</td>
-                                                        <td class="fw-bold text-danger text-nowrap">Rp 150.000</td>
-                                                        <td class="text-center text-nowrap"><span class="badge bg-danger">Macet (3 Bln)</span></td>
-                                                        <td class="text-danger font-12 text-nowrap">Tunggakan 3 bulan</td>
-                                                        <td class="text-center text-nowrap pe-4">
-                                                            <a href="https://wa.me/6281234567892" target="_blank" class="btn btn-xs btn-outline-danger">Tagih WA</a>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="ps-4 fw-bold text-dark text-nowrap">No. 05</td>
-                                                        <td class="fw-semibold text-dark text-nowrap">Mulyono</td>
-                                                        <td class="text-nowrap">Agustus 2026</td>
-                                                        <td class="fw-bold text-success text-nowrap">Rp 50.000</td>
-                                                        <td class="text-center text-nowrap"><span class="badge bg-success">Lunas</span></td>
-                                                        <td class="text-muted font-12 text-nowrap">Lunas (03 Agu)</td>
-                                                        <td class="text-center text-nowrap pe-4">
-                                                            <a href="<?= base_url('iuran/kuitansi/2') ?>" class="btn btn-xs btn-outline-secondary">Kuitansi</a>
-                                                        </td>
-                                                    </tr>
+                                                    <?php endif; ?>
                                                 </tbody>
                                             </table>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
-                            <!-- 2. BUKU KAS BLOK B -->
-                            <div class="accordion-item border rounded-3 overflow-hidden shadow-sm item-iuran-blok" id="iuran-blok-b">
-                                <h2 class="accordion-header" id="headingIuranBlokB">
-                                    <button class="accordion-button bg-white text-dark py-3 px-4 fw-bold d-flex justify-content-between align-items-center" type="button" data-bs-toggle="collapse" data-bs-target="#collapseIuranBlokB" aria-expanded="true">
-                                        <div class="d-flex flex-wrap align-items-center">
-                                            <span class="fw-bold text-dark fs-6">Blok B</span>
-                                            <span class="text-muted font-12 fw-normal ms-2">(12 Rumah • Terkumpul Rp 550.000 / Rp 600.000)</span>
-                                        </div>
-                                        <div class="ms-auto me-3 d-none d-md-flex align-items-center gap-1 font-12">
-                                            <span class="badge bg-warning text-dark">1 Verifikasi</span>
-                                            <span class="badge bg-success">11 Lunas</span>
-                                        </div>
-                                    </button>
-                                </h2>
-                                <div id="collapseIuranBlokB" class="accordion-collapse collapse show">
-                                    <div class="accordion-body p-0">
-                                        <div class="table-responsive">
-                                            <table class="table table-hover align-middle mb-0">
-                                                <thead class="table-light">
-                                                    <tr>
-                                                        <th class="text-nowrap ps-4" style="width: 110px;">No. Rumah</th>
-                                                        <th class="text-nowrap">Nama Kepala Keluarga</th>
-                                                        <th class="text-nowrap">Periode Tagihan</th>
-                                                        <th class="text-nowrap">Nominal (Rp)</th>
-                                                        <th class="text-center text-nowrap">Status Kas</th>
-                                                        <th class="text-nowrap">Keterangan</th>
-                                                        <th class="text-center text-nowrap" style="width: 130px;">Aksi</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td class="ps-4 fw-bold text-dark text-nowrap">No. 06</td>
-                                                        <td class="fw-semibold text-dark text-nowrap">Rina Marlina</td>
-                                                        <td class="text-nowrap">Juli &amp; Agt 2026</td>
-                                                        <td class="fw-bold text-success text-nowrap">Rp 100.000</td>
-                                                        <td class="text-center text-nowrap"><span class="badge bg-success">Lunas</span></td>
-                                                        <td class="text-muted font-12 text-nowrap">Lunas (10 Agu)</td>
-                                                        <td class="text-center text-nowrap pe-4">
-                                                            <a href="<?= base_url('iuran/kuitansi/2') ?>" class="btn btn-xs btn-outline-secondary">Kuitansi</a>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="ps-4 fw-bold text-dark text-nowrap">No. 12</td>
-                                                        <td class="fw-semibold text-dark text-nowrap">Hendra Wijaya</td>
-                                                        <td class="text-nowrap">Juni - Agt 2026</td>
-                                                        <td class="fw-bold text-dark text-nowrap">Rp 150.000</td>
-                                                        <td class="text-center text-nowrap"><span class="badge bg-warning text-dark">Menunggu Verifikasi</span></td>
-                                                        <td class="text-muted font-12 text-nowrap">Transfer BCA (16 Agu)</td>
-                                                        <td class="text-center text-nowrap pe-4">
-                                                            <a href="<?= base_url('iuran/verifikasi/3') ?>" class="btn btn-xs btn-success">Verifikasi</a>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- 3. BUKU KAS BLOK C -->
-                            <div class="accordion-item border rounded-3 overflow-hidden shadow-sm item-iuran-blok" id="iuran-blok-c">
-                                <h2 class="accordion-header" id="headingIuranBlokC">
-                                    <button class="accordion-button bg-white text-dark py-3 px-4 fw-bold d-flex justify-content-between align-items-center" type="button" data-bs-toggle="collapse" data-bs-target="#collapseIuranBlokC" aria-expanded="true">
-                                        <div class="d-flex flex-wrap align-items-center">
-                                            <span class="fw-bold text-dark fs-6">Blok C</span>
-                                            <span class="text-muted font-12 fw-normal ms-2">(13 Rumah • Terkumpul Rp 550.000 / Rp 650.000)</span>
-                                        </div>
-                                        <div class="ms-auto me-3 d-none d-md-flex align-items-center gap-1 font-12">
-                                            <span class="badge bg-warning text-dark">1 Belum</span>
-                                            <span class="badge bg-success">12 Lunas</span>
-                                        </div>
-                                    </button>
-                                </h2>
-                                <div id="collapseIuranBlokC" class="accordion-collapse collapse show">
-                                    <div class="accordion-body p-0">
-                                        <div class="table-responsive">
-                                            <table class="table table-hover align-middle mb-0">
-                                                <thead class="table-light">
-                                                    <tr>
-                                                        <th class="text-nowrap ps-4" style="width: 110px;">No. Rumah</th>
-                                                        <th class="text-nowrap">Nama Kepala Keluarga</th>
-                                                        <th class="text-nowrap">Periode Tagihan</th>
-                                                        <th class="text-nowrap">Nominal (Rp)</th>
-                                                        <th class="text-center text-nowrap">Status Kas</th>
-                                                        <th class="text-nowrap">Keterangan</th>
-                                                        <th class="text-center text-nowrap" style="width: 130px;">Aksi</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td class="ps-4 fw-bold text-dark text-nowrap">No. 03</td>
-                                                        <td class="fw-semibold text-dark text-nowrap">Siti Aminah</td>
-                                                        <td class="text-nowrap">Agustus 2026</td>
-                                                        <td class="fw-bold text-success text-nowrap">Rp 50.000</td>
-                                                        <td class="text-center text-nowrap"><span class="badge bg-success">Lunas</span></td>
-                                                        <td class="text-muted font-12 text-nowrap">Lunas (08 Agu)</td>
-                                                        <td class="text-center text-nowrap pe-4">
-                                                            <a href="<?= base_url('iuran/kuitansi/2') ?>" class="btn btn-xs btn-outline-secondary">Kuitansi</a>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="ps-4 fw-bold text-dark text-nowrap">No. 10</td>
-                                                        <td class="fw-semibold text-dark text-nowrap">Budi Santoso</td>
-                                                        <td class="text-nowrap">Agustus 2026</td>
-                                                        <td class="fw-bold text-dark text-nowrap">Rp 50.000</td>
-                                                        <td class="text-center text-nowrap"><span class="badge bg-warning text-dark">Belum Bayar</span></td>
-                                                        <td class="text-muted font-12 text-nowrap">Jatuh tempo 20 Agu</td>
-                                                        <td class="text-center text-nowrap pe-4">
-                                                            <a href="https://wa.me/6281234567894" target="_blank" class="btn btn-xs btn-outline-success">Kirim WA</a>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- 4. BUKU KAS BLOK D -->
-                            <div class="accordion-item border rounded-3 overflow-hidden shadow-sm item-iuran-blok" id="iuran-blok-d">
-                                <h2 class="accordion-header" id="headingIuranBlokD">
-                                    <button class="accordion-button bg-white text-dark py-3 px-4 fw-bold d-flex justify-content-between align-items-center" type="button" data-bs-toggle="collapse" data-bs-target="#collapseIuranBlokD" aria-expanded="true">
-                                        <div class="d-flex flex-wrap align-items-center">
-                                            <span class="fw-bold text-dark fs-6">Blok D</span>
-                                            <span class="text-muted font-12 fw-normal ms-2">(10 Rumah • Terkumpul Rp 450.000 / Rp 500.000)</span>
-                                        </div>
-                                        <div class="ms-auto me-3 d-none d-md-flex align-items-center gap-1 font-12">
-                                            <span class="badge bg-danger">1 Macet</span>
-                                            <span class="badge bg-success">9 Lunas</span>
-                                        </div>
-                                    </button>
-                                </h2>
-                                <div id="collapseIuranBlokD" class="accordion-collapse collapse show">
-                                    <div class="accordion-body p-0">
-                                        <div class="table-responsive">
-                                            <table class="table table-hover align-middle mb-0">
-                                                <thead class="table-light">
-                                                    <tr>
-                                                        <th class="text-nowrap ps-4" style="width: 110px;">No. Rumah</th>
-                                                        <th class="text-nowrap">Nama Kepala Keluarga</th>
-                                                        <th class="text-nowrap">Periode Tagihan</th>
-                                                        <th class="text-nowrap">Nominal (Rp)</th>
-                                                        <th class="text-center text-nowrap">Status Kas</th>
-                                                        <th class="text-nowrap">Keterangan</th>
-                                                        <th class="text-center text-nowrap" style="width: 130px;">Aksi</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td class="ps-4 fw-bold text-dark text-nowrap">No. 02</td>
-                                                        <td class="fw-semibold text-dark text-nowrap">Dedi Supardi</td>
-                                                        <td class="text-nowrap">Agustus 2026</td>
-                                                        <td class="fw-bold text-success text-nowrap">Rp 50.000</td>
-                                                        <td class="text-center text-nowrap"><span class="badge bg-success">Lunas</span></td>
-                                                        <td class="text-muted font-12 text-nowrap">Lunas (05 Agu)</td>
-                                                        <td class="text-center text-nowrap pe-4">
-                                                            <a href="<?= base_url('iuran/kuitansi/2') ?>" class="btn btn-xs btn-outline-secondary">Kuitansi</a>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="ps-4 fw-bold text-dark text-nowrap">No. 05</td>
-                                                        <td class="fw-semibold text-dark text-nowrap">Eko Prasetyo</td>
-                                                        <td class="text-nowrap">Juli &amp; Agt 2026</td>
-                                                        <td class="fw-bold text-danger text-nowrap">Rp 100.000</td>
-                                                        <td class="text-center text-nowrap"><span class="badge bg-danger">Macet (2 Bln)</span></td>
-                                                        <td class="text-danger font-12 text-nowrap">Tunggakan 2 bulan</td>
-                                                        <td class="text-center text-nowrap pe-4">
-                                                            <a href="https://wa.me/6281234567898" target="_blank" class="btn btn-xs btn-outline-danger">Tagih WA</a>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
+                            <?php $blokIndex++; ?>
+                            <?php endforeach; ?>
                         </div>
                     </div>
 

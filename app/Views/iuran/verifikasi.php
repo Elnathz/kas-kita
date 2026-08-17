@@ -26,23 +26,23 @@
                         <div class="p-3 bg-light rounded">
                             <div class="mb-2">
                                 <span class="text-muted small d-block">Nama Warga</span>
-                                <span class="fw-semibold text-dark">Ahmad Fauzi</span>
+                                <span class="fw-semibold text-dark"><?= esc($pembayaran['nama'] ?? 'N/A') ?></span>
                             </div>
                             <div class="mb-2">
                                 <span class="text-muted small d-block">No. Rumah</span>
-                                <span class="fw-semibold text-dark">Blok A / 01</span>
+                                <span class="fw-semibold text-dark"><?= esc($pembayaran['blok_rumah'] ?? '') ?> / <?= esc($pembayaran['no_rumah'] ?? '') ?></span>
                             </div>
                             <div class="mb-2">
                                 <span class="text-muted small d-block">Periode Iuran</span>
-                                <span class="fw-semibold text-dark">Agustus 2026</span>
+                                <span class="fw-semibold text-dark"><?= date('F Y', mktime(0, 0, 0, $pembayaran['periode_bulan'] ?? 1, 1, $pembayaran['periode_tahun'] ?? 2026)) ?></span>
                             </div>
                             <div class="mb-2">
                                 <span class="text-muted small d-block">Nominal Ditransfer</span>
-                                <span class="fw-bold text-success fs-5">Rp 50.000</span>
+                                <span class="fw-bold text-success fs-5">Rp <?= number_format($pembayaran['nominal'] ?? 0, 0, ',', '.') ?></span>
                             </div>
                             <div>
                                 <span class="text-muted small d-block">Tanggal Upload</span>
-                                <span class="text-dark">15 Agustus 2026, 14:30 WIB</span>
+                                <span class="text-dark"><?= date('d F Y, H:i', strtotime($pembayaran['created_at'] ?? 'now')) ?> WIB</span>
                             </div>
                         </div>
                     </div>
@@ -50,9 +50,10 @@
                     <div class="col-md-6">
                         <h6 class="fw-bold text-muted small text-uppercase mb-3">Bukti Transfer</h6>
                         <div class="border rounded p-2 text-center bg-light">
-                            <img src="<?= base_url('FreeDash/src/assets/images/big/img1.jpg') ?>" alt="Bukti Transfer" class="img-fluid rounded" style="max-height: 250px; object-fit: cover;">
+                            <?php $bukti = !empty($pembayaran['bukti_transfer']) ? base_url('uploads/bukti/' . $pembayaran['bukti_transfer']) : base_url('FreeDash/src/assets/images/big/img1.jpg'); ?>
+                            <img src="<?= esc($bukti) ?>" alt="Bukti Transfer" class="img-fluid rounded" style="max-height: 250px; object-fit: cover;">
                             <div class="mt-2">
-                                <a href="<?= base_url('FreeDash/src/assets/images/big/img1.jpg') ?>" target="_blank" class="btn btn-sm btn-outline-secondary">
+                                <a href="<?= esc($bukti) ?>" target="_blank" class="btn btn-sm btn-outline-secondary">
                                     <i data-feather="external-link" class="feather-icon"></i> Lihat Ukuran Penuh
                                 </a>
                             </div>

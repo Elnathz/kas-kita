@@ -25,30 +25,30 @@
                             </tr>
                         </thead>
                         <tbody>
+                            <?php if (empty($pembayaran)): ?>
                             <tr>
-                                <td>1</td>
-                                <td class="fw-semibold">Agustus 2026</td>
-                                <td>Rp 50.000</td>
-                                <td>15 Agu 2026</td>
-                                <td><span class="badge bg-warning text-dark">Menunggu Verifikasi</span></td>
-                                <td class="text-muted small">-</td>
+                                <td colspan="6" class="text-center py-4 text-muted">Belum ada riwayat pembayaran iuran.</td>
                             </tr>
-                            <tr>
-                                <td>2</td>
-                                <td class="fw-semibold">Juli 2026</td>
-                                <td>Rp 50.000</td>
-                                <td>10 Jul 2026</td>
-                                <td><span class="badge bg-success">Terverifikasi</span></td>
-                                <td class="text-muted small">Pembayaran valid, terima kasih.</td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td class="fw-semibold">Juni 2026</td>
-                                <td>Rp 50.000</td>
-                                <td>05 Jun 2026</td>
-                                <td><span class="badge bg-success">Terverifikasi</span></td>
-                                <td class="text-muted small">Lunas.</td>
-                            </tr>
+                            <?php else: ?>
+                                <?php $no = 1; foreach ($pembayaran as $p): ?>
+                                <tr>
+                                    <td><?= $no++ ?></td>
+                                    <td class="fw-semibold"><?= date('F Y', mktime(0, 0, 0, $p['periode_bulan'], 1, $p['periode_tahun'])) ?></td>
+                                    <td>Rp <?= number_format($p['nominal'], 0, ',', '.') ?></td>
+                                    <td><?= date('d M Y', strtotime($p['created_at'])) ?></td>
+                                    <td>
+                                        <?php if ($p['status'] == 'pending'): ?>
+                                            <span class="badge bg-warning text-dark">Menunggu Verifikasi</span>
+                                        <?php elseif ($p['status'] == 'lunas'): ?>
+                                            <span class="badge bg-success">Terverifikasi</span>
+                                        <?php else: ?>
+                                            <span class="badge bg-danger">Ditolak</span>
+                                        <?php endif; ?>
+                                    </td>
+                                    <td class="text-muted small"><?= esc($p['catatan'] ?? '-') ?></td>
+                                </tr>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
                         </tbody>
                     </table>
                 </div>
