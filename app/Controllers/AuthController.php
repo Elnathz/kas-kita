@@ -3,14 +3,19 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
+use App\Models\UserModel;
 
 class AuthController extends BaseController
 {
     public function index()
     {
         // Jika sudah login, langsung arahkan ke dashboard
-        if (session()->get('logged_in')) {
-            return redirect()->to('/dashboard');
+        if (session()->get('isLoggedIn')) {
+            if (session()->get('role') === 'pengurus') {
+                return redirect()->to('/dashboard');
+            } else {
+                return redirect()->to('/dashboard-warga');
+            }
         }
 
         return view('auth/login');
@@ -21,34 +26,34 @@ class AuthController extends BaseController
         $username = $this->request->getPost('username');
         $password = $this->request->getPost('password');
 
-        // Hardcoded credentials untuk scope UTS
-        // 1. Akun Pengurus RT (Admin)
-        if ($username === 'admin' && md5($password) === md5('admin123')) {
-            session()->set([
-                'user_id'   => 1,
-                'username'  => 'admin',
-                'nama'      => 'Pengurus RT',
-                'role'      => 'pengurus',
-                'logged_in' => true,
-            ]);
+        $userModel = new UserModel();
+        $user = $userModel->where('username', $username)->first();
 
-            return redirect()->to('/dashboard');
+        if ($user) {
+            if ($user['is_active'] == 0) {
+                return redirect()->back()->with('error', 'Akun Anda sedang menunggu persetujuan dari pengurus RT.');
+            }
+
+            if (password_verify($password, $user['password'])) {
+                session()->set([
+                    'user_id'    => $user['id'],
+                    'username'   => $user['username'],
+                    'nama'       => $user['nama'],
+                    'role'       => $user['role'],
+                    'isLoggedIn' => true,
+                ]);
+
+                if ($user['role'] === 'pengurus') {
+                    return redirect()->to('/dashboard');
+                } else {
+                    return redirect()->to('/dashboard-warga');
+                }
+            } else {
+                return redirect()->back()->with('error', 'Password salah.');
+            }
+        } else {
+            return redirect()->back()->with('error', 'Username tidak ditemukan.');
         }
-
-        // 2. Akun Warga (Farros Rifantiarno)
-        if (($username === 'farros' || $username === 'farros_r') && (md5($password) === md5('warga123') || md5($password) === md5('farros123') || md5($password) === md5('admin123'))) {
-            session()->set([
-                'user_id'   => 2,
-                'username'  => 'farros_r',
-                'nama'      => 'Farros Rifantiarno',
-                'role'      => 'warga',
-                'logged_in' => true,
-            ]);
-
-            return redirect()->to('/dashboard-warga');
-        }
-
-        return redirect()->back()->with('error', 'Username atau password salah');
     }
 
     public function logout()
@@ -59,16 +64,38 @@ class AuthController extends BaseController
 
     public function register()
     {
-        if (session()->get('logged_in')) {
+        if (session()->get('isLoggedIn')) {
             return redirect()->to('/dashboard');
         }
 
-        return view('auth/register');
+        $masterBlokModel = new \App\Models\MasterBlokModel();
+        $masterJalanModel = new \App\Models\MasterJalanModel();
+
+        $data = [
+            'master_blok' => $masterBlokModel->findAll(),
+            'master_jalan' => $masterJalanModel->findAll()
+        ];
+
+        return view('auth/register', $data);
     }
 
     public function prosesRegister()
     {
-        // Pada UTS, dummy sukses registrasi
+        $userModel = new UserModel();
+
+        $data = [
+            'nama'       => $this->request->getPost('nama'),
+            'username'   => $this->request->getPost('username'),
+            'password'   => password_hash($this->request->getPost('password'), PASSWORD_DEFAULT),
+            'role'       => 'warga',
+            'no_rumah'   => $this->request->getPost('no_rumah'),
+            'no_telepon' => $this->request->getPost('no_telepon'),
+            'alamat'     => $this->request->getPost('alamat'),
+            'is_active'  => 0, // Pending approval
+        ];
+
+        $userModel->insert($data);
+
         return redirect()->to('/login')->with('success', 'Pendaftaran berhasil! Akun Anda sedang menunggu persetujuan dari pengurus RT.');
     }
 }
