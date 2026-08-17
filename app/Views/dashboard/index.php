@@ -10,7 +10,7 @@
             <div class="card-body p-3 d-flex align-items-center justify-content-between">
                 <div>
                     <span class="text-muted small d-block mb-1">Total Saldo Kas RT</span>
-                    <h4 class="text-dark fw-bold mb-0 text-nowrap">Rp 12.650.000</h4>
+                    <h4 class="text-dark fw-bold mb-0 text-nowrap">Rp <?= number_format($saldoKas, 0, ',', '.') ?></h4>
                 </div>
                 <div class="bg-light rounded p-2 text-success d-flex align-items-center justify-content-center" style="width: 42px; height: 42px;">
                     <i data-feather="dollar-sign" class="feather-icon text-success"></i>
@@ -25,7 +25,7 @@
             <div class="card-body p-3 d-flex align-items-center justify-content-between">
                 <div>
                     <span class="text-muted small d-block mb-1">Pemasukan Bulan Ini</span>
-                    <h4 class="text-dark fw-bold mb-0 text-nowrap">Rp 4.500.000</h4>
+                    <h4 class="text-dark fw-bold mb-0 text-nowrap">Rp <?= number_format($iuranBulanIni, 0, ',', '.') ?></h4>
                 </div>
                 <div class="bg-light rounded p-2 text-primary d-flex align-items-center justify-content-center" style="width: 42px; height: 42px;">
                     <i data-feather="trending-up" class="feather-icon text-primary"></i>
@@ -40,7 +40,7 @@
             <div class="card-body p-3 d-flex align-items-center justify-content-between">
                 <div>
                     <span class="text-muted small d-block mb-1">Pengeluaran Bulan Ini</span>
-                    <h4 class="text-dark fw-bold mb-0 text-nowrap">Rp 1.850.000</h4>
+                    <h4 class="text-dark fw-bold mb-0 text-nowrap">Rp <?= number_format($pengeluaranBulanIni, 0, ',', '.') ?></h4>
                 </div>
                 <div class="bg-light rounded p-2 text-danger d-flex align-items-center justify-content-center" style="width: 42px; height: 42px;">
                     <i data-feather="trending-down" class="feather-icon text-danger"></i>
@@ -55,8 +55,8 @@
             <div class="card-body p-3 d-flex align-items-center justify-content-between">
                 <div>
                     <span class="text-muted small d-block mb-1">Sudah Bayar Bulan Ini</span>
-                    <h4 class="text-dark fw-bold mb-0 text-nowrap">42 <span class="fs-6 text-muted fw-normal">/ 50 Warga</span></h4>
-                    <small class="text-success font-12 fw-semibold">Agustus 2026 (84%)</small>
+                    <h4 class="text-dark fw-bold mb-0 text-nowrap"><?= $wargaSudahBayar ?> <span class="fs-6 text-muted fw-normal">/ <?= $totalWarga ?> Warga</span></h4>
+                    <small class="text-success font-12 fw-semibold"><?= date('F Y') ?> (<?= $totalWarga > 0 ? round(($wargaSudahBayar / $totalWarga) * 100) : 0 ?>%)</small>
                 </div>
                 <div class="bg-light rounded p-2 text-info d-flex align-items-center justify-content-center" style="width: 42px; height: 42px;">
                     <i data-feather="users" class="feather-icon text-info"></i>
@@ -69,6 +69,7 @@
 <!-- ============================================================== -->
 <!-- Notifikasi Menunggu Persetujuan (Pendaftar Baru & Pengajuan) -->
 <!-- ============================================================== -->
+<?php if (!empty($pendaftarBaru)): ?>
 <div class="row mb-4">
     <div class="col-12">
         <div class="card border-0 shadow-sm overflow-hidden border-start border-warning border-4">
@@ -77,7 +78,7 @@
                     <i data-feather="bell" class="text-warning me-2" style="width: 18px; height: 18px;"></i>
                     <h5 class="card-title mb-0 fw-bold">Menunggu Persetujuan & Validasi</h5>
                 </div>
-                <span class="badge bg-warning text-dark">2 Menunggu</span>
+                <span class="badge bg-warning text-dark"><?= count($pendaftarBaru) ?> Menunggu</span>
             </div>
             <div class="card-body p-0">
                 <div class="table-responsive">
@@ -92,37 +93,23 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <!-- Contoh 1: Pendaftar Baru -->
+                            <?php foreach($pendaftarBaru as $pendaftar): ?>
                             <tr>
                                 <td class="ps-4">
                                     <span class="badge bg-primary-subtle text-primary border border-primary-subtle px-2 py-1 font-12 fw-semibold">
                                         <i data-feather="user-plus" class="me-1" style="width: 12px; height: 12px;"></i> Pendaftar Baru
                                     </span>
                                 </td>
-                                <td class="fw-semibold text-nowrap text-dark">Joko Widodo</td>
-                                <td>Pendaftaran akun baru di <span class="fw-bold text-dark">Blok D / No. 11</span></td>
-                                <td class="text-muted font-13 text-nowrap">17 Agu 2026</td>
+                                <td class="fw-semibold text-nowrap text-dark"><?= esc($pendaftar['nama']) ?></td>
+                                <td>Pendaftaran akun baru di <span class="fw-bold text-dark"><?= esc($pendaftar['alamat']) ?></span></td>
+                                <td class="text-muted font-13 text-nowrap"><?= date('d M Y', strtotime($pendaftar['created_at'])) ?></td>
                                 <td class="text-center pe-4 text-nowrap">
+                                    <!-- Aksi akan diimplementasi di route warga -->
                                     <button class="btn btn-sm btn-success fw-semibold me-1">Setujui</button>
                                     <button class="btn btn-sm btn-outline-danger fw-semibold">Tolak</button>
                                 </td>
                             </tr>
-                            
-                            <!-- Contoh 2: Pengajuan Pindah Rumah -->
-                            <tr>
-                                <td class="ps-4">
-                                    <span class="badge bg-info-subtle text-info border border-info-subtle px-2 py-1 font-12 fw-semibold">
-                                        <i data-feather="home" class="me-1" style="width: 12px; height: 12px;"></i> Pindah Rumah
-                                    </span>
-                                </td>
-                                <td class="fw-semibold text-nowrap text-dark">Farros Rifantiarno</td>
-                                <td>Mengajukan pindah dari <span class="text-muted text-decoration-line-through">Blok A / No. 01</span> ke <span class="fw-bold text-dark">Blok B / No. 05</span></td>
-                                <td class="text-muted font-13 text-nowrap">16 Agu 2026</td>
-                                <td class="text-center pe-4 text-nowrap">
-                                    <button class="btn btn-sm btn-success fw-semibold me-1">Setujui</button>
-                                    <button class="btn btn-sm btn-outline-danger fw-semibold">Tolak</button>
-                                </td>
-                            </tr>
+                            <?php endforeach; ?>
                         </tbody>
                     </table>
                 </div>
@@ -130,6 +117,7 @@
         </div>
     </div>
 </div>
+<?php endif; ?>
 
 <!-- ============================================================== -->
 <!-- Tabel Monitoring Macet & Verifikasi Pembayaran (Maks 5 Data) -->
@@ -142,9 +130,9 @@
                 <div class="d-flex align-items-center justify-content-between mb-3">
                     <div>
                         <h4 class="card-title mb-1 fw-bold">Monitoring Pembayaran Macet</h4>
-                        <p class="text-muted small mb-0">Daftar warga yang menunggak iuran 2 bulan atau lebih.</p>
+                        <p class="text-muted small mb-0">Daftar warga yang belum bayar bulan ini.</p>
                     </div>
-                    <span class="badge bg-danger">Tunggakan 2 Bulan Lebih</span>
+                    <span class="badge bg-danger"><?= count($wargaMacet) ?> Warga</span>
                 </div>
 
                 <div class="table-responsive flex-grow-1">
@@ -153,47 +141,27 @@
                             <tr>
                                 <th class="text-nowrap">Nama Warga</th>
                                 <th class="text-nowrap">Rumah</th>
-                                <th class="text-nowrap">Tunggakan</th>
                                 <th class="text-nowrap text-center">Status</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td class="fw-semibold text-nowrap text-dark">Bambang Susanto</td>
-                                <td class="text-nowrap text-dark fw-medium">Blok A / No. 04</td>
-                                <td class="text-danger fw-semibold text-nowrap">3 Bulan (Rp 150.000)</td>
-                                <td class="text-center"><span class="badge bg-danger">Macet</span></td>
-                            </tr>
-                            <tr>
-                                <td class="fw-semibold text-nowrap text-dark">Hendra Wijaya</td>
-                                <td class="text-nowrap text-dark fw-medium">Blok B / No. 12</td>
-                                <td class="text-danger fw-semibold text-nowrap">2 Bulan (Rp 100.000)</td>
-                                <td class="text-center"><span class="badge bg-danger">Macet</span></td>
-                            </tr>
-                            <tr>
-                                <td class="fw-semibold text-nowrap text-dark">Siti Aminah</td>
-                                <td class="text-nowrap text-dark fw-medium">Blok C / No. 08</td>
-                                <td class="text-danger fw-semibold text-nowrap">2 Bulan (Rp 100.000)</td>
-                                <td class="text-center"><span class="badge bg-danger">Macet</span></td>
-                            </tr>
-                            <tr>
-                                <td class="fw-semibold text-nowrap text-dark">Dedi Kusnadi</td>
-                                <td class="text-nowrap text-dark fw-medium">Blok A / No. 15</td>
-                                <td class="text-danger fw-semibold text-nowrap">2 Bulan (Rp 100.000)</td>
-                                <td class="text-center"><span class="badge bg-danger">Macet</span></td>
-                            </tr>
-                            <tr>
-                                <td class="fw-semibold text-nowrap text-dark">Gunawan Wibowo</td>
-                                <td class="text-nowrap text-dark fw-medium">Blok D / No. 02</td>
-                                <td class="text-danger fw-semibold text-nowrap">2 Bulan (Rp 100.000)</td>
-                                <td class="text-center"><span class="badge bg-danger">Macet</span></td>
-                            </tr>
+                            <?php if (empty($wargaMacet)): ?>
+                                <tr><td colspan="3" class="text-center text-muted py-3">Tidak ada warga macet. Semua lancar!</td></tr>
+                            <?php else: ?>
+                                <?php foreach($wargaMacet as $macet): ?>
+                                <tr>
+                                    <td class="fw-semibold text-nowrap text-dark"><?= esc($macet['nama']) ?></td>
+                                    <td class="text-nowrap text-dark fw-medium"><?= esc($macet['no_rumah']) ?></td>
+                                    <td class="text-center"><span class="badge bg-danger">Belum Bayar</span></td>
+                                </tr>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
                         </tbody>
                     </table>
                 </div>
 
                 <div class="pt-3 border-top mt-3 d-flex justify-content-between align-items-center">
-                    <small class="text-muted">Menampilkan 5 dari 5 warga macet</small>
+                    <small class="text-muted">Menampilkan maks 5 warga macet</small>
                     <a href="<?= base_url('warga') ?>" class="btn btn-sm btn-outline-danger fw-semibold">Lihat Semua Warga</a>
                 </div>
             </div>
@@ -209,7 +177,7 @@
                         <h4 class="card-title mb-1 fw-bold">Verifikasi Pembayaran Masuk</h4>
                         <p class="text-muted small mb-0">Bukti transfer warga menunggu konfirmasi pengurus.</p>
                     </div>
-                    <span class="badge bg-warning text-dark">5 Menunggu</span>
+                    <span class="badge bg-warning text-dark"><?= $menungguVerifikasi ?> Menunggu</span>
                 </div>
 
                 <div class="table-responsive flex-grow-1">
@@ -223,76 +191,29 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <!-- Contoh 1: Pembayaran 1 Bulan Normal -->
-                            <tr>
-                                <td class="fw-semibold text-nowrap text-dark">Ahmad Fauzi</td>
-                                <td class="text-nowrap text-dark fw-medium">Blok A / No. 01</td>
-                                <td class="text-nowrap">
-                                    <span class="fw-bold text-dark">Rp 50.000</span>
-                                    <small class="text-muted d-block font-12">Agustus 2026</small>
-                                </td>
-                                <td class="text-center">
-                                    <a href="<?= base_url('iuran/verifikasi/1') ?>" class="btn btn-sm btn-success px-3 fw-semibold">Periksa</a>
-                                </td>
-                            </tr>
-
-                            <!-- Contoh 2: Pembayaran 2 Bulan Sekaligus -->
-                            <tr>
-                                <td class="fw-semibold text-nowrap text-dark">Rina Marlina</td>
-                                <td class="text-nowrap text-dark fw-medium">Blok B / No. 06</td>
-                                <td class="text-nowrap">
-                                    <span class="fw-bold text-dark">Rp 100.000</span>
-                                    <small class="text-muted d-block font-12">Juli &amp; Agustus 2026 (2 Bulan)</small>
-                                </td>
-                                <td class="text-center">
-                                    <a href="<?= base_url('iuran/verifikasi/2') ?>" class="btn btn-sm btn-success px-3 fw-semibold">Periksa</a>
-                                </td>
-                            </tr>
-
-                            <!-- Contoh 3: Pembayaran 3 Bulan Sekaligus -->
-                            <tr>
-                                <td class="fw-semibold text-nowrap text-dark">Budi Santoso</td>
-                                <td class="text-nowrap text-dark fw-medium">Blok C / No. 10</td>
-                                <td class="text-nowrap">
-                                    <span class="fw-bold text-dark">Rp 150.000</span>
-                                    <small class="text-muted d-block font-12">Juni - Agustus 2026 (3 Bulan)</small>
-                                </td>
-                                <td class="text-center">
-                                    <a href="<?= base_url('iuran/verifikasi/3') ?>" class="btn btn-sm btn-success px-3 fw-semibold">Periksa</a>
-                                </td>
-                            </tr>
-
-                            <!-- Contoh 4: Pembayaran 1 Bulan Normal -->
-                            <tr>
-                                <td class="fw-semibold text-nowrap text-dark">Eko Prasetyo</td>
-                                <td class="text-nowrap text-dark fw-medium">Blok D / No. 05</td>
-                                <td class="text-nowrap">
-                                    <span class="fw-bold text-dark">Rp 50.000</span>
-                                    <small class="text-muted d-block font-12">Agustus 2026</small>
-                                </td>
-                                <td class="text-center">
-                                    <a href="<?= base_url('iuran/verifikasi/4') ?>" class="btn btn-sm btn-success px-3 fw-semibold">Periksa</a>
-                                </td>
-                            </tr>
-
-                            <!-- Contoh 5: Pembayaran 1 Bulan Normal -->
-                            <tr>
-                                <td class="fw-semibold text-nowrap text-dark">Dewi Lestari</td>
-                                <td class="text-nowrap text-dark fw-medium">Blok B / No. 14</td>
-                                <td class="text-nowrap">
-                                    <span class="fw-bold text-dark">Rp 50.000</span>
-                                    <small class="text-muted d-block font-12">Agustus 2026</small>
-                                </td>
-                                <td class="text-center">
-                                    <a href="<?= base_url('iuran/verifikasi/5') ?>" class="btn btn-sm btn-success px-3 fw-semibold">Periksa</a>
-                                </td>
-                            </tr>
+                            <?php if (empty($iuranMenunggu)): ?>
+                                <tr><td colspan="4" class="text-center text-muted py-3">Tidak ada iuran yang menunggu verifikasi.</td></tr>
+                            <?php else: ?>
+                                <?php foreach($iuranMenunggu as $iuran): ?>
+                                <tr>
+                                    <td class="fw-semibold text-nowrap text-dark"><?= esc($iuran['nama_warga']) ?></td>
+                                    <td class="text-nowrap text-dark fw-medium"><?= esc($iuran['no_rumah']) ?></td>
+                                    <td class="text-nowrap">
+                                        <span class="fw-bold text-dark">Rp <?= number_format($iuran['nominal'], 0, ',', '.') ?></span>
+                                        <small class="text-muted d-block font-12">Bulan <?= $iuran['periode_bulan'] ?> Tahun <?= $iuran['periode_tahun'] ?></small>
+                                    </td>
+                                    <td class="text-center">
+                                        <a href="<?= base_url('iuran/verifikasi/' . $iuran['id']) ?>" class="btn btn-sm btn-success px-3 fw-semibold">Periksa</a>
+                                    </td>
+                                </tr>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
                         </tbody>
                     </table>
                 </div>
 
                 <div class="pt-3 border-top mt-3 d-flex justify-content-between align-items-center">
-                    <small class="text-muted">Menampilkan 5 dari 8 pembayaran baru</small>
+                    <small class="text-muted">Menampilkan antrean verifikasi</small>
                     <a href="<?= base_url('iuran') ?>" class="btn btn-sm btn-outline-success fw-semibold">Lihat Semua Iuran</a>
                 </div>
             </div>
