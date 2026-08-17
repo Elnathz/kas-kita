@@ -13,7 +13,7 @@
                     <a href="<?= base_url('warga') ?>" class="btn btn-outline-secondary btn-sm">Kembali</a>
                 </div>
 
-                <form action="<?= base_url('warga/update/1') ?>" method="post">
+                <form action="<?= base_url('warga/update/' . $warga['id']) ?>" method="post">
                     <?= csrf_field() ?>
                     
                     <!-- ============================================================== -->
@@ -28,19 +28,19 @@
                         <div class="row g-3">
                             <div class="col-md-6">
                                 <label class="form-label text-dark fw-semibold small mb-1" for="nama">Nama Lengkap</label>
-                                <input type="text" class="form-control" id="nama" name="nama" value="Ahmad Fauzi" required>
+                                <input type="text" class="form-control" id="nama" name="nama" value="<?= esc($warga['nama']) ?>" required>
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label text-dark fw-semibold small mb-1" for="username">Username Login</label>
-                                <input type="text" class="form-control" id="username" name="username" value="ahmad_fauzi" maxlength="20" required>
+                                <input type="text" class="form-control" id="username" name="username" value="<?= esc($warga['username']) ?>" maxlength="20" required>
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label text-dark fw-semibold small mb-1" for="password">Ganti Password (Opsional)</label>
                                 <input type="password" class="form-control" id="password" name="password" minlength="6" placeholder="Kosongkan jika tidak diubah">
                             </div>
                             <div class="col-md-6">
-                                <label class="form-label text-dark fw-semibold small mb-1" for="no_telepon">Nomor WhatsApp / HP</label>
-                                <input type="tel" class="form-control" id="no_telepon" name="no_telepon" value="081234567890" inputmode="numeric" 
+                                <label class="form-label text-dark fw-semibold small mb-1" for="no_hp">Nomor WhatsApp / HP</label>
+                                <input type="tel" class="form-control" id="no_hp" name="no_hp" value="<?= esc($warga['no_hp']) ?>" inputmode="numeric" 
                                     pattern="[0-9]{10,15}" maxlength="15" oninput="this.value = this.value.replace(/[^0-9]/g, '')" required>
                             </div>
                         </div>
@@ -60,15 +60,15 @@
                             <div class="col-md-4">
                                 <label class="form-label text-dark fw-semibold small mb-1" for="dropdownBlokEdit">Blok Pemukiman</label>
                                 <div class="dropdown">
-                                    <input type="hidden" name="blok_rumah" id="input_blok_edit" value="Blok A (Kapasitas 15)" required>
+                                    <input type="hidden" name="blok_rumah" id="input_blok_edit" value="<?= esc($warga['blok_rumah']) ?>" required>
                                     <button class="form-select text-start d-flex justify-content-between align-items-center bg-white" type="button" id="dropdownBlokEdit" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <span id="selectedBlokEditText" class="text-dark fw-semibold">Blok A (Kapasitas 15)</span>
+                                        <span id="selectedBlokEditText" class="text-dark fw-semibold"><?= esc($warga['blok_rumah']) ?></span>
                                     </button>
                                     <ul class="dropdown-menu w-100 shadow border-0" aria-labelledby="dropdownBlokEdit" style="max-height: 180px; overflow-y: auto;">
-                                        <?php foreach (['Blok A (Kapasitas 15)', 'Blok B (Kapasitas 12)', 'Blok C (Kapasitas 13)', 'Blok D (Kapasitas 10)'] as $blok) : ?>
+                                        <?php foreach ($master_blok as $blok) : ?>
                                             <li>
-                                                <a class="dropdown-item py-2" href="javascript:void(0)" onclick="selectOption('input_blok_edit', 'selectedBlokEditText', '<?= $blok ?>')">
-                                                    <?= $blok ?>
+                                                <a class="dropdown-item py-2" href="javascript:void(0)" onclick="pilihBlok('<?= esc($blok['nama_blok']) ?>', <?= $blok['maks_nomor'] ?>)">
+                                                    <?= esc($blok['nama_blok']) ?> (Kapasitas <?= $blok['maks_nomor'] ?>)
                                                 </a>
                                             </li>
                                         <?php endforeach; ?>
@@ -80,19 +80,17 @@
                             <div class="col-md-4">
                                 <label class="form-label text-dark fw-semibold small mb-1" for="dropdownNoRumahEdit">Nomor Rumah</label>
                                 <div class="dropdown">
-                                    <input type="hidden" name="no_rumah" id="input_no_rumah_edit" value="No. 01" required>
+                                    <input type="hidden" name="no_rumah" id="input_no_rumah_edit" value="<?= esc($warga['no_rumah']) ?>" required>
                                     <button class="form-select text-start d-flex justify-content-between align-items-center bg-white" type="button" id="dropdownNoRumahEdit" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <span id="selectedNoRumahEditText" class="text-dark fw-semibold">No. 01</span>
+                                        <span id="selectedNoRumahEditText" class="text-dark fw-semibold"><?= esc($warga['no_rumah']) ?></span>
                                     </button>
-                                    <ul class="dropdown-menu w-100 shadow border-0" aria-labelledby="dropdownNoRumahEdit" style="max-height: 180px; overflow-y: auto;">
-                                        <?php for ($i = 1; $i <= 30; $i++) : ?>
-                                            <?php $nomor = sprintf('%02d', $i); ?>
-                                            <li>
-                                                <a class="dropdown-item py-2" href="javascript:void(0)" onclick="selectOption('input_no_rumah_edit', 'selectedNoRumahEditText', 'No. <?= $nomor ?>')">
-                                                    No. <?= $nomor ?>
-                                                </a>
-                                            </li>
-                                        <?php endfor; ?>
+                                    <ul class="dropdown-menu w-100 shadow border-0" aria-labelledby="dropdownNoRumahEdit" id="dropdownNoRumahList" style="max-height: 180px; overflow-y: auto;">
+                                        <!-- Will be populated by JS if a new block is selected, but currently showing default list for simplicity or initial load -->
+                                        <li>
+                                            <a class="dropdown-item py-2" href="javascript:void(0)">
+                                                <?= esc($warga['no_rumah']) ?> (Terpilih)
+                                            </a>
+                                        </li>
                                     </ul>
                                 </div>
                             </div>
@@ -101,15 +99,15 @@
                             <div class="col-md-4">
                                 <label class="form-label text-dark fw-semibold small mb-1" for="dropdownNamaJalanEdit">Nama Jalan</label>
                                 <div class="dropdown">
-                                    <input type="hidden" name="nama_jalan" id="input_nama_jalan_edit" value="Jl. Mawar" required>
+                                    <input type="hidden" name="nama_jalan" id="input_nama_jalan_edit" value="<?= esc($warga['nama_jalan']) ?>" required>
                                     <button class="form-select text-start d-flex justify-content-between align-items-center bg-white" type="button" id="dropdownNamaJalanEdit" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <span id="selectedJalanEditText" class="text-dark fw-semibold">Jl. Mawar</span>
+                                        <span id="selectedJalanEditText" class="text-dark fw-semibold"><?= esc($warga['nama_jalan']) ?></span>
                                     </button>
                                     <ul class="dropdown-menu w-100 shadow border-0" aria-labelledby="dropdownNamaJalanEdit" style="max-height: 180px; overflow-y: auto;">
-                                        <?php foreach (['Jl. Mawar', 'Jl. Melati', 'Jl. Anggrek', 'Jl. Kenanga'] as $jalan) : ?>
+                                        <?php foreach ($master_jalan as $jalan) : ?>
                                             <li>
-                                                <a class="dropdown-item py-2" href="javascript:void(0)" onclick="selectOption('input_nama_jalan_edit', 'selectedJalanEditText', '<?= $jalan ?>')">
-                                                    <?= $jalan ?>
+                                                <a class="dropdown-item py-2" href="javascript:void(0)" onclick="selectOption('input_nama_jalan_edit', 'selectedJalanEditText', '<?= esc($jalan['nama_jalan']) ?>')">
+                                                    <?= esc($jalan['nama_jalan']) ?>
                                                 </a>
                                             </li>
                                         <?php endforeach; ?>
@@ -132,17 +130,16 @@
                             <div class="col-md-6">
                                 <label class="form-label text-dark fw-semibold small mb-1" for="role">Role Pengguna</label>
                                 <select class="form-select" id="role" name="role" required>
-                                    <option value="warga" selected>Warga RT (Akses Pembayaran &amp; Tagihan)</option>
-                                    <option value="pengurus">Pengurus RT (Akses Manajemen Penuh)</option>
+                                    <option value="warga" <?= $warga['role'] == 'warga' ? 'selected' : '' ?>>Warga RT (Akses Pembayaran &amp; Tagihan)</option>
+                                    <option value="pengurus" <?= $warga['role'] == 'pengurus' ? 'selected' : '' ?>>Pengurus RT (Akses Manajemen Penuh)</option>
                                 </select>
                                 <span class="text-muted font-11">Pilih 'Pengurus RT' untuk memberikan hak akses pengelola kas.</span>
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label text-dark fw-semibold small mb-1" for="status">Status Akun</label>
                                 <select class="form-select" id="status" name="status" required>
-                                    <option value="active" selected>Aktif (Disetujui Pengurus)</option>
-                                    <option value="pending">Menunggu Konfirmasi</option>
-                                    <option value="inactive">Nonaktif (Pindah / Tidak Aktif)</option>
+                                    <option value="active" <?= $warga['is_active'] ? 'selected' : '' ?>>Aktif (Disetujui Pengurus)</option>
+                                    <option value="pending" <?= !$warga['is_active'] ? 'selected' : '' ?>>Menunggu Konfirmasi</option>
                                 </select>
                             </div>
                         </div>
@@ -167,5 +164,58 @@ function selectOption(inputId, textSpanId, value) {
     span.classList.remove('text-muted');
     span.classList.add('text-dark', 'fw-semibold');
 }
+
+function pilihBlok(namaBlok, maksNomor) {
+    // Set value blok
+    document.getElementById('input_blok_edit').value = namaBlok;
+    const spanBlok = document.getElementById('selectedBlokEditText');
+    spanBlok.textContent = namaBlok;
+    spanBlok.classList.remove('text-muted');
+    spanBlok.classList.add('text-dark', 'fw-semibold');
+
+    // Reset value nomor rumah
+    document.getElementById('input_no_rumah_edit').value = '';
+    const spanNoRumah = document.getElementById('selectedNoRumahEditText');
+    spanNoRumah.textContent = 'Pilih No...';
+    spanNoRumah.classList.remove('text-dark', 'fw-semibold');
+    spanNoRumah.classList.add('text-muted');
+
+    // Enable button
+    document.getElementById('dropdownNoRumahEdit').disabled = false;
+
+    // Generate list nomor rumah sesuai kapasitas
+    const ulNoRumah = document.getElementById('dropdownNoRumahList');
+    ulNoRumah.innerHTML = ''; // bersihkan list lama
+    
+    for (let i = 1; i <= maksNomor; i++) {
+        let nomorStr = (i < 10 ? '0' : '') + i;
+        let textNomor = 'No. ' + nomorStr;
+        
+        let li = document.createElement('li');
+        let a = document.createElement('a');
+        a.className = 'dropdown-item py-2';
+        a.href = 'javascript:void(0)';
+        a.textContent = textNomor;
+        a.onclick = function() {
+            selectOption('input_no_rumah_edit', 'selectedNoRumahEditText', textNomor);
+        };
+        
+        li.appendChild(a);
+        ulNoRumah.appendChild(li);
+    }
+}
+
+// Saat halaman dimuat, trigger generate nomor rumah berdasarkan blok yang terpilih
+document.addEventListener('DOMContentLoaded', function() {
+    let currentBlok = '<?= esc($warga['blok_rumah']) ?>';
+    let currentNo = '<?= esc($warga['no_rumah']) ?>';
+    
+    <?php foreach ($master_blok as $blok) : ?>
+    if (currentBlok === '<?= esc($blok['nama_blok']) ?>') {
+        pilihBlok('<?= esc($blok['nama_blok']) ?>', <?= $blok['maks_nomor'] ?>);
+        selectOption('input_no_rumah_edit', 'selectedNoRumahEditText', currentNo);
+    }
+    <?php endforeach; ?>
+});
 </script>
 <?= $this->endSection() ?>

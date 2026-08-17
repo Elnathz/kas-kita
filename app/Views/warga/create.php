@@ -66,10 +66,10 @@
                                         <span id="selectedBlokText" class="text-muted">Pilih Blok...</span>
                                     </button>
                                     <ul class="dropdown-menu w-100 shadow border-0" aria-labelledby="dropdownBlok" style="max-height: 180px; overflow-y: auto;">
-                                        <?php foreach (['Blok A (Kapasitas 15)', 'Blok B (Kapasitas 12)', 'Blok C (Kapasitas 13)', 'Blok D (Kapasitas 10)'] as $blok) : ?>
+                                        <?php foreach ($master_blok as $blok) : ?>
                                             <li>
-                                                <a class="dropdown-item py-2" href="javascript:void(0)" onclick="selectOption('input_blok_rumah', 'selectedBlokText', '<?= $blok ?>')">
-                                                    <?= $blok ?>
+                                                <a class="dropdown-item py-2" href="javascript:void(0)" onclick="pilihBlok('<?= esc($blok['nama_blok']) ?>', <?= $blok['maks_nomor'] ?>)">
+                                                    <?= esc($blok['nama_blok']) ?> (Kapasitas <?= $blok['maks_nomor'] ?>)
                                                 </a>
                                             </li>
                                         <?php endforeach; ?>
@@ -77,23 +77,16 @@
                                 </div>
                             </div>
                             
-                            <!-- Pilihan Nomor Rumah (Custom Scrollable Dropdown Maks 5 View) -->
+                            <!-- Pilihan Nomor Rumah (Custom Scrollable Dropdown) -->
                             <div class="col-md-4">
                                 <label class="form-label text-dark fw-semibold small mb-1" for="dropdownNoRumah">Nomor Rumah</label>
                                 <div class="dropdown">
                                     <input type="hidden" name="no_rumah" id="input_no_rumah" value="" required>
-                                    <button class="form-select text-start d-flex justify-content-between align-items-center bg-white" type="button" id="dropdownNoRumah" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <span id="selectedNoRumahText" class="text-muted">Pilih No...</span>
+                                    <button class="form-select text-start d-flex justify-content-between align-items-center bg-white" type="button" id="dropdownNoRumah" data-bs-toggle="dropdown" aria-expanded="false" disabled>
+                                        <span id="selectedNoRumahText" class="text-muted">Pilih Blok Dulu...</span>
                                     </button>
-                                    <ul class="dropdown-menu w-100 shadow border-0" aria-labelledby="dropdownNoRumah" style="max-height: 180px; overflow-y: auto;">
-                                        <?php for ($i = 1; $i <= 30; $i++) : ?>
-                                            <?php $nomor = sprintf('%02d', $i); ?>
-                                            <li>
-                                                <a class="dropdown-item py-2" href="javascript:void(0)" onclick="selectOption('input_no_rumah', 'selectedNoRumahText', 'No. <?= $nomor ?>')">
-                                                    No. <?= $nomor ?>
-                                                </a>
-                                            </li>
-                                        <?php endfor; ?>
+                                    <ul class="dropdown-menu w-100 shadow border-0" aria-labelledby="dropdownNoRumah" id="dropdownNoRumahList" style="max-height: 180px; overflow-y: auto;">
+                                        <!-- Opsi nomor rumah akan dirender via JS -->
                                     </ul>
                                 </div>
                             </div>
@@ -107,10 +100,10 @@
                                         <span id="selectedJalanText" class="text-muted">Pilih Jalan...</span>
                                     </button>
                                     <ul class="dropdown-menu w-100 shadow border-0" aria-labelledby="dropdownNamaJalan" style="max-height: 180px; overflow-y: auto;">
-                                        <?php foreach (['Jl. Mawar', 'Jl. Melati', 'Jl. Anggrek', 'Jl. Kenanga'] as $jalan) : ?>
+                                        <?php foreach ($master_jalan as $jalan) : ?>
                                             <li>
-                                                <a class="dropdown-item py-2" href="javascript:void(0)" onclick="selectOption('input_nama_jalan', 'selectedJalanText', '<?= $jalan ?>')">
-                                                    <?= $jalan ?>
+                                                <a class="dropdown-item py-2" href="javascript:void(0)" onclick="selectOption('input_nama_jalan', 'selectedJalanText', '<?= esc($jalan['nama_jalan']) ?>')">
+                                                    <?= esc($jalan['nama_jalan']) ?>
                                                 </a>
                                             </li>
                                         <?php endforeach; ?>
@@ -166,6 +159,46 @@ function selectOption(inputId, textSpanId, value) {
     span.textContent = value;
     span.classList.remove('text-muted');
     span.classList.add('text-dark', 'fw-semibold');
+}
+
+function pilihBlok(namaBlok, maksNomor) {
+    // Set value blok
+    document.getElementById('input_blok_rumah').value = namaBlok;
+    const spanBlok = document.getElementById('selectedBlokText');
+    spanBlok.textContent = namaBlok + ' (Kapasitas ' + maksNomor + ')';
+    spanBlok.classList.remove('text-muted');
+    spanBlok.classList.add('text-dark', 'fw-semibold');
+
+    // Reset value nomor rumah
+    document.getElementById('input_no_rumah').value = '';
+    const spanNoRumah = document.getElementById('selectedNoRumahText');
+    spanNoRumah.textContent = 'Pilih No...';
+    spanNoRumah.classList.remove('text-dark', 'fw-semibold');
+    spanNoRumah.classList.add('text-muted');
+
+    // Enable button
+    document.getElementById('dropdownNoRumah').disabled = false;
+
+    // Generate list nomor rumah sesuai kapasitas
+    const ulNoRumah = document.getElementById('dropdownNoRumahList');
+    ulNoRumah.innerHTML = ''; // bersihkan list lama
+    
+    for (let i = 1; i <= maksNomor; i++) {
+        let nomorStr = (i < 10 ? '0' : '') + i;
+        let textNomor = 'No. ' + nomorStr;
+        
+        let li = document.createElement('li');
+        let a = document.createElement('a');
+        a.className = 'dropdown-item py-2';
+        a.href = 'javascript:void(0)';
+        a.textContent = textNomor;
+        a.onclick = function() {
+            selectOption('input_no_rumah', 'selectedNoRumahText', textNomor);
+        };
+        
+        li.appendChild(a);
+        ulNoRumah.appendChild(li);
+    }
 }
 </script>
 <?= $this->endSection() ?>

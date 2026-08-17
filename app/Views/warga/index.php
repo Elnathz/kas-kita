@@ -28,11 +28,10 @@
 
                 <!-- Filter Cepat Per Blok -->
                 <div class="d-flex flex-wrap gap-2 mb-4 p-2 bg-light rounded-3 border">
-                    <button class="btn btn-sm btn-success fw-bold rounded-2 px-3 filter-blok-btn active" onclick="filterBlok('all', this)">Semua Blok (50 KK)</button>
-                    <button class="btn btn-sm btn-outline-secondary fw-semibold rounded-2 px-3 filter-blok-btn" onclick="filterBlok('blok-a', this)">Blok A (15 KK)</button>
-                    <button class="btn btn-sm btn-outline-secondary fw-semibold rounded-2 px-3 filter-blok-btn" onclick="filterBlok('blok-b', this)">Blok B (12 KK)</button>
-                    <button class="btn btn-sm btn-outline-secondary fw-semibold rounded-2 px-3 filter-blok-btn" onclick="filterBlok('blok-c', this)">Blok C (13 KK)</button>
-                    <button class="btn btn-sm btn-outline-secondary fw-semibold rounded-2 px-3 filter-blok-btn" onclick="filterBlok('blok-d', this)">Blok D (10 KK)</button>
+                    <button class="btn btn-sm btn-success fw-bold rounded-2 px-3 filter-blok-btn active" onclick="filterBlok('all', this)">Semua Blok (<?= $totalWarga ?> KK)</button>
+                    <?php foreach ($dataWargaPerBlok as $namaBlok => $dataBlok): ?>
+                        <button class="btn btn-sm btn-outline-secondary fw-semibold rounded-2 px-3 filter-blok-btn" onclick="filterBlok('<?= strtolower(str_replace(' ', '-', $namaBlok)) ?>', this)"><?= esc($namaBlok) ?> (<?= count($dataBlok['warga']) ?> KK)</button>
+                    <?php endforeach; ?>
                 </div>
 
                 <!-- ============================================================== -->
@@ -40,22 +39,25 @@
                 <!-- ============================================================== -->
                 <div class="accordion d-flex flex-column gap-3" id="accordionWargaBlok">
                     
-                    <!-- ============================================================== -->
-                    <!-- 1. GRUP BLOK A -->
-                    <!-- ============================================================== -->
-                    <div class="accordion-item border rounded-3 overflow-hidden shadow-sm item-blok-wrapper" id="item-blok-a">
-                        <h2 class="accordion-header" id="headingBlokA">
-                            <button class="accordion-button bg-white text-dark py-3 px-4 fw-bold d-flex justify-content-between align-items-center" type="button" data-bs-toggle="collapse" data-bs-target="#collapseBlokA" aria-expanded="true" aria-controls="collapseBlokA">
+                    <?php foreach ($dataWargaPerBlok as $namaBlok => $dataBlok): ?>
+                    <?php 
+                        $blokIdStr = strtolower(str_replace(' ', '-', $namaBlok));
+                        $wargaCount = count($dataBlok['warga']);
+                        $kapasitas = $dataBlok['kapasitas'];
+                    ?>
+                    <div class="accordion-item border rounded-3 overflow-hidden shadow-sm item-blok-wrapper" id="item-<?= $blokIdStr ?>">
+                        <h2 class="accordion-header" id="heading<?= $blokIdStr ?>">
+                            <button class="accordion-button bg-white text-dark py-3 px-4 fw-bold d-flex justify-content-between align-items-center" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<?= $blokIdStr ?>" aria-expanded="true" aria-controls="collapse<?= $blokIdStr ?>">
                                 <div class="d-flex flex-wrap align-items-center">
-                                    <span class="fw-bold text-dark fs-6">Blok A</span>
-                                    <span class="text-muted font-12 fw-normal ms-2">(Kapasitas 15 Rumah • 15 Terdaftar)</span>
+                                    <span class="fw-bold text-dark fs-6"><?= esc($namaBlok) ?></span>
+                                    <span class="text-muted font-12 fw-normal ms-2">(Kapasitas <?= $kapasitas ?> Rumah • <?= $wargaCount ?> Terdaftar)</span>
                                 </div>
                                 <div class="ms-auto me-3 d-none d-md-flex align-items-center font-12 text-muted">
-                                    <span>15 Kepala Keluarga Aktif</span>
+                                    <span><?= $wargaCount ?> Kepala Keluarga Aktif</span>
                                 </div>
                             </button>
                         </h2>
-                        <div id="collapseBlokA" class="accordion-collapse collapse show" aria-labelledby="headingBlokA">
+                        <div id="collapse<?= $blokIdStr ?>" class="accordion-collapse collapse show" aria-labelledby="heading<?= $blokIdStr ?>">
                             <div class="accordion-body p-0">
                                 <div class="table-responsive">
                                     <table class="table table-hover align-middle mb-0">
@@ -72,248 +74,47 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td class="ps-4 fw-bold text-dark text-nowrap">No. 01</td>
-                                                <td class="text-nowrap text-dark fw-medium">Jl. Mawar</td>
-                                                <td class="fw-semibold text-nowrap text-dark">Farros Rifantiarno</td>
-                                                <td class="text-nowrap text-muted">farros_r</td>
-                                                <td class="text-nowrap">081234567890</td>
-                                                <td class="text-center text-nowrap"><span class="badge bg-light text-dark border">Warga</span></td>
-                                                <td class="text-center text-nowrap"><span class="badge bg-success">Aktif</span></td>
-                                                <td class="text-center text-nowrap pe-4">
-                                                    <a href="<?= base_url('warga/edit/1') ?>" class="btn btn-sm btn-outline-warning me-1">Edit</a>
-                                                    <button class="btn btn-sm btn-outline-danger" onclick="konfirmasiHapus('Farros Rifantiarno', 'Blok A / No. 01 (Jl. Mawar)', 1)">Hapus</button>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="ps-4 fw-bold text-dark text-nowrap">No. 02</td>
-                                                <td class="text-nowrap text-dark fw-medium">Jl. Mawar</td>
-                                                <td class="fw-semibold text-nowrap text-dark">
-                                                    Agus Hariyanto
-                                                </td>
-                                                <td class="text-nowrap text-muted">admin</td>
-                                                <td class="text-nowrap">081234567891</td>
-                                                <td class="text-center text-nowrap"><span class="badge bg-primary text-white">Pengurus RT</span></td>
-                                                <td class="text-center text-nowrap"><span class="badge bg-success">Aktif</span></td>
-                                                <td class="text-center text-nowrap pe-4">
-                                                    <a href="<?= base_url('warga/edit/2') ?>" class="btn btn-sm btn-outline-warning me-1">Edit</a>
-                                                    <button class="btn btn-sm btn-outline-danger" onclick="konfirmasiHapus('Agus Hariyanto', 'Blok A / No. 02 (Jl. Mawar)', 2)">Hapus</button>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="ps-4 fw-bold text-dark text-nowrap">No. 04</td>
-                                                <td class="text-nowrap text-dark fw-medium">Jl. Mawar</td>
-                                                <td class="fw-semibold text-nowrap text-dark">Bambang Susanto</td>
-                                                <td class="text-nowrap text-muted">bambang_s</td>
-                                                <td class="text-nowrap">081234567892</td>
-                                                <td class="text-center text-nowrap"><span class="badge bg-light text-dark border">Warga</span></td>
-                                                <td class="text-center text-nowrap"><span class="badge bg-success">Aktif</span></td>
-                                                <td class="text-center text-nowrap pe-4">
-                                                    <a href="<?= base_url('warga/edit/3') ?>" class="btn btn-sm btn-outline-warning me-1">Edit</a>
-                                                    <button class="btn btn-sm btn-outline-danger" onclick="konfirmasiHapus('Bambang Susanto', 'Blok A / No. 04 (Jl. Mawar)', 3)">Hapus</button>
-                                                </td>
-                                            </tr>
+                                            <?php if($wargaCount == 0): ?>
+                                                <tr>
+                                                    <td colspan="8" class="text-center text-muted py-4">Belum ada warga yang terdaftar di blok ini.</td>
+                                                </tr>
+                                            <?php else: ?>
+                                                <?php foreach ($dataBlok['warga'] as $warga): ?>
+                                                <tr>
+                                                    <td class="ps-4 fw-bold text-dark text-nowrap"><?= esc($warga['no_rumah']) ?></td>
+                                                    <td class="text-nowrap text-dark fw-medium"><?= esc($warga['nama_jalan']) ?></td>
+                                                    <td class="fw-semibold text-nowrap text-dark"><?= esc($warga['nama']) ?></td>
+                                                    <td class="text-nowrap text-muted"><?= esc($warga['username']) ?></td>
+                                                    <td class="text-nowrap"><?= esc($warga['no_hp']) ?></td>
+                                                    <td class="text-center text-nowrap">
+                                                        <?php if($warga['role'] == 'pengurus'): ?>
+                                                            <span class="badge bg-primary text-white">Pengurus RT</span>
+                                                        <?php else: ?>
+                                                            <span class="badge bg-light text-dark border">Warga</span>
+                                                        <?php endif; ?>
+                                                    </td>
+                                                    <td class="text-center text-nowrap">
+                                                        <?php if($warga['is_active']): ?>
+                                                            <span class="badge bg-success">Aktif</span>
+                                                        <?php else: ?>
+                                                            <span class="badge bg-warning text-dark">Menunggu</span>
+                                                        <?php endif; ?>
+                                                    </td>
+                                                    <td class="text-center text-nowrap pe-4">
+                                                        <a href="<?= base_url('warga/edit/' . $warga['id']) ?>" class="btn btn-sm btn-outline-warning me-1">Edit</a>
+                                                        <!-- Meneruskan ID ke fungsi javascript hapus -->
+                                                        <button class="btn btn-sm btn-outline-danger" onclick="konfirmasiHapus('<?= addslashes($warga['nama']) ?>', '<?= addslashes($warga['blok_rumah']) ?> / <?= addslashes($warga['no_rumah']) ?> (<?= addslashes($warga['nama_jalan']) ?>)', <?= $warga['id'] ?>)">Hapus</button>
+                                                    </td>
+                                                </tr>
+                                                <?php endforeach; ?>
+                                            <?php endif; ?>
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
                         </div>
                     </div>
-
-                    <!-- ============================================================== -->
-                    <!-- 2. GRUP BLOK B -->
-                    <!-- ============================================================== -->
-                    <div class="accordion-item border rounded-3 overflow-hidden shadow-sm item-blok-wrapper" id="item-blok-b">
-                        <h2 class="accordion-header" id="headingBlokB">
-                            <button class="accordion-button bg-white text-dark py-3 px-4 fw-bold d-flex justify-content-between align-items-center" type="button" data-bs-toggle="collapse" data-bs-target="#collapseBlokB" aria-expanded="true" aria-controls="collapseBlokB">
-                                <div class="d-flex flex-wrap align-items-center">
-                                    <span class="fw-bold text-dark fs-6">Blok B</span>
-                                    <span class="text-muted font-12 fw-normal ms-2">(Kapasitas 12 Rumah • 12 Terdaftar)</span>
-                                </div>
-                                <div class="ms-auto me-3 d-none d-md-flex align-items-center font-12 text-muted">
-                                    <span>12 Kepala Keluarga Aktif</span>
-                                </div>
-                            </button>
-                        </h2>
-                        <div id="collapseBlokB" class="accordion-collapse collapse show" aria-labelledby="headingBlokB">
-                            <div class="accordion-body p-0">
-                                <div class="table-responsive">
-                                    <table class="table table-hover align-middle mb-0">
-                                        <thead class="table-light">
-                                            <tr>
-                                                <th class="text-nowrap ps-4" style="width: 100px;">No. Rumah</th>
-                                                <th class="text-nowrap" style="width: 130px;">Nama Jalan</th>
-                                                <th class="text-nowrap">Nama Kepala Keluarga</th>
-                                                <th class="text-nowrap">Username</th>
-                                                <th class="text-nowrap">Nomor WhatsApp</th>
-                                                <th class="text-nowrap text-center">Role Akun</th>
-                                                <th class="text-nowrap text-center">Status Akun</th>
-                                                <th class="text-nowrap text-center" style="width: 130px;">Aksi</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td class="ps-4 fw-bold text-dark text-nowrap">No. 06</td>
-                                                <td class="text-nowrap text-dark fw-medium">Jl. Melati</td>
-                                                <td class="fw-semibold text-nowrap text-dark">Rina Marlina</td>
-                                                <td class="text-nowrap text-muted">rina_m</td>
-                                                <td class="text-nowrap">081234567893</td>
-                                                <td class="text-center text-nowrap"><span class="badge bg-light text-dark border">Warga</span></td>
-                                                <td class="text-center text-nowrap"><span class="badge bg-success">Aktif</span></td>
-                                                <td class="text-center text-nowrap pe-4">
-                                                    <a href="<?= base_url('warga/edit/4') ?>" class="btn btn-sm btn-outline-warning me-1">Edit</a>
-                                                    <button class="btn btn-sm btn-outline-danger" onclick="konfirmasiHapus('Rina Marlina', 'Blok B / No. 06 (Jl. Melati)', 4)">Hapus</button>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="ps-4 fw-bold text-dark text-nowrap">No. 12</td>
-                                                <td class="text-nowrap text-dark fw-medium">Jl. Melati</td>
-                                                <td class="fw-semibold text-nowrap text-dark">Hendra Wijaya</td>
-                                                <td class="text-nowrap text-muted">hendra_w</td>
-                                                <td class="text-nowrap">081234567895</td>
-                                                <td class="text-center text-nowrap"><span class="badge bg-light text-dark border">Warga</span></td>
-                                                <td class="text-center text-nowrap"><span class="badge bg-success">Aktif</span></td>
-                                                <td class="text-center text-nowrap pe-4">
-                                                    <a href="<?= base_url('warga/edit/6') ?>" class="btn btn-sm btn-outline-warning me-1">Edit</a>
-                                                    <button class="btn btn-sm btn-outline-danger" onclick="konfirmasiHapus('Hendra Wijaya', 'Blok B / No. 12 (Jl. Melati)', 6)">Hapus</button>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- ============================================================== -->
-                    <!-- 3. GRUP BLOK C -->
-                    <!-- ============================================================== -->
-                    <div class="accordion-item border rounded-3 overflow-hidden shadow-sm item-blok-wrapper" id="item-blok-c">
-                        <h2 class="accordion-header" id="headingBlokC">
-                            <button class="accordion-button bg-white text-dark py-3 px-4 fw-bold d-flex justify-content-between align-items-center" type="button" data-bs-toggle="collapse" data-bs-target="#collapseBlokC" aria-expanded="true" aria-controls="collapseBlokC">
-                                <div class="d-flex flex-wrap align-items-center">
-                                    <span class="fw-bold text-dark fs-6">Blok C</span>
-                                    <span class="text-muted font-12 fw-normal ms-2">(Kapasitas 13 Rumah • 13 Terdaftar)</span>
-                                </div>
-                                <div class="ms-auto me-3 d-none d-md-flex align-items-center font-12 text-muted">
-                                    <span>13 Kepala Keluarga Aktif</span>
-                                </div>
-                            </button>
-                        </h2>
-                        <div id="collapseBlokC" class="accordion-collapse collapse show" aria-labelledby="headingBlokC">
-                            <div class="accordion-body p-0">
-                                <div class="table-responsive">
-                                    <table class="table table-hover align-middle mb-0">
-                                        <thead class="table-light">
-                                            <tr>
-                                                <th class="text-nowrap ps-4" style="width: 100px;">No. Rumah</th>
-                                                <th class="text-nowrap" style="width: 130px;">Nama Jalan</th>
-                                                <th class="text-nowrap">Nama Kepala Keluarga</th>
-                                                <th class="text-nowrap">Username</th>
-                                                <th class="text-nowrap">Nomor WhatsApp</th>
-                                                <th class="text-nowrap text-center">Role Akun</th>
-                                                <th class="text-nowrap text-center">Status Akun</th>
-                                                <th class="text-nowrap text-center" style="width: 130px;">Aksi</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td class="ps-4 fw-bold text-dark text-nowrap">No. 03</td>
-                                                <td class="text-nowrap text-dark fw-medium">Jl. Anggrek</td>
-                                                <td class="fw-semibold text-nowrap text-dark">Siti Aminah</td>
-                                                <td class="text-nowrap text-muted">siti_a</td>
-                                                <td class="text-nowrap">081234567896</td>
-                                                <td class="text-center text-nowrap"><span class="badge bg-light text-dark border">Warga</span></td>
-                                                <td class="text-center text-nowrap"><span class="badge bg-success">Aktif</span></td>
-                                                <td class="text-center text-nowrap pe-4">
-                                                    <a href="<?= base_url('warga/edit/7') ?>" class="btn btn-sm btn-outline-warning me-1">Edit</a>
-                                                    <button class="btn btn-sm btn-outline-danger" onclick="konfirmasiHapus('Siti Aminah', 'Blok C / No. 03 (Jl. Anggrek)', 7)">Hapus</button>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="ps-4 fw-bold text-dark text-nowrap">No. 10</td>
-                                                <td class="text-nowrap text-dark fw-medium">Jl. Anggrek</td>
-                                                <td class="fw-semibold text-nowrap text-dark">Budi Santoso</td>
-                                                <td class="text-nowrap text-muted">budi_santoso</td>
-                                                <td class="text-nowrap">081234567894</td>
-                                                <td class="text-center text-nowrap"><span class="badge bg-light text-dark border">Warga</span></td>
-                                                <td class="text-center text-nowrap"><span class="badge bg-success">Aktif</span></td>
-                                                <td class="text-center text-nowrap pe-4">
-                                                    <a href="<?= base_url('warga/edit/3') ?>" class="btn btn-sm btn-outline-warning me-1">Edit</a>
-                                                    <button class="btn btn-sm btn-outline-danger" onclick="konfirmasiHapus('Budi Santoso', 'Blok C / No. 10 (Jl. Anggrek)', 3)">Hapus</button>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- ============================================================== -->
-                    <!-- 4. GRUP BLOK D -->
-                    <!-- ============================================================== -->
-                    <div class="accordion-item border rounded-3 overflow-hidden shadow-sm item-blok-wrapper" id="item-blok-d">
-                        <h2 class="accordion-header" id="headingBlokD">
-                            <button class="accordion-button bg-white text-dark py-3 px-4 fw-bold d-flex justify-content-between align-items-center" type="button" data-bs-toggle="collapse" data-bs-target="#collapseBlokD" aria-expanded="true" aria-controls="collapseBlokD">
-                                <div class="d-flex flex-wrap align-items-center">
-                                    <span class="fw-bold text-dark fs-6">Blok D</span>
-                                    <span class="text-muted font-12 fw-normal ms-2">(Kapasitas 10 Rumah • 10 Terdaftar)</span>
-                                </div>
-                                <div class="ms-auto me-3 d-none d-md-flex align-items-center font-12 text-muted">
-                                    <span>10 Kepala Keluarga Aktif</span>
-                                </div>
-                            </button>
-                        </h2>
-                        <div id="collapseBlokD" class="accordion-collapse collapse show" aria-labelledby="headingBlokD">
-                            <div class="accordion-body p-0">
-                                <div class="table-responsive">
-                                    <table class="table table-hover align-middle mb-0">
-                                        <thead class="table-light">
-                                            <tr>
-                                                <th class="text-nowrap ps-4" style="width: 100px;">No. Rumah</th>
-                                                <th class="text-nowrap" style="width: 130px;">Nama Jalan</th>
-                                                <th class="text-nowrap">Nama Kepala Keluarga</th>
-                                                <th class="text-nowrap">Username</th>
-                                                <th class="text-nowrap">Nomor WhatsApp</th>
-                                                <th class="text-nowrap text-center">Role Akun</th>
-                                                <th class="text-nowrap text-center">Status Akun</th>
-                                                <th class="text-nowrap text-center" style="width: 130px;">Aksi</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td class="ps-4 fw-bold text-dark text-nowrap">No. 02</td>
-                                                <td class="text-nowrap text-dark fw-medium">Jl. Kenanga</td>
-                                                <td class="fw-semibold text-nowrap text-dark">Dedi Supardi</td>
-                                                <td class="text-nowrap text-muted">dedi_s</td>
-                                                <td class="text-nowrap">081234567897</td>
-                                                <td class="text-center text-nowrap"><span class="badge bg-light text-dark border">Warga</span></td>
-                                                <td class="text-center text-nowrap"><span class="badge bg-success">Aktif</span></td>
-                                                <td class="text-center text-nowrap pe-4">
-                                                    <a href="<?= base_url('warga/edit/8') ?>" class="btn btn-sm btn-outline-warning me-1">Edit</a>
-                                                    <button class="btn btn-sm btn-outline-danger" onclick="konfirmasiHapus('Dedi Supardi', 'Blok D / No. 02 (Jl. Kenanga)', 8)">Hapus</button>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="ps-4 fw-bold text-dark text-nowrap">No. 05</td>
-                                                <td class="text-nowrap text-dark fw-medium">Jl. Kenanga</td>
-                                                <td class="fw-semibold text-nowrap text-dark">Eko Prasetyo</td>
-                                                <td class="text-nowrap text-muted">eko_p</td>
-                                                <td class="text-nowrap">081234567898</td>
-                                                <td class="text-center text-nowrap"><span class="badge bg-light text-dark border">Warga</span></td>
-                                                <td class="text-center text-nowrap"><span class="badge bg-success">Aktif</span></td>
-                                                <td class="text-center text-nowrap pe-4">
-                                                    <a href="<?= base_url('warga/edit/5') ?>" class="btn btn-sm btn-outline-warning me-1">Edit</a>
-                                                    <button class="btn btn-sm btn-outline-danger" onclick="konfirmasiHapus('Eko Prasetyo', 'Blok D / No. 05 (Jl. Kenanga)', 5)">Hapus</button>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <?php endforeach; ?>
 
                 </div>
             </div>
