@@ -141,36 +141,45 @@
                         <!-- RT & RW -->
                         <div class="col-6">
                             <label class="form-label text-dark fw-semibold small mb-1" for="rt">Nomor RT</label>
-                            <input type="text" class="form-control" id="rt" name="rt" value="RT 04" required>
+                            <input type="text" class="form-control" id="rt" name="rt" value="RT 06" required>
                         </div>
                         <div class="col-6">
                             <label class="form-label text-dark fw-semibold small mb-1" for="rw">Nomor RW</label>
-                            <input type="text" class="form-control" id="rw" name="rw" value="RW 12" required>
+                            <input type="text" class="form-control" id="rw" name="rw" value="RW 20" required>
                         </div>
 
                         <!-- Kelurahan & Kecamatan -->
                         <div class="col-6">
                             <label class="form-label text-dark fw-semibold small mb-1" for="kelurahan">Kelurahan / Desa</label>
-                            <input type="text" class="form-control" id="kelurahan" name="kelurahan" value="Sukamaju" required>
+                            <input type="text" class="form-control" id="kelurahan" name="kelurahan" value="Purwodadi" required>
                         </div>
                         <div class="col-6">
                             <label class="form-label text-dark fw-semibold small mb-1" for="kecamatan">Kecamatan</label>
-                            <input type="text" class="form-control" id="kecamatan" name="kecamatan" value="Coblong" required>
+                            <input type="text" class="form-control" id="kecamatan" name="kecamatan" value="Purwodadi" required>
                         </div>
 
                         <!-- Kota/Kabupaten & Provinsi -->
                         <div class="col-6">
                             <label class="form-label text-dark fw-semibold small mb-1" for="kota">Kota / Kabupaten</label>
-                            <input type="text" class="form-control" id="kota" name="kota" value="Kota Bandung" required>
+                            <input type="text" class="form-control" id="kota" name="kota" value="Grobogan" required>
                         </div>
                         <div class="col-6">
                             <label class="form-label text-dark fw-semibold small mb-1" for="provinsi">Provinsi</label>
-                            <input type="text" class="form-control" id="provinsi" name="provinsi" value="Jawa Barat" required>
+                            <input type="text" class="form-control" id="provinsi" name="provinsi" value="Jawa Tengah" required>
                         </div>
 
-                        <!-- ============================================================== -->
-                        <!-- MANAJER BLOK RUMAH & MAKSIMAL NOMOR RUMAH -->
-                        <!-- ============================================================== -->
+                        <div class="col-12 mt-3">
+                            <button type="submit" class="btn btn-success fw-semibold px-4 w-100">
+                                Simpan Data Administrasi RT/RW
+                            </button>
+                        </div>
+                    </div>
+                </form>
+
+                <div class="row g-3 mt-1">
+                    <!-- ============================================================== -->
+                    <!-- MANAJER BLOK RUMAH & MAKSIMAL NOMOR RUMAH -->
+                    <!-- ============================================================== -->
                         <div class="col-12 pt-2 border-top">
                             <label class="form-label text-dark fw-bold small mb-2 d-flex justify-content-between align-items-center">
                                 <span>Daftar Blok &amp; Kapasitas Nomor Rumah</span>
@@ -179,42 +188,38 @@
                             
                             <!-- Container Badge Chips Blok dengan Kapasitas Nomor -->
                             <div id="containerChipsBlok" class="d-flex flex-wrap gap-2 mb-3 p-2 bg-light rounded border">
-                                <span class="badge bg-white text-dark border px-2 py-2 d-inline-flex align-items-center gap-1 font-12 shadow-sm chip-item" data-blok="Blok A" data-max="15">
-                                    <strong>Blok A</strong> <span class="text-muted font-11">(No. 01 - 15)</span>
-                                    <a href="javascript:void(0)" onclick="removeChip(this, 'Master Blok Pemukiman')" class="text-danger ms-1 text-decoration-none fw-bold">&times;</a>
-                                </span>
-                                <span class="badge bg-white text-dark border px-2 py-2 d-inline-flex align-items-center gap-1 font-12 shadow-sm chip-item" data-blok="Blok B" data-max="12">
-                                    <strong>Blok B</strong> <span class="text-muted font-11">(No. 01 - 12)</span>
-                                    <a href="javascript:void(0)" onclick="removeChip(this, 'Master Blok Pemukiman')" class="text-danger ms-1 text-decoration-none fw-bold">&times;</a>
-                                </span>
-                                <span class="badge bg-white text-dark border px-2 py-2 d-inline-flex align-items-center gap-1 font-12 shadow-sm chip-item" data-blok="Blok C" data-max="13">
-                                    <strong>Blok C</strong> <span class="text-muted font-11">(No. 01 - 13)</span>
-                                    <a href="javascript:void(0)" onclick="removeChip(this, 'Master Blok Pemukiman')" class="text-danger ms-1 text-decoration-none fw-bold">&times;</a>
-                                </span>
-                                <span class="badge bg-white text-dark border px-2 py-2 d-inline-flex align-items-center gap-1 font-12 shadow-sm chip-item" data-blok="Blok D" data-max="10">
-                                    <strong>Blok D</strong> <span class="text-muted font-11">(No. 01 - 10)</span>
-                                    <a href="javascript:void(0)" onclick="removeChip(this, 'Master Blok Pemukiman')" class="text-danger ms-1 text-decoration-none fw-bold">&times;</a>
-                                </span>
+                                <?php if(isset($master_blok) && !empty($master_blok)): ?>
+                                    <?php foreach($master_blok as $blok): ?>
+                                        <span class="badge bg-white text-dark border px-2 py-2 d-inline-flex align-items-center gap-1 font-12 shadow-sm chip-item" data-blok="<?= $blok['nama_blok'] ?>" data-max="<?= $blok['maks_nomor'] ?>">
+                                            <strong><?= $blok['nama_blok'] ?></strong> <span class="text-muted font-11">(No. 01 - <?= sprintf('%02d', $blok['maks_nomor']) ?>)</span>
+                                            <form action="<?= base_url('pengaturan/iuran/blok/delete/'.$blok['id']) ?>" method="post" class="d-inline" onsubmit="return confirm('Hapus blok ini?');">
+                                                <button type="submit" class="btn btn-link text-danger p-0 ms-1 text-decoration-none fw-bold border-0 bg-transparent">&times;</button>
+                                            </form>
+                                        </span>
+                                    <?php endforeach; ?>
+                                <?php endif; ?>
                             </div>
 
                             <!-- Input Form Tambah Blok dengan Jumlah Nomor Rumah (Lega & Rapi) -->
-                            <div class="p-2 bg-light rounded border mb-2">
-                                <div class="row g-2 align-items-end">
-                                    <div class="col-6">
-                                        <label class="form-label text-dark fw-semibold font-11 mb-1" for="inputNewBlok">Nama Blok</label>
-                                        <input type="text" class="form-control form-control-sm" id="inputNewBlok" placeholder="Cth: Blok E">
-                                    </div>
-                                    <div class="col-3">
-                                        <label class="form-label text-dark fw-semibold font-11 mb-1" for="inputMaxNomor">Maks No.</label>
-                                        <input type="number" class="form-control form-control-sm" id="inputMaxNomor" placeholder="15" value="15" min="1" max="99">
-                                    </div>
-                                    <div class="col-3">
-                                        <button class="btn btn-sm btn-success fw-semibold w-100 font-12" type="button" onclick="addNewBlokWithCapacity()">
-                                            + Tambah
-                                        </button>
+                            <form action="<?= base_url('pengaturan/iuran/blok/add') ?>" method="post">
+                                <div class="p-2 bg-light rounded border mb-2">
+                                    <div class="row g-2 align-items-end">
+                                        <div class="col-6">
+                                            <label class="form-label text-dark fw-semibold font-11 mb-1" for="inputNewBlok">Nama Blok</label>
+                                            <input type="text" class="form-control form-control-sm" name="nama_blok" id="inputNewBlok" placeholder="Cth: Blok E" required>
+                                        </div>
+                                        <div class="col-3">
+                                            <label class="form-label text-dark fw-semibold font-11 mb-1" for="inputMaxNomor">Maks No.</label>
+                                            <input type="number" class="form-control form-control-sm" name="maks_nomor" id="inputMaxNomor" placeholder="15" value="15" min="1" max="99" required>
+                                        </div>
+                                        <div class="col-3">
+                                            <button class="btn btn-sm btn-success fw-semibold w-100 font-12" type="submit">
+                                                + Tambah
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            </form>
                         </div>
 
                         <!-- ============================================================== -->
@@ -228,43 +233,36 @@
 
                             <!-- Container Badge Chips Jalan -->
                             <div id="containerChipsJalan" class="d-flex flex-wrap gap-2 mb-3 p-2 bg-light rounded border">
-                                <span class="badge bg-white text-dark border px-2 py-2 d-inline-flex align-items-center gap-1 font-12 shadow-sm chip-item">
-                                    Jl. Mawar <a href="javascript:void(0)" onclick="removeChip(this, 'Master Nama Jalan')" class="text-danger ms-1 text-decoration-none fw-bold">&times;</a>
-                                </span>
-                                <span class="badge bg-white text-dark border px-2 py-2 d-inline-flex align-items-center gap-1 font-12 shadow-sm chip-item">
-                                    Jl. Melati <a href="javascript:void(0)" onclick="removeChip(this, 'Master Nama Jalan')" class="text-danger ms-1 text-decoration-none fw-bold">&times;</a>
-                                </span>
-                                <span class="badge bg-white text-dark border px-2 py-2 d-inline-flex align-items-center gap-1 font-12 shadow-sm chip-item">
-                                    Jl. Anggrek <a href="javascript:void(0)" onclick="removeChip(this, 'Master Nama Jalan')" class="text-danger ms-1 text-decoration-none fw-bold">&times;</a>
-                                </span>
-                                <span class="badge bg-white text-dark border px-2 py-2 d-inline-flex align-items-center gap-1 font-12 shadow-sm chip-item">
-                                    Jl. Kenanga <a href="javascript:void(0)" onclick="removeChip(this, 'Master Nama Jalan')" class="text-danger ms-1 text-decoration-none fw-bold">&times;</a>
-                                </span>
+                                <?php if(isset($master_jalan) && !empty($master_jalan)): ?>
+                                    <?php foreach($master_jalan as $jalan): ?>
+                                        <span class="badge bg-white text-dark border px-2 py-2 d-inline-flex align-items-center gap-1 font-12 shadow-sm chip-item">
+                                            <?= $jalan['nama_jalan'] ?> 
+                                            <form action="<?= base_url('pengaturan/iuran/jalan/delete/'.$jalan['id']) ?>" method="post" class="d-inline" onsubmit="return confirm('Hapus jalan ini?');">
+                                                <button type="submit" class="btn btn-link text-danger p-0 ms-1 text-decoration-none fw-bold border-0 bg-transparent">&times;</button>
+                                            </form>
+                                        </span>
+                                    <?php endforeach; ?>
+                                <?php endif; ?>
                             </div>
 
                             <!-- Input Form Tambah Jalan (Lega & Rapi) -->
-                            <div class="p-2 bg-light rounded border">
-                                <div class="row g-2 align-items-end">
-                                    <div class="col-8">
-                                        <label class="form-label text-dark fw-semibold font-11 mb-1" for="inputNewJalan">Nama Jalan Baru</label>
-                                        <input type="text" class="form-control form-control-sm" id="inputNewJalan" placeholder="Cth: Jl. Cempaka">
-                                    </div>
-                                    <div class="col-4">
-                                        <button class="btn btn-sm btn-success fw-semibold w-100 font-12" type="button" onclick="addNewChip('inputNewJalan', 'containerChipsJalan')">
-                                            + Tambah
-                                        </button>
+                            <form action="<?= base_url('pengaturan/iuran/jalan/add') ?>" method="post">
+                                <div class="p-2 bg-light rounded border">
+                                    <div class="row g-2 align-items-end">
+                                        <div class="col-8">
+                                            <label class="form-label text-dark fw-semibold font-11 mb-1" for="inputNewJalan">Nama Jalan Baru</label>
+                                            <input type="text" class="form-control form-control-sm" name="nama_jalan" id="inputNewJalan" placeholder="Cth: Jl. Cempaka" required>
+                                        </div>
+                                        <div class="col-4">
+                                            <button class="btn btn-sm btn-success fw-semibold w-100 font-12" type="submit">
+                                                + Tambah
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            </form>
                         </div>
-                    </div>
-
-                    <div class="d-flex justify-content-end mt-4 pt-3 border-top">
-                        <button type="button" class="btn btn-success fw-semibold px-4" onclick="showAppToast('Data wilayah dan master blok/jalan berhasil disimpan!', 'success', 'Pengaturan Tersimpan')">
-                            Simpan Data Wilayah
-                        </button>
-                    </div>
-                </form>
+                </div>
             </div>
         </div>
 
@@ -297,7 +295,11 @@
                         <span class="badge bg-primary">E-Wallet &amp; M-Banking</span>
                     </div>
                     <div class="d-flex align-items-center gap-3">
-                        <img src="<?= base_url('assets/images/qris-rt.svg') ?>" alt="QRIS Kas RT" class="img-thumbnail" style="width: 68px; height: auto;">
+                        <div style="width: 68px; height: 68px; overflow: hidden; border-radius: 8px; border: 1px solid #ddd; position: relative;">
+                            <div style="transform: scale(0.18); transform-origin: top left; width: 380px;">
+                                <?= $this->include('components/qris_card') ?>
+                            </div>
+                        </div>
                         <div>
                             <span class="fw-bold text-dark font-12 d-block">KAS RT 04 RW 12</span>
                             <small class="text-muted font-11 d-block">NMID: ID1024098234120</small>
@@ -375,12 +377,14 @@
                     <!-- TAB 2: FORM QRIS RT -->
                     <div class="tab-pane fade" id="pills-qris" role="tabpanel">
                         <form action="#" method="post" enctype="multipart/form-data" id="formQrisSettings">
-                            <div class="row g-3 align-items-center">
-                                <div class="col-md-4 text-center">
-                                    <img src="<?= base_url('assets/images/qris-rt.svg') ?>" alt="QRIS Preview" class="img-fluid rounded border shadow-sm p-2" style="max-height: 200px;">
-                                    <small class="text-muted d-block mt-2 font-11">Pratinjau QRIS Aktif</small>
+                            <div class="row g-3 align-items-start">
+                                <div class="col-md-5 text-center">
+                                    <div style="transform: scale(0.65); transform-origin: top center; margin-bottom: -150px;">
+                                        <?= $this->include('components/qris_card') ?>
+                                    </div>
+                                    <small class="text-muted d-block mt-4 font-11">Pratinjau QRIS Aktif</small>
                                 </div>
-                                <div class="col-md-8">
+                                <div class="col-md-7">
                                     <div class="mb-3">
                                         <label class="form-label text-dark fw-semibold small mb-1" for="nama_merchant">Nama Merchant QRIS</label>
                                         <input type="text" class="form-control" id="nama_merchant" name="nama_merchant" value="KAS RT 04 RW 12 SUKAMAJU" required>
