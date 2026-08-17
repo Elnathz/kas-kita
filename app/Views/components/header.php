@@ -2,11 +2,9 @@
 <!-- Topbar header -->
 <!-- ============================================================== -->
 <?php
-$uri = service('uri');
-$seg1 = $uri->getTotalSegments() >= 1 ? $uri->getSegment(1) : '';
-$isWargaMode = ($seg1 === 'dashboard-warga' || $seg1 === 'laporan-warga' || $seg1 === 'profil' || ($seg1 === 'iuran' && in_array($uri->getTotalSegments() >= 2 ? $uri->getSegment(2) : '', ['tagihan', 'bayar', 'riwayat'])));
-$currentUserName = $isWargaMode ? 'Farros Rifantiarno' : (session()->get('nama') ?? 'Pengurus RT');
-$currentUserRole = $isWargaMode ? 'Warga RT 04' : (ucfirst(session()->get('role') ?? 'Pengurus RT'));
+$isWargaMode = (session()->get('role') === 'warga');
+$currentUserName = session()->get('nama') ?? 'Pengguna';
+$currentUserRole = ucfirst(session()->get('role') ?? 'Unknown');
 ?>
 <header class="topbar" data-navbarbg="skin6">
     <nav class="navbar top-navbar navbar-expand-lg">
@@ -51,17 +49,9 @@ $currentUserRole = $isWargaMode ? 'Warga RT 04' : (ucfirst(session()->get('role'
                         <a class="dropdown-item" href="<?= base_url('profil') ?>">
                             <i data-feather="user" class="svg-icon text-info"></i> Profil Akun
                         </a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item text-success fw-semibold" href="<?= base_url('dashboard') ?>">
-                            <i data-feather="repeat" class="svg-icon text-success"></i> Mode Pengurus RT
-                        </a>
                     <?php else : ?>
                         <a class="dropdown-item" href="<?= base_url('dashboard') ?>">
                             <i data-feather="home" class="svg-icon text-primary"></i> Dashboard Pengurus
-                        </a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item text-primary fw-semibold" href="<?= base_url('dashboard-warga') ?>">
-                            <i data-feather="user" class="svg-icon text-primary"></i> Mode Warga (Farros)
                         </a>
                     <?php endif; ?>
 
@@ -83,22 +73,8 @@ $currentUserRole = $isWargaMode ? 'Warga RT 04' : (ucfirst(session()->get('role'
                 </li>
             </ul>
 
-            <!-- Right side items (User profile & Role Switcher for Desktop) -->
+            <!-- Right side items (User profile for Desktop) -->
             <ul class="navbar-nav float-end align-items-center">
-                <!-- Role Switcher Quick Button (Sangat Berguna untuk Demo UTS) -->
-                <li class="nav-item me-2 d-none d-sm-block">
-                    <?php if ($isWargaMode) : ?>
-                        <a href="<?= base_url('dashboard') ?>" class="btn btn-sm btn-outline-success d-flex align-items-center gap-1">
-                            <i data-feather="repeat" class="feather-icon" style="width: 14px; height: 14px;"></i>
-                            <span>Beralih ke Pengurus</span>
-                        </a>
-                    <?php else : ?>
-                        <a href="<?= base_url('dashboard-warga') ?>" class="btn btn-sm btn-outline-primary d-flex align-items-center gap-1">
-                            <i data-feather="user" class="feather-icon" style="width: 14px; height: 14px;"></i>
-                            <span>Lihat Akun Farros (Warga)</span>
-                        </a>
-                    <?php endif; ?>
-                </li>
 
                 <!-- User profile (Desktop) -->
                 <li class="nav-item dropdown d-none d-lg-block">
@@ -128,17 +104,9 @@ $currentUserRole = $isWargaMode ? 'Warga RT 04' : (ucfirst(session()->get('role'
                             <a class="dropdown-item" href="<?= base_url('profil') ?>">
                                 <i data-feather="user" class="svg-icon text-info"></i> Profil Akun
                             </a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item text-success fw-semibold" href="<?= base_url('dashboard') ?>">
-                                <i data-feather="repeat" class="svg-icon text-success"></i> Mode Pengurus RT
-                            </a>
                         <?php else : ?>
                             <a class="dropdown-item" href="<?= base_url('dashboard') ?>">
                                 <i data-feather="home" class="svg-icon text-primary"></i> Dashboard Pengurus
-                            </a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item text-primary fw-semibold" href="<?= base_url('dashboard-warga') ?>">
-                                <i data-feather="user" class="svg-icon text-primary"></i> Mode Warga (Farros)
                             </a>
                         <?php endif; ?>
 

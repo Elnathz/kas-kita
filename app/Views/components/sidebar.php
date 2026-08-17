@@ -2,7 +2,7 @@
 $uri = service('uri');
 $seg1 = $uri->getTotalSegments() >= 1 ? $uri->getSegment(1) : '';
 $seg2 = $uri->getTotalSegments() >= 2 ? $uri->getSegment(2) : '';
-$isWargaMode = ($seg1 === 'dashboard-warga' || $seg1 === 'laporan-warga' || $seg1 === 'profil' || ($seg1 === 'iuran' && in_array($seg2, ['tagihan', 'bayar', 'riwayat'])));
+$isWargaMode = (session()->get('role') === 'warga');
 ?>
 <!-- ============================================================== -->
 <!-- Left Sidebar - style you can find in sidebar.scss  -->
