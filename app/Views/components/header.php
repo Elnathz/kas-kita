@@ -4,7 +4,7 @@
 <?php
 $uri = service('uri');
 $seg1 = $uri->getTotalSegments() >= 1 ? $uri->getSegment(1) : '';
-$isWargaMode = ($seg1 === 'dashboard-warga' || ($seg1 === 'iuran' && in_array($uri->getTotalSegments() >= 2 ? $uri->getSegment(2) : '', ['tagihan', 'bayar', 'riwayat'])));
+$isWargaMode = ($seg1 === 'dashboard-warga' || $seg1 === 'laporan-warga' || $seg1 === 'profil' || ($seg1 === 'iuran' && in_array($uri->getTotalSegments() >= 2 ? $uri->getSegment(2) : '', ['tagihan', 'bayar', 'riwayat'])));
 $currentUserName = $isWargaMode ? 'Farros Rifantiarno' : (session()->get('nama') ?? 'Pengurus RT');
 $currentUserRole = $isWargaMode ? 'Warga RT 04' : (ucfirst(session()->get('role') ?? 'Pengurus RT'));
 ?>
@@ -18,8 +18,9 @@ $currentUserRole = $isWargaMode ? 'Warga RT 04' : (ucfirst(session()->get('role'
             
             <!-- Brand Logo with Wordmark -->
             <div class="navbar-brand py-0">
-                <a href="<?= base_url($isWargaMode ? 'dashboard-warga' : 'dashboard') ?>" class="d-flex align-items-center text-decoration-none py-1">
-                    <img id="headerBrandLogo" src="<?= base_url('assets/images/logo-full.svg') ?>" data-full-logo="<?= base_url('assets/images/logo-full.svg') ?>" data-icon-logo="<?= base_url('assets/images/logo-icon.svg') ?>" alt="Kas Kita - Manajemen Kas RT" class="img-fluid" style="height: 44px; width: auto;">
+                <a href="<?= base_url($isWargaMode ? 'dashboard-warga' : 'dashboard') ?>" class="d-flex align-items-center text-decoration-none py-1 gap-2">
+                    <img id="headerBrandIcon" src="<?= base_url('assets/images/logo-icon.svg') ?>" alt="Icon" class="img-fluid" style="height: 60px; width: 40px; filter: drop-shadow(0 2px 4px rgba(5,150,105,0.2));">
+                    <span class="logo-text fw-bolder" style="font-size: 1.45rem; letter-spacing: -0.5px; line-height: 1;">Kas Kita</span>
                 </a>
             </div>
 
@@ -46,6 +47,9 @@ $currentUserRole = $isWargaMode ? 'Warga RT 04' : (ucfirst(session()->get('role'
                         </a>
                         <a class="dropdown-item" href="<?= base_url('iuran/tagihan') ?>">
                             <i data-feather="file-text" class="svg-icon text-warning"></i> Tagihan Saya
+                        </a>
+                        <a class="dropdown-item" href="<?= base_url('profil') ?>">
+                            <i data-feather="user" class="svg-icon text-info"></i> Profil Akun
                         </a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item text-success fw-semibold" href="<?= base_url('dashboard') ?>">
@@ -120,6 +124,9 @@ $currentUserRole = $isWargaMode ? 'Warga RT 04' : (ucfirst(session()->get('role'
                             </a>
                             <a class="dropdown-item" href="<?= base_url('iuran/tagihan') ?>">
                                 <i data-feather="file-text" class="svg-icon text-warning"></i> Tagihan Saya
+                            </a>
+                            <a class="dropdown-item" href="<?= base_url('profil') ?>">
+                                <i data-feather="user" class="svg-icon text-info"></i> Profil Akun
                             </a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item text-success fw-semibold" href="<?= base_url('dashboard') ?>">
