@@ -19,9 +19,9 @@
                             <label class="form-label text-dark fw-semibold small mb-1" for="kategori_id">Kategori Pos Pengeluaran</label>
                             <select class="form-select" id="kategori_id" name="kategori_id" required>
                                 <option value="" disabled selected>Pilih Kategori Pos Kas...</option>
-                                <option value="1">Kas Operasional (Lampu, Kebersihan, Keamanan)</option>
-                                <option value="2">Sosial (Santunan Sakit, Duka Cita)</option>
-                                <option value="3">Konsumsi (Rapat, Kegiatan Warga)</option>
+                                <?php foreach ($kategori as $k): ?>
+                                    <option value="<?= esc($k['id']) ?>"><?= esc($k['nama_kategori']) ?> (<?= esc($k['deskripsi']) ?>)</option>
+                                <?php endforeach; ?>
                             </select>
                         </div>
                         <div class="col-md-6">

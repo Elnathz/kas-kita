@@ -31,97 +31,39 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <!-- 1. Pembelian Lampu (Hanya Nota) -->
-                            <tr>
-                                <td class="ps-3 text-nowrap">1</td>
-                                <td class="text-nowrap text-muted font-12">14 Agu 2026</td>
-                                <td class="text-nowrap text-dark fw-medium">Kas Operasional</td>
-                                <td class="text-dark fw-semibold text-nowrap">Pembelian lampu penerangan jalan gang RT 03</td>
-                                <td class="text-nowrap fw-bold text-dark">Rp 350.000</td>
-                                <td class="text-center text-nowrap">
-                                    <button class="btn btn-xs btn-outline-secondary" onclick="previewLampiran('nota', 'Pembelian Lampu Penerangan Gang', 'Rp 350.000', 'nota_lampu_jalan.jpg')">
-                                        <i data-feather="file-text" class="feather-icon me-1" style="width: 11px; height: 11px;"></i>Lihat Nota
-                                    </button>
-                                </td>
-                                <td class="text-center text-nowrap pe-3">
-                                    <a href="<?= base_url('pengeluaran/edit/1') ?>" class="btn btn-xs btn-outline-warning me-1">Edit</a>
-                                    <button class="btn btn-xs btn-outline-danger" onclick="konfirmasiHapusPengeluaran('Pembelian lampu penerangan jalan gang RT 03', 'Rp 350.000', 1)">Hapus</button>
-                                </td>
-                            </tr>
-
-                            <!-- 2. Santunan Warga Sakit (Nota + Foto Kegiatan) -->
-                            <tr>
-                                <td class="ps-3 text-nowrap">2</td>
-                                <td class="text-nowrap text-muted font-12">10 Agu 2026</td>
-                                <td class="text-nowrap text-dark fw-medium">Sosial</td>
-                                <td class="text-dark fw-semibold text-nowrap">Santunan warga sakit (Bpk. Mulyono)</td>
-                                <td class="text-nowrap fw-bold text-dark">Rp 500.000</td>
-                                <td class="text-center text-nowrap">
-                                    <div class="d-flex justify-content-center align-items-center gap-1">
-                                        <button class="btn btn-xs btn-outline-secondary" onclick="previewLampiran('nota', 'Kuitansi Santunan Warga Sakit', 'Rp 500.000', 'kuitansi_santunan_mulyono.jpg')">
+                            <?php if (empty($pengeluaran)): ?>
+                                <tr>
+                                    <td colspan="7" class="text-center py-4 text-muted">Belum ada catatan pengeluaran.</td>
+                                </tr>
+                            <?php else: ?>
+                                <?php $no = 1; foreach ($pengeluaran as $p): ?>
+                                <tr>
+                                    <td class="ps-3 text-nowrap"><?= $no++ ?></td>
+                                    <td class="text-nowrap text-muted font-12"><?= date('d M Y', strtotime($p['tanggal'])) ?></td>
+                                    <td class="text-nowrap text-dark fw-medium"><?= esc($p['nama_kategori']) ?></td>
+                                    <td class="text-dark fw-semibold text-nowrap"><?= esc($p['keterangan']) ?></td>
+                                    <td class="text-nowrap fw-bold text-dark">Rp <?= number_format($p['nominal'], 0, ',', '.') ?></td>
+                                    <td class="text-center text-nowrap">
+                                        <!-- Placeholder for lampiran -->
+                                        <button class="btn btn-xs btn-outline-secondary" onclick="previewLampiran('nota', '<?= htmlspecialchars($p['keterangan']) ?>', 'Rp <?= number_format($p['nominal'], 0, ',', '.') ?>', 'nota_placeholder.jpg')">
                                             <i data-feather="file-text" class="feather-icon me-1" style="width: 11px; height: 11px;"></i>Lihat Nota
                                         </button>
-                                        <button class="btn btn-xs btn-outline-success" onclick="previewLampiran('kegiatan', 'Dokumentasi Penyerahan Santunan Warga', 'Bpk. Mulyono (Blok A / No. 05)', 'foto_penyerahan_santunan.jpg')">
-                                            <i data-feather="image" class="feather-icon me-1" style="width: 11px; height: 11px;"></i>Dokumentasi
-                                        </button>
-                                    </div>
-                                </td>
-                                <td class="text-center text-nowrap pe-3">
-                                    <a href="<?= base_url('pengeluaran/edit/2') ?>" class="btn btn-xs btn-outline-warning me-1">Edit</a>
-                                    <button class="btn btn-xs btn-outline-danger" onclick="konfirmasiHapusPengeluaran('Santunan warga sakit (Bpk. Mulyono)', 'Rp 500.000', 2)">Hapus</button>
-                                </td>
-                            </tr>
-
-                            <!-- 3. Kerja Bakti Saluran (Nota + Foto Kegiatan) -->
-                            <tr>
-                                <td class="ps-3 text-nowrap">3</td>
-                                <td class="text-nowrap text-muted font-12">08 Agu 2026</td>
-                                <td class="text-nowrap text-dark fw-medium">Kas Operasional</td>
-                                <td class="text-dark fw-semibold text-nowrap">Kerja bakti &amp; perbaikan saluran gang Mawar</td>
-                                <td class="text-nowrap fw-bold text-dark">Rp 750.000</td>
-                                <td class="text-center text-nowrap">
-                                    <div class="d-flex justify-content-center align-items-center gap-1">
-                                        <button class="btn btn-xs btn-outline-secondary" onclick="previewLampiran('nota', 'Nota Toko Bangunan Saluran Air', 'Rp 750.000', 'nota_semen_pasir.jpg')">
-                                            <i data-feather="file-text" class="feather-icon me-1" style="width: 11px; height: 11px;"></i>Lihat Nota
-                                        </button>
-                                        <button class="btn btn-xs btn-outline-success" onclick="previewLampiran('kegiatan', 'Dokumentasi Kerja Bakti Saluran Gang Mawar', 'Minggu Pagi, 08 Agustus 2026', 'foto_kerja_bakti_saluran.jpg')">
-                                            <i data-feather="image" class="feather-icon me-1" style="width: 11px; height: 11px;"></i>Dokumentasi
-                                        </button>
-                                    </div>
-                                </td>
-                                <td class="text-center text-nowrap pe-3">
-                                    <a href="<?= base_url('pengeluaran/edit/4') ?>" class="btn btn-xs btn-outline-warning me-1">Edit</a>
-                                    <button class="btn btn-xs btn-outline-danger" onclick="konfirmasiHapusPengeluaran('Kerja bakti & perbaikan saluran gang Mawar', 'Rp 750.000', 4)">Hapus</button>
-                                </td>
-                            </tr>
-
-                            <!-- 4. Konsumsi Snack Rapat (Nota + Foto Kegiatan) -->
-                            <tr>
-                                <td class="ps-3 text-nowrap">4</td>
-                                <td class="text-nowrap text-muted font-12">05 Agu 2026</td>
-                                <td class="text-nowrap text-dark fw-medium">Konsumsi</td>
-                                <td class="text-dark fw-semibold text-nowrap">Konsumsi snack rapat bulanan pengurus RT</td>
-                                <td class="text-nowrap fw-bold text-dark">Rp 250.000</td>
-                                <td class="text-center text-nowrap">
-                                    <div class="d-flex justify-content-center align-items-center gap-1">
-                                        <button class="btn btn-xs btn-outline-secondary" onclick="previewLampiran('nota', 'Struk Belanja Snack Bakery', 'Rp 250.000', 'struk_snack_rapat.jpg')">
-                                            <i data-feather="file-text" class="feather-icon me-1" style="width: 11px; height: 11px;"></i>Lihat Nota
-                                        </button>
-                                        <button class="btn btn-xs btn-outline-success" onclick="previewLampiran('kegiatan', 'Dokumentasi Rapat Bulanan Pengurus RT', 'Rabu Malam di Balai Warga', 'foto_rapat_pengurus.jpg')">
-                                            <i data-feather="image" class="feather-icon me-1" style="width: 11px; height: 11px;"></i>Dokumentasi
-                                        </button>
-                                    </div>
-                                </td>
-                                <td class="text-center text-nowrap pe-3">
-                                    <a href="<?= base_url('pengeluaran/edit/3') ?>" class="btn btn-xs btn-outline-warning me-1">Edit</a>
-                                    <button class="btn btn-xs btn-outline-danger" onclick="konfirmasiHapusPengeluaran('Konsumsi snack rapat bulanan pengurus RT', 'Rp 250.000', 3)">Hapus</button>
-                                </td>
-                            </tr>
+                                    </td>
+                                    <td class="text-center text-nowrap pe-3">
+                                        <a href="<?= base_url('pengeluaran/edit/' . $p['id']) ?>" class="btn btn-xs btn-outline-warning me-1">Edit</a>
+                                        <form action="<?= base_url('pengeluaran/delete/' . $p['id']) ?>" method="post" class="d-inline" id="formHapusPengeluaran<?= $p['id'] ?>">
+                                            <?= csrf_field() ?>
+                                            <button type="button" class="btn btn-xs btn-outline-danger" onclick="konfirmasiHapusPengeluaran('<?= htmlspecialchars($p['keterangan']) ?>', 'Rp <?= number_format($p['nominal'], 0, ',', '.') ?>', <?= $p['id'] ?>)">Hapus</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
                         </tbody>
                         <tfoot class="table-light">
                             <tr>
-                                <th colspan="4" class="text-end fw-bold text-dark ps-3">Total Pengeluaran Bulan Ini (Agustus 2026):</th>
-                                <th colspan="3" class="fw-bold text-dark fs-6 pe-3">Rp 1.850.000</th>
+                                <th colspan="4" class="text-end fw-bold text-dark ps-3">Total Pengeluaran Bulan Ini (<?= date('F Y') ?>):</th>
+                                <th colspan="3" class="fw-bold text-dark fs-6 pe-3">Rp <?= number_format($total_bulan_ini ?? 0, 0, ',', '.') ?></th>
                             </tr>
                         </tfoot>
                     </table>
@@ -238,12 +180,9 @@ function konfirmasiHapusPengeluaran(keterangan, nominal, id) {
 }
 
 function eksekusiHapusPengeluaran() {
-    const modalEl = document.getElementById('modalHapusPengeluaran');
-    const modal = bootstrap.Modal.getInstance(modalEl);
-    if (modal) {
-        modal.hide();
+    if (idPengeluaranDihapus) {
+        document.getElementById('formHapusPengeluaran' + idPengeluaranDihapus).submit();
     }
-    showAppToast('Catatan pengeluaran berhasil dihapus dari buku kas.', 'info', 'Pengeluaran Dihapus');
 }
 </script>
 
