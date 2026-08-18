@@ -39,8 +39,8 @@
                                 <input type="password" class="form-control" id="password" name="password" minlength="6" placeholder="Kosongkan jika tidak diubah">
                             </div>
                             <div class="col-md-6">
-                                <label class="form-label text-dark fw-semibold small mb-1" for="no_hp">Nomor WhatsApp / HP</label>
-                                <input type="tel" class="form-control" id="no_hp" name="no_hp" value="<?= esc($warga['no_hp']) ?>" inputmode="numeric" 
+                                <label class="form-label text-dark fw-semibold small mb-1" for="no_telepon">Nomor WhatsApp / HP</label>
+                                <input type="tel" class="form-control" id="no_telepon" name="no_telepon" value="<?= esc($warga['no_telepon'] ?? '') ?>" inputmode="numeric" 
                                     pattern="[0-9]{10,15}" maxlength="15" oninput="this.value = this.value.replace(/[^0-9]/g, '')" required>
                             </div>
                         </div>

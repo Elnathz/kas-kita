@@ -85,7 +85,7 @@
                                                     <td class="text-nowrap text-dark fw-medium"><?= esc($warga['nama_jalan']) ?></td>
                                                     <td class="fw-semibold text-nowrap text-dark"><?= esc($warga['nama']) ?></td>
                                                     <td class="text-nowrap text-muted"><?= esc($warga['username']) ?></td>
-                                                    <td class="text-nowrap"><?= esc($warga['no_hp']) ?></td>
+                                                    <td class="text-nowrap"><?= esc($warga['no_telepon'] ?? '-') ?></td>
                                                     <td class="text-center text-nowrap">
                                                         <?php if($warga['role'] == 'pengurus'): ?>
                                                             <span class="badge bg-primary text-white">Pengurus RT</span>

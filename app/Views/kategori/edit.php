@@ -12,15 +12,26 @@
                     <a href="<?= base_url('kategori') ?>" class="btn btn-outline-secondary btn-sm">Kembali</a>
                 </div>
 
-                <form action="<?= base_url('kategori/update/' . ($id ?? 1)) ?>" method="post">
+                <?php if (session()->getFlashdata('errors')): ?>
+                <div class="alert alert-danger py-2 px-3 small mb-3">
+                    <ul class="mb-0 ps-3">
+                        <?php foreach (session()->getFlashdata('errors') as $err): ?>
+                        <li><?= esc($err) ?></li>
+                        <?php endforeach; ?>
+                    </ul>
+                </div>
+                <?php endif; ?>
+
+                <form action="<?= base_url('kategori/update/' . $kategori['id']) ?>" method="post">
                     <?= csrf_field() ?>
                     <div class="mb-3">
                         <label class="form-label text-dark fw-semibold small" for="nama">Nama Kategori</label>
-                        <input type="text" class="form-control" id="nama" name="nama" value="Kas Operasional" required>
+                        <input type="text" class="form-control" id="nama" name="nama"
+                               value="<?= esc(old('nama', $kategori['nama_kategori'])) ?>" required>
                     </div>
                     <div class="mb-4">
                         <label class="form-label text-dark fw-semibold small" for="deskripsi">Deskripsi / Rincian Pos</label>
-                        <textarea class="form-control" id="deskripsi" name="deskripsi" rows="3">Pemeliharaan fasilitas umum, listrik pos, kebersihan, keamanan</textarea>
+                        <textarea class="form-control" id="deskripsi" name="deskripsi" rows="3"><?= esc(old('deskripsi', $kategori['deskripsi'] ?? '')) ?></textarea>
                     </div>
 
                     <div class="d-flex justify-content-end gap-2">

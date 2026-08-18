@@ -58,7 +58,7 @@ class PengeluaranSeeder extends Seeder
                 'updated_at'  => date('Y-m-d H:i:s', strtotime('-1 months')),
             ],
             [
-                'kategori_id' => 4, // Acara
+                'kategori_id' => 3, // Konsumsi
                 'keterangan'  => 'Persiapan Lomba 17-an (perlengkapan & umbul-umbul)',
                 'nominal'     => 1200000.00,
                 'tanggal'     => '2026-07-28',

@@ -48,19 +48,28 @@ class DashboardController extends BaseController
 
         // Saldo Kas Saat Ini (Total Iuran Terverifikasi - Total Pengeluaran)
         $totalPemasukan = $this->pembayaranModel->where('status', 'terverifikasi')->selectSum('nominal')->first()['nominal'] ?? 0;
+        
+        // Warga Sudah Bayar Bulan Ini
+        $wargaSudahBayar = $this->pembayaranModel
+            ->where('periode_bulan', $currentMonth)
+            ->where('periode_tahun', $currentYear)
+            ->where('status', 'terverifikasi')
+            ->groupBy('user_id')
+            ->countAllResults();
+
         $totalPengeluaran = $this->pengeluaranModel->selectSum('nominal')->first()['nominal'] ?? 0;
         $saldoKas = $totalPemasukan - $totalPengeluaran;
 
         // Iuran Menunggu Verifikasi
-        $menungguVerifikasi = $this->pembayaranModel->where('status', 'menunggu_verifikasi')->countAllResults();
+        $menungguVerifikasi = $this->pembayaranModel->where('status', 'pending')->countAllResults();
 
         // Pembayaran Menunggu Verifikasi (List)
         $iuranMenunggu = $this->pembayaranModel
-            ->select('pembayaran.*, users.nama as nama_warga, users.no_rumah')
+            ->select('pembayaran.*, users.nama as nama_warga, users.no_rumah, users.blok_rumah')
             ->join('users', 'users.id = pembayaran.user_id')
-            ->where('pembayaran.status', 'menunggu_verifikasi')
+            ->where('pembayaran.status', 'pending')
             ->orderBy('pembayaran.created_at', 'ASC')
-            ->find();
+            ->findAll();
 
         // Pendaftar Baru Menunggu Persetujuan
         $pendaftarBaru = $this->userModel
@@ -115,7 +124,7 @@ class DashboardController extends BaseController
         if ($pembayaranBulanIni) {
             if ($pembayaranBulanIni['status'] == 'terverifikasi') {
                 $statusBulanIni = 'Lunas';
-            } elseif ($pembayaranBulanIni['status'] == 'menunggu_verifikasi') {
+            } elseif ($pembayaranBulanIni['status'] == 'pending') {
                 $statusBulanIni = 'Menunggu Verifikasi';
             } elseif ($pembayaranBulanIni['status'] == 'ditolak') {
                 $statusBulanIni = 'Ditolak';

@@ -59,3 +59,15 @@ Log perubahan terhadap Technical Design Document (TDD).
 - **Sesudah**: Dibuat rute /profil untuk warga. Perubahan data kontak (No WA), nama, dan password tersimpan langsung. Perubahan fisik rumah (Blok & Nomor) masuk ke status "Pengajuan". Di Dashboard Pengurus ditambahkan tabel _Menunggu Persetujuan_ untuk menyetujui akun baru dan pengajuan pindah rumah.
 - **Alasan**: Menjaga integritas data finansial rumah namun tetap memberikan kebebasan pada warga, serta mempercepat *awareness* pengurus.
 - **Dampak**: Section 6.2 (Dashboard Pengurus), Section 6.9 (Profil Warga baru), View dashboard/index.php, View profil/index.php.
+
+### 18 Agustus 2026 - Penambahan Kolom Blok dan Jalan di Tabel Users
+- **Sebelum**: Tabel `users` di TDD hanya memiliki kolom `no_rumah` (format gabungan) dan `alamat`, sedangkan kode di UI form dan Controller mengharapkan `blok_rumah` dan `nama_jalan` yang terpisah.
+- **Sesudah**: Menambahkan kolom `blok_rumah` dan `nama_jalan` secara eksplisit ke dalam struktur tabel `users` (via migrasi) agar sinkron dengan input form. Data `no_rumah` diubah menjadi murni nomor tanpa prefix blok.
+- **Alasan**: Menghindari error `Undefined array key "blok_rumah"` di Controller yang mengekstraksi blok secara paksa dari array database yang tidak memilikinya, dan untuk menyesuaikan dengan "kondisi kode aktual" seperti yang disarankan.
+- **Dampak**: Skema Database (Section 5.2.1), Model `UserModel` (`$allowedFields`), Migrasi Database `Users`.
+
+### 18 Agustus 2026 - Penyesuaian Kolom Tabel Kategori Pengeluaran
+- **Sebelum**: Tabel `kategori_pengeluaran` di TDD dan database menggunakan kolom `nama` untuk menyimpan nama kategori.
+- **Sesudah**: Kolom `nama` diubah menjadi `nama_kategori` melalui migrasi database.
+- **Alasan**: Semua *Controller* (`PengeluaranController`, `DashboardController`), *Model*, dan *View* sudah ditulis dengan menggunakan parameter/kunci `nama_kategori`. Sesuai instruksi untuk mengikuti *kondisi kode aktual*, maka tabel database disesuaikan agar tidak memunculkan `Unknown column` error.
+- **Dampak**: Skema Database (Section 5.2.4), Migrasi Database `KategoriPengeluaran`.

@@ -27,7 +27,7 @@
                             </div>
                             <div class="d-flex align-items-center bg-black bg-opacity-25 rounded px-3 py-2 border border-white border-opacity-10">
                                 <i data-feather="phone" class="text-white-50 me-2" style="width: 16px; height: 16px;"></i>
-                                <span class="text-white fw-medium"><?= esc(session()->get('no_hp')) ?></span>
+                                <span class="text-white fw-medium"><?= esc(session()->get('no_telepon') ?? '-') ?></span>
                             </div>
                         </div>
                     </div>

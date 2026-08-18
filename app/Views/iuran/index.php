@@ -241,7 +241,7 @@
                                                     <?= esc($w['keterangan']) ?>
                                                 </td>
                                                 <td class="text-center text-nowrap">
-                                                    <a href="https://wa.me/<?= preg_replace('/^0/', '62', $w['no_hp']) ?>?text=Halo%20<?= urlencode($w['nama']) ?>%2C%20ini%20pengingat%20iuran%20kas%20RT%20bulan%20<?= date('F') ?>." target="_blank" class="btn btn-sm btn-outline-success fw-semibold">
+                                                    <a href="https://wa.me/<?= preg_replace('/^0/', '62', $w['no_telepon'] ?? '') ?>?text=Halo%20<?= urlencode($w['nama']) ?>%2C%20ini%20pengingat%20iuran%20kas%20RT%20bulan%20<?= date('F') ?>." target="_blank" class="btn btn-sm btn-outline-success fw-semibold">
                                                         Kirim WA
                                                     </a>
                                                 </td>
@@ -387,7 +387,7 @@
                                                         </td>
                                                         <td class="text-center text-nowrap pe-4">
                                                             <?php if ($w['status'] == 'belum_bayar'): ?>
-                                                                <a href="https://wa.me/<?= preg_replace('/^0/', '62', $w['no_hp']) ?>?text=Halo%20<?= urlencode($w['nama']) ?>%2C%20ini%20pengingat%20iuran%20kas%20RT%20bulan%20<?= date('F') ?>." target="_blank" class="btn btn-xs btn-outline-success">Kirim WA</a>
+                                                                <a href="https://wa.me/<?= preg_replace('/^0/', '62', $w['no_telepon'] ?? '') ?>?text=Halo%20<?= urlencode($w['nama']) ?>%2C%20ini%20pengingat%20iuran%20kas%20RT%20bulan%20<?= date('F') ?>." target="_blank" class="btn btn-xs btn-outline-success">Kirim WA</a>
                                                             <?php elseif ($w['status'] == 'pending'): ?>
                                                                 <button onclick="pilihTabIuran('pills-verif-tab')" class="btn btn-xs btn-success">Verifikasi</button>
                                                             <?php elseif ($w['status'] == 'lunas'): ?>
