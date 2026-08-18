@@ -71,3 +71,9 @@ Log perubahan terhadap Technical Design Document (TDD).
 - **Sesudah**: Kolom `nama` diubah menjadi `nama_kategori` melalui migrasi database.
 - **Alasan**: Semua *Controller* (`PengeluaranController`, `DashboardController`), *Model*, dan *View* sudah ditulis dengan menggunakan parameter/kunci `nama_kategori`. Sesuai instruksi untuk mengikuti *kondisi kode aktual*, maka tabel database disesuaikan agar tidak memunculkan `Unknown column` error.
 - **Dampak**: Skema Database (Section 5.2.4), Migrasi Database `KategoriPengeluaran`.
+
+### 18 Agustus 2026 - Standarisasi Status Pembayaran (lunas -> terverifikasi)
+- **Sebelum**: Status pembayaran tidak konsisten: beberapa controller pakai `lunas`, beberapa pakai `terverifikasi`, beberapa pakai `menunggu_verifikasi`, bahkan ada yang kosong di database. Akibatnya verifikasi pembayaran tidak pernah berubah state.
+- **Sesudah**: Standar status baku: `pending` (sudah upload, belum diverifikasi), `terverifikasi` (disetujui pengurus), `ditolak` (ditolak pengurus). Semua controller dan seeder diupdate. Data existing difix via migration.
+- **Alasan**: Bug kritis - form verifikasi mengirim field `action` tapi controller baca field `status` yang tidak ada. Plus mismatch status antara IuranController dan DashboardController.
+- **Dampak**: `IuranController`, `DashboardController`, `PembayaranSeeder`, Migration baru, Section 5.2.2 (Status Pembayaran) di TDD.
