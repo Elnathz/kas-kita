@@ -14,14 +14,14 @@ class PembayaranSeeder extends Seeder
 
         // Warga 3 (Farros) - Lunas s/d Juli, Agustus menunggu verifikasi
         for ($m = 1; $m <= 7; $m++) {
-            $data[] = $this->createPayment(3, $m, $currentYear, 'lunas', date('Y-m-d H:i:s', strtotime("2026-$m-10")));
+            $data[] = $this->createPayment(3, $m, $currentYear, 'terverifikasi', date('Y-m-d H:i:s', strtotime("2026-$m-10")));
         }
         $data[] = $this->createPayment(3, 8, $currentYear, 'pending', date('Y-m-d H:i:s', strtotime("2026-08-15")), true);
 
         // Warga 4 s/d 15 (Lancar) - Lunas s/d Agustus
         for ($userId = 4; $userId <= 15; $userId++) {
             for ($m = 1; $m <= 8; $m++) {
-                $data[] = $this->createPayment($userId, $m, $currentYear, 'lunas', date('Y-m-d H:i:s', strtotime("2026-$m-12")));
+                $data[] = $this->createPayment($userId, $m, $currentYear, 'terverifikasi', date('Y-m-d H:i:s', strtotime("2026-$m-12")));
             }
         }
 
@@ -35,7 +35,7 @@ class PembayaranSeeder extends Seeder
         // Warga 19 s/d 21 (Macet) - Lunas s/d Mei
         for ($userId = 19; $userId <= 21; $userId++) {
             for ($m = 1; $m <= 5; $m++) {
-                $data[] = $this->createPayment($userId, $m, $currentYear, 'lunas', date('Y-m-d H:i:s', strtotime("2026-$m-10")));
+                $data[] = $this->createPayment($userId, $m, $currentYear, 'terverifikasi', date('Y-m-d H:i:s', strtotime("2026-$m-10")));
             }
         }
 
