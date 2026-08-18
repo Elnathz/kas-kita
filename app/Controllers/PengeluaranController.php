@@ -47,7 +47,7 @@ class PengeluaranController extends BaseController
             'tanggal' => $this->request->getPost('tanggal'),
             'nominal' => $this->request->getPost('nominal'),
             'keterangan' => $this->request->getPost('keterangan'),
-            'created_by' => session()->get('id') ?? 1
+            'created_by' => session()->get('id') ?? session()->get('user_id') ?? 1
         ];
         
         $pengeluaranModel->insert($data);

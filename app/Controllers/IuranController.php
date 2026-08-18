@@ -155,7 +155,7 @@ class IuranController extends BaseController
 
     public function tagihan()
     {
-        $userId = session()->get('id');
+        $userId = session()->get('id') ?? session()->get('user_id');
         if (!$userId) return redirect()->to('/login');
 
         $pembayaranModel = new \App\Models\PembayaranModel();
@@ -214,7 +214,7 @@ class IuranController extends BaseController
 
     public function bayar()
     {
-        $userId = session()->get('id');
+        $userId = session()->get('id') ?? session()->get('user_id');
         if (!$userId) return redirect()->to('/login');
 
         $pembayaranModel = new \App\Models\PembayaranModel();
@@ -264,7 +264,7 @@ class IuranController extends BaseController
 
     public function prosesBayar()
     {
-        $userId = session()->get('id');
+        $userId = session()->get('id') ?? session()->get('user_id');
         if (!$userId) return redirect()->to('/login');
 
         $pembayaranModel = new \App\Models\PembayaranModel();
@@ -306,7 +306,7 @@ class IuranController extends BaseController
 
     public function riwayat()
     {
-        $userId = session()->get('id');
+        $userId = session()->get('id') ?? session()->get('user_id');
         if (!$userId) return redirect()->to('/login');
 
         $pembayaranModel = new \App\Models\PembayaranModel();
@@ -354,7 +354,7 @@ class IuranController extends BaseController
         $data = [
             'status'      => $status,
             'catatan'     => $this->request->getPost('catatan'),
-            'verified_by' => session()->get('id'),
+            'verified_by' => session()->get('id') ?? session()->get('user_id'),
             'verified_at' => date('Y-m-d H:i:s')
         ];
 

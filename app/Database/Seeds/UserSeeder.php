@@ -43,7 +43,7 @@ class UserSeeder extends Seeder
         $data[] = [
             'nama'       => 'Farros Rifantiarno',
             'username'   => 'warga1',
-            'password'   => password_hash('warga123', PASSWORD_DEFAULT),
+            'password'   => password_hash('farros123', PASSWORD_DEFAULT),
             'role'       => 'warga',
             'no_rumah'   => 'S/05',
             'no_telepon' => '08222222222',

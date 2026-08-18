@@ -105,7 +105,7 @@ class DashboardController extends BaseController
 
     public function warga()
     {
-        $userId = session()->get('id');
+        $userId = session()->get('id') ?? session()->get('user_id');
         $currentMonth = (int) date('n');
         $currentYear = (int) date('Y');
 

@@ -61,7 +61,7 @@
                         <button type="button" class="btn btn-xs btn-outline-success font-12 py-1 px-2" onclick="setLogin('admin', 'admin123')">
                             Pengurus (admin)
                         </button>
-                        <button type="button" class="btn btn-xs btn-outline-primary font-12 py-1 px-2" onclick="setLogin('farros', 'warga123')">
+                        <button type="button" class="btn btn-xs btn-outline-primary font-12 py-1 px-2" onclick="setLogin('warga1', 'warga123')">
                             Warga (Farros)
                         </button>
                     </div>
@@ -72,10 +72,10 @@
 </div>
 
 <script>
-function setLogin(u, p) {
-    document.getElementById('username').value = u;
-    document.getElementById('password').value = p;
-    document.getElementById('formLogin').submit();
-}
+    function setLogin(u, p) {
+        document.getElementById('username').value = u;
+        document.getElementById('password').value = p;
+        document.getElementById('formLogin').submit();
+    }
 </script>
 <?= $this->endSection() ?>
