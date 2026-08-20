@@ -16,6 +16,12 @@ $routes->get('/', 'AuthController::index');
 
 $routes->group('', ['filter' => 'auth'], function($routes) {
     
+    // Switch Role
+    $routes->get('/switch-role', 'AuthController::switchRole');
+
+    // Kuitansi dapat dibuka oleh pengurus maupun warga setelah pembayaran terverifikasi.
+    $routes->get('/iuran/kuitansi/(:num)', 'IuranController::kuitansi/$1');
+    
     // Warga Routes
     $routes->group('', ['filter' => 'role:warga'], function($routes) {
         $routes->get('/dashboard-warga', 'DashboardController::warga');
@@ -25,8 +31,6 @@ $routes->group('', ['filter' => 'auth'], function($routes) {
         $routes->get('/iuran/bayar', 'IuranController::bayar');
         $routes->post('/iuran/bayar/proses', 'IuranController::prosesBayar');
         $routes->get('/iuran/riwayat', 'IuranController::riwayat');
-        $routes->get('/iuran/kuitansi/(:num)', 'IuranController::kuitansi/$1');
-        
         // Laporan Warga
         $routes->get('/laporan-warga', 'LaporanController::warga');
         
@@ -47,6 +51,8 @@ $routes->group('', ['filter' => 'auth'], function($routes) {
         $routes->get('/warga/edit/(:num)', 'WargaController::edit/$1');
         $routes->post('/warga/update/(:num)', 'WargaController::update/$1');
         $routes->post('/warga/delete/(:num)', 'WargaController::delete/$1');
+        $routes->post('/warga/approve/(:num)', 'WargaController::approve/$1');
+        $routes->post('/warga/reject/(:num)', 'WargaController::reject/$1');
 
         // Iuran Management
         $routes->get('/iuran', 'IuranController::index');
@@ -72,6 +78,9 @@ $routes->group('', ['filter' => 'auth'], function($routes) {
         // Pengaturan
         $routes->get('/pengaturan/iuran', 'PengaturanController::iuran');
         $routes->post('/pengaturan/iuran/update', 'PengaturanController::updateIuran');
+        $routes->post('/pengaturan/iuran/metode/store', 'PengaturanController::storeMetode');
+        $routes->post('/pengaturan/iuran/metode/update/(:num)', 'PengaturanController::updateMetode/$1');
+        $routes->post('/pengaturan/iuran/metode/delete/(:num)', 'PengaturanController::deleteMetode/$1');
         $routes->post('/pengaturan/iuran/jalan/add', 'PengaturanController::addJalan');
         $routes->post('/pengaturan/iuran/jalan/delete/(:num)', 'PengaturanController::deleteJalan/$1');
         $routes->post('/pengaturan/iuran/blok/add', 'PengaturanController::addBlok');
