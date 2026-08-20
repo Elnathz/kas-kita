@@ -60,7 +60,7 @@ class WargaController extends BaseController
     public function create()
     {
         $masterJalanModel = new \App\Models\MasterJalanModel();
-        
+
         $data = [
             'master_blok' => $this->masterBlokModel->findAll(),
             'master_jalan' => $masterJalanModel->findAll()
@@ -108,12 +108,12 @@ class WargaController extends BaseController
     public function edit($id = null)
     {
         if (!$id) return redirect()->to('/warga');
-        
+
         $warga = $this->userModel->find($id);
         if (!$warga) return redirect()->to('/warga');
 
         $masterJalanModel = new \App\Models\MasterJalanModel();
-        
+
         $data = [
             'warga' => $warga,
             'master_blok' => $this->masterBlokModel->findAll(),
@@ -200,10 +200,10 @@ class WargaController extends BaseController
                 if (strpos($no_hp, '0') === 0) {
                     $no_hp = '62' . substr($no_hp, 1);
                 }
-                
+
                 $pesan_wa = "Halo " . $user['nama'] . ",\n\nMohon maaf, pendaftaran akun Kas RT Anda *ditolak*.\n\n*Alasan:* " . $alasan;
                 $link_wa = "https://wa.me/" . preg_replace('/[^0-9]/', '', $no_hp) . "?text=" . urlencode($pesan_wa);
-                
+
                 $this->userModel->delete($id);
                 return redirect()->back()->with('message', 'Pendaftar berhasil ditolak dan dihapus. <a href="' . $link_wa . '" target="_blank" class="btn btn-sm btn-success ms-2">Kirim Penjelasan WA</a>');
             }

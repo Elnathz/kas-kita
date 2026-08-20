@@ -124,7 +124,7 @@ class DashboardController extends BaseController
                     $tunggakan++;
                 }
             }
-            
+
             if ($tunggakan >= $toleransi_macet) {
                 // Hitung total nominal tunggakan
                 $w['total_tunggakan'] = $tunggakan * (int) ($pengaturan['nominal'] ?? 0);
@@ -147,7 +147,7 @@ class DashboardController extends BaseController
             'toleransiMacet' => $toleransi_macet,
         ];
 
-        return view('dashboard/index', $data); 
+        return view('dashboard/index', $data);
     }
 
     // Menampilkan dashboard atau laporan khusus untuk warga
@@ -180,7 +180,7 @@ class DashboardController extends BaseController
             ->where('periode_bulan', $currentMonth)
             ->where('periode_tahun', $currentYear)
             ->first();
-            
+
         $statusBulanIni = 'Belum Bayar';
         if ($pembayaranBulanIni) {
             if ($pembayaranBulanIni['status'] == 'terverifikasi') {
@@ -201,14 +201,14 @@ class DashboardController extends BaseController
         $billingSaya = IuranPeriodSummary::residentBilling($user, $pembayaranSaya, $period, $nominalIuran);
         $totalTunggakanSaya = (int) $billingSaya['total_tagihan'];
         $jumlahTunggakanSaya = count($billingSaya['tagihan']);
-        
+
         $riwayatPembayaran = $this->pembayaranModel
             ->where('user_id', $userId)
             ->orderBy('periode_tahun', 'DESC')
             ->orderBy('periode_bulan', 'DESC')
             ->limit(20)
             ->find();
-            
+
         $pembayaranTerakhir = $this->pembayaranModel
             ->where('user_id', $userId)
             ->where('status', 'terverifikasi')
@@ -222,7 +222,7 @@ class DashboardController extends BaseController
             ->where('status', 'terverifikasi')
             ->selectSum('nominal')
             ->first()['nominal'] ?? 0;
-            
+
         $bulanLunasSaya = $this->pembayaranModel
             ->where('user_id', $userId)
             ->where('periode_tahun', $currentYear)

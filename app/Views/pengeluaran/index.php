@@ -87,7 +87,7 @@
                                             <i data-feather="file-text" class="feather-icon me-1" style="width: 11px; height: 11px;"></i>Nota
                                         </button>
                                         <?php endif; ?>
-                                        
+
                                         <?php if (!empty($p['dokumentasi'])): ?>
                                         <button class="btn btn-xs btn-outline-success" onclick="previewLampiran('kegiatan', '<?= htmlspecialchars($p['keterangan']) ?>', 'Rp <?= number_format($p['nominal'], 0, ',', '.') ?>', '<?= htmlspecialchars($p['dokumentasi']) ?>', '<?= htmlspecialchars($urlLampiran($p['dokumentasi'])) ?>')">
                                             <i data-feather="image" class="feather-icon me-1" style="width: 11px; height: 11px;"></i>Dokumentasi
@@ -231,7 +231,7 @@ function previewLampiran(tipe, judul, subjudul, namaFile, fileUrl) {
     const previewTitle = document.getElementById('previewItemTitle');
     const previewSubtitle = document.getElementById('previewItemSubtitle');
     const previewFilename = document.getElementById('previewItemFilename');
-    
+
     if (tipe === 'kegiatan') {
         modalHeaderTitle.innerHTML = '<i data-feather="image" class="feather-icon text-success me-2" style="width: 16px; height: 16px;"></i> Foto Dokumentasi Kegiatan';
     } else {
@@ -241,7 +241,7 @@ function previewLampiran(tipe, judul, subjudul, namaFile, fileUrl) {
     previewTitle.textContent = judul;
     previewSubtitle.textContent = subjudul;
     previewFilename.textContent = namaFile;
-    
+
     const imagePath = fileUrl;
     previewImagePath = imagePath;
     resetPreviewZoom();
@@ -261,7 +261,7 @@ function previewLampiran(tipe, judul, subjudul, namaFile, fileUrl) {
     const modalEl = document.getElementById('modalPreviewLampiran');
     const modal = new bootstrap.Modal(modalEl);
     modal.show();
-    
+
     if (typeof feather !== 'undefined') {
         feather.replace();
     }
