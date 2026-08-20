@@ -180,6 +180,8 @@ if (uri_string() != "" && uri_string() != "/") {
         </div>
     </div>
 
+    <script src="<?= base_url('assets/js/upload-validation.js') ?>"></script>
+
     <!-- Global Toast Helper Script -->
     <script>
     function showAppToast(message, type = 'success', title = null) {
@@ -219,6 +221,51 @@ if (uri_string() != "" && uri_string() != "/") {
         const toast = new bootstrap.Toast(toastEl, { delay: 4000 });
         toast.show();
     }
+    </script>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const maxFileSize = window.KasKitaUploadValidation?.MAX_FILE_SIZE ?? (2 * 1024 * 1024);
+        const fileInputs = document.querySelectorAll('form[enctype="multipart/form-data"] input[type="file"]');
+
+        function validateUploadInput(input) {
+            const file = input.files?.[0];
+            if (!file) {
+                if (input.dataset.uploadInvalid === 'true') {
+                    input.setCustomValidity('Ukuran file maksimal 2 MB.');
+                    showAppToast('Ukuran file maksimal 2 MB. Pilih file yang lebih kecil.', 'warning', 'File Terlalu Besar');
+                    return false;
+                }
+
+                input.setCustomValidity('');
+                return true;
+            }
+
+            if (file.size <= maxFileSize) {
+                input.dataset.uploadInvalid = 'false';
+                input.setCustomValidity('');
+                return true;
+            }
+
+            input.value = '';
+            input.dataset.uploadInvalid = 'true';
+            input.setCustomValidity('Ukuran file maksimal 2 MB.');
+            showAppToast('Ukuran file maksimal 2 MB. Pilih file yang lebih kecil.', 'warning', 'File Terlalu Besar');
+            return false;
+        }
+
+        fileInputs.forEach(function (input) {
+            input.addEventListener('change', function () {
+                validateUploadInput(input);
+            });
+
+            input.form?.addEventListener('submit', function (event) {
+                if (!validateUploadInput(input)) {
+                    event.preventDefault();
+                }
+            });
+        });
+    });
     </script>
     
     <?= $this->renderSection('scripts') ?>
