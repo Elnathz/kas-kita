@@ -253,8 +253,14 @@ pengaturan_iuran (standalone config)
 
 - **URL**: `/iuran`
 - **Method**: GET
-- **Menampilkan**: Tabel status iuran per warga per bulan
-- **Filter**: Bulan, tahun, status
+- **Menampilkan**: Rekap status iuran per warga untuk periode yang dipilih.
+- **Filter periode**:
+  - Bulanan: pilih bulan dan tahun.
+  - Tahunan: pilih tahun dan rekap dari Januari sampai bulan berjalan untuk tahun aktif, atau Januari hingga Desember untuk tahun yang sudah selesai.
+  - Rentang: pilih bulan dan tahun awal serta akhir.
+- **Filter tambahan**: Blok. Status ditampilkan melalui tab Menunggu Verifikasi, Tunggakan & Belum Bayar, Sudah Lunas, dan Semua Data.
+- Untuk periode lebih dari satu bulan, tiap warga tampil satu kali dengan total tagihan, nilai terverifikasi, nilai pending, sisa tagihan, dan status rekap.
+- Kartu ringkasan dan buku register memakai periode filter yang sama.
 
 #### Validasi Pembayaran (Pengurus)
 
@@ -267,7 +273,8 @@ pengaturan_iuran (standalone config)
 
 - **URL**: `/iuran/tagihan` atau `/iuran/bayar`
 - **Method**: GET (daftar tagihan + form pembayaran), POST (`/iuran/bayar/proses`)
-- **Menampilkan**: Rincian tagihan bulan berjalan dan tunggakan bulan sebelumnya (jika ada)
+- **Menampilkan**: Rincian seluruh periode iuran sejak `berlaku_dari` sampai bulan berjalan, dengan periode sebelum warga terdaftar dikecualikan.
+- **Sinkronisasi periode**: Perhitungan tagihan, pembayaran, dan rekap mengikuti sumber periode yang sama dengan Daftar Iuran Pengurus.
 - **Mekanisme Pilihan Pembayaran**:
   - **Opsi Bayar Semua Sekaligus**: Warga melunasi seluruh tunggakan + bulan berjalan sekaligus dengan 1 bukti transfer.
   - **Opsi Bayar Sebagian (Satu per Satu)**: Warga dapat memilih bulan tertentu yang ingin dibayar terlebih dahulu. Sistem mewajibkan pelunasan dengan prinsip **FIFO (First In, First Out)**, yaitu melunasi tunggakan bulan paling lama terlebih dahulu sebelum membayar bulan berikutnya.
@@ -277,7 +284,7 @@ pengaturan_iuran (standalone config)
 
 - **URL**: `/iuran/riwayat`
 - **Method**: GET
-- **Menampilkan**: Daftar semua pembayaran yang pernah dilakukan
+- **Menampilkan**: Daftar pembayaran berdasarkan tahun aktif. Tab tahun tersedia sejak awal iuran sampai tahun berjalan; tahun tanpa pembayaran menampilkan keadaan kosong.
 
 ### 6.5 Pengeluaran (Pengurus Only)
 
