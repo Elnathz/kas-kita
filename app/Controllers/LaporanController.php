@@ -2,12 +2,13 @@
 
 namespace App\Controllers;
 
-use App\Controllers\BaseController;
-use App\Models\PembayaranModel;
+use App\Libraries\IuranPeriodSummary;
+use App\Models\PengaturanIuranModel;
+use App\Models\PengaturanSistemModel;
 use App\Models\PengeluaranModel;
+use App\Models\PembayaranModel;
 use App\Models\UserModel;
 use App\Models\MasterBlokModel;
-use App\Models\PengaturanIuranModel;
 
 class LaporanController extends BaseController
 {
@@ -16,174 +17,132 @@ class LaporanController extends BaseController
     protected $userModel;
     protected $masterBlokModel;
     protected $pengaturanModel;
+    protected $pengaturanSistemModel;
 
     public function __construct()
     {
-        $this->pembayaranModel  = new PembayaranModel();
+        $this->pembayaranModel = new PembayaranModel();
         $this->pengeluaranModel = new PengeluaranModel();
-        $this->userModel        = new UserModel();
-        $this->masterBlokModel  = new MasterBlokModel();
-        $this->pengaturanModel  = new PengaturanIuranModel();
+        $this->userModel = new UserModel();
+        $this->masterBlokModel = new MasterBlokModel();
+        $this->pengaturanModel = new PengaturanIuranModel();
+        $this->pengaturanSistemModel = new PengaturanSistemModel();
     }
 
-    public function index()
-    {
-        return $this->tampilLaporan();
-    }
-
-    public function warga()
-    {
-        return $this->tampilLaporan(true);
-    }
+    // Menampilkan halaman daftar data utama
+    public function index() { return $this->tampilLaporan(); }
+    // Menampilkan dashboard atau laporan khusus untuk warga
+    public function warga() { return $this->tampilLaporan(true); }
 
     private function tampilLaporan(bool $isWarga = false)
     {
-        $bulan  = (int)($this->request->getGet('bulan') ?? date('n'));
-        $tahun  = (int)($this->request->getGet('tahun') ?? date('Y'));
+        $currentMonth = (int) date('n');
+        $currentYear = (int) date('Y');
+        $jenisPeriode = (string) ($this->request->getGet('jenis_periode') ?? 'bulanan');
+        if (!in_array($jenisPeriode, ['bulanan', 'tahunan', 'semua'], true)) $jenisPeriode = 'bulanan';
 
-        // Validasi rentang
-        if ($bulan < 1 || $bulan > 12) $bulan = (int)date('n');
-        if ($tahun < 2020 || $tahun > 2099) $tahun = (int)date('Y');
+        $settingIuran = IuranPeriodSummary::effectiveSetting(
+            $this->pengaturanModel->orderBy('berlaku_dari', 'ASC')->findAll()
+        );
+        $bounds = IuranPeriodSummary::resolveBounds($settingIuran['berlaku_dari'] ?? $currentYear . '-01-01', $currentMonth, $currentYear);
+        $bulan = (int) ($this->request->getGet('bulan') ?? $currentMonth);
+        $tahun = (int) ($this->request->getGet('tahun') ?? $currentYear);
+        $period = $this->resolvePeriod($jenisPeriode, $bulan, $tahun, $bounds, $currentMonth, $currentYear);
+        $statusPeriod = IuranPeriodSummary::resolvePeriod([
+            'jenis_periode' => 'rentang',
+            'bulan_awal'    => $bounds['start']['bulan'],
+            'tahun_awal'    => $bounds['start']['tahun'],
+            'bulan_akhir'   => $period['end']['bulan'],
+            'tahun_akhir'   => $period['end']['tahun'],
+        ], $currentMonth, $currentYear, $bounds);
 
-        // Ambil nominal iuran
-        $pengaturan    = $this->pengaturanModel->orderBy('berlaku_dari', 'DESC')->first();
-        $nominal_iuran = $pengaturan ? (int)$pengaturan['nominal'] : 50000;
+        $nominalIuran = (int) ($settingIuran['nominal'] ?? 50000);
+        $toleransiMacet = max(1, (int) ($settingIuran['toleransi_macet'] ?? 2));
+        $warga = $this->userModel->where('is_active', 1)->findAll();
+        $pembayaran = $this->pembayaranModel->findAll();
+        $rekap = IuranPeriodSummary::summarize($warga, $pembayaran, $period, $nominalIuran, $toleransiMacet, $statusPeriod);
 
-        // Total pemasukan bulan ini (terverifikasi)
-        $totalPemasukanBulan = $this->pembayaranModel
-            ->where('periode_bulan', $bulan)
-            ->where('periode_tahun', $tahun)
-            ->where('status', 'terverifikasi')
-            ->selectSum('nominal')
-            ->first()['nominal'] ?? 0;
-
-        $jumlahTransaksiBulan = $this->pembayaranModel
-            ->where('periode_bulan', $bulan)
-            ->where('periode_tahun', $tahun)
-            ->where('status', 'terverifikasi')
-            ->countAllResults();
-
-        // Total pengeluaran bulan ini
-        $totalPengeluaranBulan = $this->pengeluaranModel
-            ->where('MONTH(tanggal)', $bulan)
-            ->where('YEAR(tanggal)', $tahun)
-            ->selectSum('nominal')
-            ->first()['nominal'] ?? 0;
-
-        $jumlahKegiatanBulan = $this->pengeluaranModel
-            ->where('MONTH(tanggal)', $bulan)
-            ->where('YEAR(tanggal)', $tahun)
-            ->countAllResults();
-
-        // Arus kas bulan ini
-        $arusKasBulan = $totalPemasukanBulan - $totalPengeluaranBulan;
-
-        // Saldo kumulatif RT (semua waktu)
-        $totalPemasukan  = $this->pembayaranModel->where('status', 'terverifikasi')->selectSum('nominal')->first()['nominal'] ?? 0;
-        $totalPengeluaran = $this->pengeluaranModel->selectSum('nominal')->first()['nominal'] ?? 0;
-        $saldoKumulatif  = $totalPemasukan - $totalPengeluaran;
-
-        // Rincian pengeluaran bulan ini
-        $pengeluaranBulan = $this->pengeluaranModel
+        [$startDate, $endDate] = $this->periodDates($period, $jenisPeriode);
+        $expenseQuery = $this->pengeluaranModel
             ->select('pengeluaran.*, kategori_pengeluaran.nama_kategori')
             ->join('kategori_pengeluaran', 'kategori_pengeluaran.id = pengeluaran.kategori_id', 'left')
-            ->where('MONTH(tanggal)', $bulan)
-            ->where('YEAR(tanggal)', $tahun)
-            ->orderBy('tanggal', 'DESC')
-            ->findAll();
+            ->orderBy('tanggal', 'DESC');
+        if ($startDate !== null) $expenseQuery->where('tanggal >=', $startDate)->where('tanggal <=', $endDate);
+        $pengeluaran = $expenseQuery->findAll();
+        $totalPengeluaran = (int) array_sum(array_map(static fn (array $item): float => (float) $item['nominal'], $pengeluaran));
 
-        // Statistik per blok
-        $masterBlok = $this->masterBlokModel->findAll();
-        $warga      = $this->userModel->where('role', 'warga')->where('is_active', 1)->findAll();
-
-        // Ambil semua pembayaran bulan ini (terverifikasi + pending)
-        $pembayaranBulan = $this->pembayaranModel
-            ->where('periode_bulan', $bulan)
-            ->where('periode_tahun', $tahun)
-            ->findAll();
-
-        // Index pembayaran per user
-        $statusPerUser = [];
-        foreach ($pembayaranBulan as $p) {
-            if (!isset($statusPerUser[$p['user_id']]) || $p['status'] == 'terverifikasi') {
-                $statusPerUser[$p['user_id']] = $p['status'];
+        $paymentKeys = array_fill_keys($period['keys'], true);
+        $totalPemasukan = 0;
+        $jumlahTransaksi = 0;
+        foreach ($pembayaran as $payment) {
+            $key = sprintf('%04d-%02d', (int) ($payment['periode_tahun'] ?? 0), (int) ($payment['periode_bulan'] ?? 0));
+            if (isset($paymentKeys[$key]) && $payment['status'] === 'terverifikasi') {
+                $totalPemasukan += (int) $payment['nominal'];
+                $jumlahTransaksi++;
             }
         }
 
-        $statistikBlok  = [];
-        $totalWarga     = count($warga);
-        $totalLunas     = 0;
-        $totalBelum     = 0;
-        $totalMacet     = 0;
+        $endBalanceDate = $endDate ?? date('Y-m-d');
+        $endBalanceMonth = date('Y-m', strtotime($endBalanceDate));
+        $totalPemasukanSampaiPeriode = 0;
+        foreach ($pembayaran as $payment) {
+            $key = sprintf('%04d-%02d', (int) ($payment['periode_tahun'] ?? 0), (int) ($payment['periode_bulan'] ?? 0));
+            if ($payment['status'] === 'terverifikasi' && $key <= $endBalanceMonth) $totalPemasukanSampaiPeriode += (int) $payment['nominal'];
+        }
+        $totalPengeluaranSampaiPeriode = (int) ($this->pengeluaranModel->where('tanggal <=', $endBalanceDate)->selectSum('nominal')->first()['nominal'] ?? 0);
 
         $wargaPerBlok = [];
-        foreach ($masterBlok as $blok) {
-            $wargaPerBlok[$blok['nama_blok']] = [
-                'kapasitas' => $blok['maks_nomor'],
-                'lunas'     => 0,
-                'belum'     => 0,
-                'pending'   => 0,
-                'warga'     => []
-            ];
+        foreach ($this->masterBlokModel->orderBy('nama_blok', 'ASC')->findAll() as $blok) {
+            $wargaPerBlok[$blok['nama_blok']] = ['kapasitas' => (int) $blok['maks_nomor'], 'lunas' => 0, 'belum' => 0, 'pending' => 0, 'macet' => 0, 'warga' => []];
+        }
+        foreach ($rekap['warga'] as $item) {
+            $blok = $item['blok_rumah'] ?: 'Belum Ditentukan';
+            if (!isset($wargaPerBlok[$blok])) $wargaPerBlok[$blok] = ['kapasitas' => 0, 'lunas' => 0, 'belum' => 0, 'pending' => 0, 'macet' => 0, 'warga' => []];
+            $wargaPerBlok[$blok]['warga'][] = $item;
+            if ($item['lunas']) $wargaPerBlok[$blok]['lunas']++;
+            elseif ($item['macet']) { $wargaPerBlok[$blok]['macet']++; $wargaPerBlok[$blok]['belum']++; }
+            elseif ($item['butuh_verifikasi']) $wargaPerBlok[$blok]['pending']++;
+            else $wargaPerBlok[$blok]['belum']++;
         }
 
-        foreach ($warga as $w) {
-            $blok = $w['blok_rumah'];
-            if (!isset($wargaPerBlok[$blok])) {
-                $wargaPerBlok[$blok] = ['kapasitas' => 0, 'lunas' => 0, 'belum' => 0, 'pending' => 0, 'warga' => []];
-            }
+        $wilayah = [];
+        foreach ($this->pengaturanSistemModel->where('kategori', 'wilayah')->findAll() as $row) $wilayah[$row['kunci']] = $row['nilai'];
+        $pengurus = $this->userModel->where('role', 'pengurus')->where('is_active', 1)->findAll();
+        $ketua = $this->findOfficer($pengurus, 'Ketua RT') ?? ($pengurus[0] ?? null);
+        $bendahara = $this->findOfficer($pengurus, 'Bendahara') ?? ($pengurus[1] ?? $pengurus[0] ?? null);
 
-            $status = $statusPerUser[$w['id']] ?? 'belum';
-            $wargaPerBlok[$blok]['warga'][] = [
-                'nama'      => $w['nama'],
-                'no_rumah'  => $w['no_rumah'],
-                'no_telepon' => $w['no_telepon'] ?? '',
-                'status'    => $status
-            ];
+        return view('laporan/index', [
+            'bulan' => (int) $period['start']['bulan'], 'tahun' => (int) $period['start']['tahun'], 'jenisPeriode' => $jenisPeriode, 'period' => $period,
+            'nominal_iuran' => $nominalIuran, 'totalPemasukanBulan' => $totalPemasukan, 'jumlahTransaksiBulan' => $jumlahTransaksi,
+            'totalPengeluaranBulan' => $totalPengeluaran, 'jumlahKegiatanBulan' => count($pengeluaran), 'arusKasBulan' => $totalPemasukan - $totalPengeluaran,
+            'saldoKumulatif' => $totalPemasukanSampaiPeriode - $totalPengeluaranSampaiPeriode, 'pengeluaranBulan' => $pengeluaran,
+            'wargaPerBlok' => $wargaPerBlok, 'rekapWarga' => $rekap['warga'], 'totalWarga' => $rekap['statistik']['total_warga'],
+            'totalLunas' => $rekap['statistik']['lunas'], 'totalBelum' => $rekap['statistik']['belum_bayar'] + $rekap['statistik']['macet'],
+            'totalMacet' => $rekap['statistik']['macet'], 'totalPending' => $rekap['statistik']['menunggu_verifikasi'],
+            'persentasePartisipasi' => $rekap['statistik']['total_warga'] > 0 ? round(($rekap['statistik']['lunas'] / $rekap['statistik']['total_warga']) * 100) : 0,
+            'tahunOptions' => IuranPeriodSummary::availableYears($bounds), 'wilayah' => $wilayah, 'ketua' => $ketua, 'bendahara' => $bendahara, 'isWarga' => $isWarga,
+        ]);
+    }
 
-            if ($status == 'terverifikasi') {
-                $wargaPerBlok[$blok]['lunas']++;
-                $totalLunas++;
-            } elseif ($status == 'pending') {
-                $wargaPerBlok[$blok]['pending']++;
-            } else {
-                $wargaPerBlok[$blok]['belum']++;
-                $totalBelum++;
-            }
+    private function resolvePeriod(string $jenis, int $bulan, int $tahun, array $bounds, int $currentMonth, int $currentYear): array
+    {
+        if ($jenis === 'semua') {
+            return IuranPeriodSummary::resolvePeriod(['jenis_periode' => 'rentang', 'bulan_awal' => $bounds['start']['bulan'], 'tahun_awal' => $bounds['start']['tahun'], 'bulan_akhir' => $bounds['end']['bulan'], 'tahun_akhir' => $bounds['end']['tahun']], $currentMonth, $currentYear, $bounds);
         }
+        return IuranPeriodSummary::resolvePeriod(['jenis_periode' => $jenis, 'bulan' => $bulan, 'tahun' => $tahun, 'tahun_tahunan' => $tahun], $currentMonth, $currentYear, $bounds);
+    }
 
-        // Persentase partisipasi
-        $persentasePartisipasi = $totalWarga > 0 ? round(($totalLunas / $totalWarga) * 100) : 0;
+    private function periodDates(array $period, string $jenis): array
+    {
+        if ($jenis === 'semua') return [null, null];
+        $start = sprintf('%04d-%02d-01', $period['start']['tahun'], $period['start']['bulan']);
+        $end = date('Y-m-t', strtotime(sprintf('%04d-%02d-01', $period['end']['tahun'], $period['end']['bulan'])));
+        return [$start, $end];
+    }
 
-        // Daftar tahun yang tersedia untuk filter (dari data pembayaran)
-        $db           = \Config\Database::connect();
-        $tahunList    = $db->table('pembayaran')->select('DISTINCT YEAR(created_at) as tahun')->orderBy('tahun', 'DESC')->get()->getResultArray();
-        $tahunOptions = array_column($tahunList, 'tahun');
-        if (!in_array($tahun, $tahunOptions)) {
-            $tahunOptions[] = $tahun;
-            rsort($tahunOptions);
-        }
-
-        $data = [
-            'bulan'                  => $bulan,
-            'tahun'                  => $tahun,
-            'nominal_iuran'          => $nominal_iuran,
-            'totalPemasukanBulan'    => (int)$totalPemasukanBulan,
-            'jumlahTransaksiBulan'   => $jumlahTransaksiBulan,
-            'totalPengeluaranBulan'  => (int)$totalPengeluaranBulan,
-            'jumlahKegiatanBulan'    => $jumlahKegiatanBulan,
-            'arusKasBulan'           => (int)$arusKasBulan,
-            'saldoKumulatif'         => (int)$saldoKumulatif,
-            'pengeluaranBulan'       => $pengeluaranBulan,
-            'wargaPerBlok'           => $wargaPerBlok,
-            'totalWarga'             => $totalWarga,
-            'totalLunas'             => $totalLunas,
-            'totalBelum'             => $totalBelum,
-            'persentasePartisipasi'  => $persentasePartisipasi,
-            'tahunOptions'           => $tahunOptions,
-            'isWarga'                => $isWarga
-        ];
-
-        return view('laporan/index', $data);
+    private function findOfficer(array $pengurus, string $jabatan): ?array
+    {
+        foreach ($pengurus as $person) if (($person['jabatan'] ?? '') === $jabatan || stripos((string) ($person['nama'] ?? ''), $jabatan) !== false) return $person;
+        return null;
     }
 }
