@@ -21,7 +21,7 @@ $routes->group('', ['filter' => 'auth'], function($routes) {
 
     // Kuitansi dapat dibuka oleh pengurus maupun warga setelah pembayaran terverifikasi.
     $routes->get('/iuran/kuitansi/(:num)', 'IuranController::kuitansi/$1');
-    
+
     // Warga Routes
     $routes->group('', ['filter' => 'role:warga'], function($routes) {
         $routes->get('/dashboard-warga', 'DashboardController::warga');

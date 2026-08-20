@@ -53,7 +53,7 @@ class DashboardController extends BaseController
 
         // Saldo Kas Saat Ini (Total Iuran Terverifikasi - Total Pengeluaran)
         $totalPemasukan = $this->pembayaranModel->where('status', 'terverifikasi')->selectSum('nominal')->first()['nominal'] ?? 0;
-        
+
         // Warga Sudah Bayar Bulan Ini
         $wargaSudahBayar = $this->pembayaranModel
             ->where('periode_bulan', $currentMonth)
@@ -88,11 +88,11 @@ class DashboardController extends BaseController
 
         // Warga Macet
         // Warga disebut macet jika belum bayar selama >= toleransi_macet bulan.
-        // Untuk query ini, kita ambil semua warga yang aktif, 
+        // Untuk query ini, kita ambil semua warga yang aktif,
         // lalu hitung berapa bulan sejak mereka bergabung atau sejak bulan pertama tahun ini (untuk mock).
         // Lebih aman kita hitung tunggakan asli.
         // Karena ini kompleks untuk query tunggal, kita ambil data lalu filter via PHP.
-        
+
         $wargaAktif = $this->userModel->where('is_active', 1)->findAll();
         $pembayaranAktif = $this->pembayaranModel
             ->where('status', 'terverifikasi')
@@ -105,21 +105,21 @@ class DashboardController extends BaseController
             $tunggakan = 0;
             $joinedMonth = (int)date('m', strtotime($w['created_at']));
             $joinedYear = (int)date('Y', strtotime($w['created_at']));
-            
+
             for ($i = 1; $i <= $currentMonth; $i++) {
                 // Skip jika sebelum bergabung
                 if ($currentYear < $joinedYear || ($currentYear == $joinedYear && $i < $joinedMonth)) {
                     continue;
                 }
-                
+
                 $sudahBayar = false;
                 foreach ($pembayaranAktif as $p) {
                     if ($p['user_id'] == $w['id'] && $p['periode_bulan'] == $i && $p['periode_tahun'] == $currentYear) {
                         $sudahBayar = true;
-                        break;
-                    }
+                    break;
                 }
-                
+            }
+
                 if (!$sudahBayar) {
                     $tunggakan++;
                 }
