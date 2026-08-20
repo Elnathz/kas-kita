@@ -145,7 +145,12 @@
 
                 <div class="alert alert-info border-0 p-2 mt-3 mb-3 small d-flex align-items-center">
                     <i data-feather="info" class="feather-icon text-info me-2 flex-shrink-0"></i>
-                    <span>Wilayah: <strong>RT 06 / RW 20</strong>, Kecamatan Purwodadi, Kabupaten Grobogan. Akun akan diverifikasi pengurus RT sebelum aktif.</span>
+                    <?php
+                    $wilayah = $wilayah ?? [];
+                    $rtRegister = preg_replace('/^RT\\s*/i', '', trim((string) ($wilayah['rt'] ?? '')));
+                    $rwRegister = preg_replace('/^RW\\s*/i', '', trim((string) ($wilayah['rw'] ?? '')));
+                    ?>
+                    <span>Wilayah: <strong>RT <?= esc($rtRegister ?: '-') ?> / RW <?= esc($rwRegister ?: '-') ?></strong>, Kecamatan <?= esc($wilayah['kecamatan'] ?? '-') ?>, Kabupaten <?= esc($wilayah['kota'] ?? '-') ?>. Akun akan diverifikasi pengurus RT sebelum aktif.</span>
                 </div>
 
                 <div class="d-grid mb-3">

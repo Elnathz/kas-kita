@@ -14,7 +14,8 @@ class RoleFilter implements FilterInterface
             return redirect()->to('/login');
         }
 
-        if ($arguments && !in_array(session()->get('role'), $arguments)) {
+        $activeRole = session()->get('active_role') ?? session()->get('role');
+        if ($arguments && !in_array($activeRole, $arguments)) {
             return redirect()->to('/dashboard')->with('error', 'Akses ditolak.');
         }
     }

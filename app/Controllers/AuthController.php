@@ -7,6 +7,7 @@ use App\Models\UserModel;
 
 class AuthController extends BaseController
 {
+    // Menampilkan halaman daftar data utama
     public function index()
     {
         // Jika sudah login, langsung arahkan ke dashboard
@@ -21,6 +22,7 @@ class AuthController extends BaseController
         return view('auth/login');
     }
 
+    // Menampilkan halaman login pengguna
     public function login()
     {
         $username = $this->request->getPost('username');
@@ -36,13 +38,13 @@ class AuthController extends BaseController
 
             if (password_verify($password, $user['password'])) {
                 session()->set([
-                    'id'         => $user['id'],
-                    'user_id'    => $user['id'],
-                    'username'   => $user['username'],
-                    'nama'       => $user['nama'],
-                    'role'       => $user['role'],
-                    'no_telepon' => $user['no_telepon'],
-                    'isLoggedIn' => true,
+                    'id'          => $user['id'],
+                    'user_id'     => $user['id'],
+                    'username'    => $user['username'],
+                    'nama'        => $user['nama'],
+                    'role'        => $user['role'],
+                    'active_role' => $user['role'],
+                    'isLoggedIn'  => true,
                 ]);
 
                 if ($user['role'] === 'pengurus') {
@@ -58,12 +60,30 @@ class AuthController extends BaseController
         }
     }
 
+    // Memproses logout dan menghapus session pengguna
     public function logout()
     {
         session()->destroy();
         return redirect()->to('/login');
     }
 
+    // Mengganti peran pengguna secara instan (mode testing)
+    public function switchRole()
+    {
+        if (session()->get('role') === 'pengurus') {
+            $currentActive = session()->get('active_role') ?? session()->get('role');
+            if ($currentActive === 'pengurus') {
+                session()->set('active_role', 'warga');
+                return redirect()->to('/dashboard-warga');
+            } else {
+                session()->set('active_role', 'pengurus');
+                return redirect()->to('/dashboard');
+            }
+        }
+        return redirect()->back();
+    }
+
+    // Menampilkan form pendaftaran warga baru
     public function register()
     {
         if (session()->get('isLoggedIn')) {
@@ -72,28 +92,36 @@ class AuthController extends BaseController
 
         $masterBlokModel = new \App\Models\MasterBlokModel();
         $masterJalanModel = new \App\Models\MasterJalanModel();
+        $sistemModel = new \App\Models\PengaturanSistemModel();
+        $wilayah = [];
+        foreach ($sistemModel->where('kategori', 'wilayah')->findAll() as $row) {
+            $wilayah[$row['kunci']] = $row['nilai'];
+        }
 
         $data = [
             'master_blok' => $masterBlokModel->findAll(),
-            'master_jalan' => $masterJalanModel->findAll()
+            'master_jalan' => $masterJalanModel->findAll(),
+            'wilayah' => $wilayah,
         ];
 
         return view('auth/register', $data);
     }
 
+    // Memproses penyimpanan data registrasi warga
     public function prosesRegister()
     {
         $userModel = new UserModel();
 
         $data = [
-            'nama'       => $this->request->getPost('nama'),
-            'username'   => $this->request->getPost('username'),
-            'password'   => password_hash($this->request->getPost('password'), PASSWORD_DEFAULT),
-            'role'       => 'warga',
-            'no_rumah'   => $this->request->getPost('no_rumah'),
-            'no_telepon' => $this->request->getPost('no_telepon'),
-            'alamat'     => $this->request->getPost('alamat'),
-            'is_active'  => 0, // Pending approval
+            'nama'        => $this->request->getPost('nama'),
+            'username'    => $this->request->getPost('username'),
+            'password'    => password_hash($this->request->getPost('password'), PASSWORD_DEFAULT),
+            'role'        => 'warga',
+            'active_role' => 'warga',
+            'no_rumah'    => $this->request->getPost('no_rumah'),
+            'no_telepon'  => $this->request->getPost('no_telepon'),
+            'alamat'      => $this->request->getPost('alamat'),
+            'is_active'   => 0, // Pending approval
         ];
 
         $userModel->insert($data);
