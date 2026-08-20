@@ -1,5 +1,85 @@
 <?= $this->extend('layouts/app') ?>
 <?= $this->section('content') ?>
+<style>
+.iuran-nominal {
+    min-width: 110px;
+    white-space: nowrap;
+}
+.payment-method-card {
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    padding: 1rem;
+    height: 100%;
+    background: #fff;
+}
+.payment-method-body {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+}
+.payment-method-details {
+    min-width: 0;
+    flex: 1 1 auto;
+}
+.payment-method-preview {
+    width: 132px;
+    height: 132px;
+    flex: 0 0 132px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: .45rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    background: #f8fafc;
+}
+.payment-method-preview img {
+    display: block;
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+}
+.qris-preview-trigger {
+    display: block;
+    border: 0;
+    cursor: zoom-in;
+    background: transparent;
+}
+.qris-preview-trigger:focus-visible {
+    outline: 2px solid #0d6efd;
+    outline-offset: 3px;
+    border-radius: 8px;
+}
+.qris-modal-stage {
+    min-height: 420px;
+    max-height: 76vh;
+    overflow: auto;
+    background: #eef1f4;
+}
+#qrisPreviewImage {
+    max-width: 100%;
+    max-height: 68vh;
+    object-fit: contain;
+    transform-origin: center center;
+    transition: transform .15s ease;
+    cursor: zoom-in;
+}
+#qrisPreviewImage.is-zoomed { cursor: grab; }
+.qris-preview-toolbar .btn { min-width: 36px; }
+@media (max-width: 575.98px) {
+    .payment-method-body {
+        flex-direction: column;
+    }
+    .payment-method-preview {
+        width: 150px;
+        height: 150px;
+        flex-basis: 150px;
+        align-self: center;
+    }
+}
+</style>
 <div class="row">
     <div class="col-lg-9 mx-auto">
         <!-- Alert Tunggakan -->
@@ -7,7 +87,7 @@
             <i data-feather="alert-circle" class="me-3 flex-shrink-0 mt-1" style="width: 20px; height: 20px;"></i>
             <div>
                 <h6 class="fw-bold mb-1">Pemberitahuan Tunggakan</h6>
-                <p class="mb-0 font-13">Anda memiliki <strong>2 bulan tagihan iuran</strong> yang belum lunas (Juli & Agustus 2026). Sistem menerapkan metode pembayaran berurutan (FIFO), bulan terlama harus dilunasi lebih dahulu.</p>
+                <p class="mb-0 font-13">Anda memiliki <strong><?= count($tagihan_list) ?> bulan tagihan iuran</strong> yang belum lunas. Sistem menerapkan metode pembayaran berurutan (FIFO), bulan terlama harus dilunasi lebih dahulu.</p>
             </div>
         </div>
 
@@ -19,7 +99,7 @@
                     </div>
                     <div>
                         <h5 class="card-title fw-bold mb-0 text-dark">Form Pembayaran Iuran</h5>
-                        <p class="text-muted small mb-0 mt-1">Pilih periode tagihan dan unggah bukti transfer</p>
+                        <p class="text-muted small mb-0 mt-1">Pilih periode tagihan dari <?= esc($period['label'] ?? 'periode aktif') ?> dan unggah bukti transfer</p>
                     </div>
                 </div>
             </div>
@@ -37,7 +117,7 @@
                                 <div class="form-check mb-0">
                                     <input class="form-check-input" type="checkbox" id="checkAll" checked onchange="toggleSelectAll(this)">
                                     <label class="form-check-label fw-bold text-dark" for="checkAll">
-                                        Bayar Semua Sekaligus (2 Bulan)
+                                        Bayar Semua Sekaligus (<?= count($tagihan_list) ?> Bulan)
                                     </label>
                                 </div>
                             </div>
@@ -52,12 +132,10 @@
                                     <!-- Item Bulan <?= $i + 1 ?> -->
                                     <div class="d-flex align-items-center justify-content-between mb-3 pb-3 border-bottom">
                                         <div class="form-check mb-0">
-                                            <input class="form-check-input period-check" type="checkbox" name="periode[]" value="<?= $t['tahun'] . '-' . sprintf('%02d', $t['bulan']) ?>" id="p_<?= $t['bulan'] ?>" data-nominal="<?= $t['tarif'] ?>" checked onchange="handleCheck(<?= $i ?>)">
-                                            <!-- Kita sisipkan input tersembunyi agar form bayar mengambil periode dari yang dicheck (but the controller currently gets periode_bulan/tahun directly from post. We will modify the form to send an array and process it, but for now we just keep the checkbox logic and let JS calculate total) -->
-                                            <input type="hidden" name="periode_bulan" value="<?= $t['bulan'] ?>">
-                                            <input type="hidden" name="periode_tahun" value="<?= $t['tahun'] ?>">
-                                            <label class="form-check-label ms-2 cursor-pointer" for="p_<?= $t['bulan'] ?>">
-                                                <span class="d-block fw-semibold text-dark">Iuran <?= date('F Y', mktime(0, 0, 0, $t['bulan'], 1, $t['tahun'])) ?></span>
+                                            <input class="form-check-input period-check" type="checkbox" name="periode[]" value="<?= $t['tahun'] . '-' . sprintf('%02d', $t['bulan']) ?>" id="p_<?= $t['tahun'] ?>_<?= $t['bulan'] ?>" data-nominal="<?= $t['tarif'] ?>" checked onchange="handleCheck(<?= $i ?>)">
+                                            <!-- array periode[] akan diproses controller multibayar -->
+                                            <label class="form-check-label ms-2 cursor-pointer" for="p_<?= $t['tahun'] ?>_<?= $t['bulan'] ?>">
+                                                <span class="d-block fw-semibold text-dark">Iuran <?= esc($t['label']) ?></span>
                                                 <?php if ($t['status'] == 'Tunggakan'): ?>
                                                     <span class="badge bg-danger-subtle text-danger border border-danger-subtle font-11 mt-1">Tunggakan</span>
                                                 <?php else: ?>
@@ -65,7 +143,7 @@
                                                 <?php endif; ?>
                                             </label>
                                         </div>
-                                        <span class="fw-bold text-dark">Rp <?= number_format($t['tarif'], 0, ',', '.') ?></span>
+                                        <span class="fw-bold text-dark iuran-nominal">Rp <?= number_format($t['tarif'], 0, ',', '.') ?></span>
                                     </div>
                                     <?php $i++; endforeach; ?>
                                 <?php endif; ?>
@@ -82,45 +160,41 @@
                     <!-- Rekening Tujuan Kas RT -->
                     <div class="mb-4">
                         <h6 class="fw-bold text-dark mb-3"><span class="bg-light text-muted px-2 py-1 rounded me-2">2</span>Tujuan Transfer</h6>
-                        
                         <div class="row g-3">
-                            <div class="col-md-6">
-                                <div class="border rounded-3 p-3 h-100 bg-white shadow-sm">
-                                    <div class="d-flex justify-content-between align-items-center mb-3">
-                                        <div class="d-flex align-items-center">
-                                            <div class="bg-primary text-white rounded p-1 px-2 me-2 font-12 fw-bold">BCA</div>
-                                            <span class="fw-bold text-dark font-14">Bank Transfer</span>
-                                        </div>
-                                        <i data-feather="copy" class="text-muted cursor-pointer" style="width: 16px; height: 16px;" title="Salin Rekening"></i>
-                                    </div>
-                                    <h4 class="fw-bold text-dark mb-1 font-monospace" style="letter-spacing: 1px;">8830-1234-5678</h4>
-                                    <span class="text-muted small">a.n. Kas RT 06 RW 20 Purwodadi</span>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="border rounded-3 p-3 h-100 bg-white shadow-sm">
-                                    <div class="d-flex justify-content-between align-items-center mb-2">
-                                        <div class="d-flex align-items-center">
-                                            <div class="bg-danger text-white rounded p-1 px-2 me-2 font-12 fw-bold">QRIS</div>
-                                            <span class="fw-bold text-dark font-14">E-Wallet</span>
-                                        </div>
-                                    </div>
-                                    <div class="d-flex align-items-center gap-3">
-                                        <div style="width: 68px; height: 68px; overflow: hidden; border-radius: 8px; border: 1px solid #ddd; position: relative;">
-                                            <div style="transform: scale(0.18); transform-origin: top left; width: 380px;">
-                                                <?= $this->include('components/qris_card') ?>
+                            <?php foreach (($metodePembayaran ?? []) as $metode): ?>
+                                <?php $gambarMetode = !empty($metode['gambar']) ? (is_file(FCPATH . 'uploads/metode-pembayaran/' . $metode['gambar']) ? base_url('uploads/metode-pembayaran/' . $metode['gambar']) : base_url('assets/images/' . $metode['gambar'])) : ''; ?>
+                                <div class="col-md-6">
+                                    <div class="payment-method-card shadow-sm">
+                                        <div class="d-flex justify-content-between align-items-center mb-3">
+                                            <div class="d-flex align-items-center">
+                                                <span class="badge <?= $metode['jenis'] === 'qris' ? 'bg-danger' : 'bg-primary' ?> me-2"><?= esc(strtoupper($metode['jenis'])) ?></span>
+                                                <span class="fw-bold text-dark font-14"><?= esc($metode['nama_metode']) ?></span>
                                             </div>
                                         </div>
-                                        <div>
-                                            <span class="fw-bold text-dark font-12 d-block">KAS RT 06 RW 20</span>
-                                            <small class="text-muted font-11 d-block mb-1">NMID: ID1024098234120</small>
-                                            <a href="javascript:void(0)" class="text-danger font-11 fw-semibold text-decoration-none d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#modalQris">
-                                                <i data-feather="zoom-in" style="width: 12px; height: 12px;" class="me-1"></i> Perbesar QR
-                                            </a>
+                                        <div class="payment-method-body">
+                                            <div class="payment-method-details">
+                                                <?php if (!empty($metode['nomor'])): ?><h5 class="fw-bold text-dark mb-1 font-monospace"><?= esc($metode['nomor']) ?></h5><?php endif; ?>
+                                                <?php if (!empty($metode['atas_nama'])): ?><span class="text-muted small d-block">a.n. <?= esc($metode['atas_nama']) ?></span><?php endif; ?>
+                                                <?php if (!empty($metode['detail'])): ?><small class="text-muted d-block mt-2"><?= esc($metode['detail']) ?></small><?php endif; ?>
+                                            </div>
+                                            <?php if ($gambarMetode): ?>
+                                                <div class="payment-method-preview">
+                                                    <?php if ($metode['jenis'] === 'qris'): ?>
+                                                        <button type="button" class="qris-preview-trigger p-0" onclick="lihatQris(<?= esc(json_encode($gambarMetode), 'attr') ?>, <?= esc(json_encode($metode['nama_metode']), 'attr') ?>)">
+                                                            <img src="<?= esc($gambarMetode) ?>" alt="<?= esc($metode['nama_metode']) ?>">
+                                                        </button>
+                                                    <?php else: ?>
+                                                        <img src="<?= esc($gambarMetode) ?>" alt="<?= esc($metode['nama_metode']) ?>">
+                                                    <?php endif; ?>
+                                                </div>
+                                            <?php endif; ?>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            <?php endforeach; ?>
+                            <?php if (empty($metodePembayaran)): ?>
+                                <div class="col-12"><div class="alert alert-warning mb-0">Belum ada metode pembayaran aktif. Hubungi pengurus RT.</div></div>
+                            <?php endif; ?>
                         </div>
                     </div>
 
@@ -147,31 +221,74 @@
     </div>
 </div>
 
-<!-- Modal Perbesar QRIS -->
-<div class="modal fade" id="modalQris" tabindex="-1" aria-labelledby="modalQrisLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-sm">
-        <div class="modal-content border-0 shadow-lg">
-            <div class="modal-header border-0 pb-0">
+<div class="modal fade" id="modalQrisPreview" tabindex="-1" aria-labelledby="modalQrisPreviewLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered" id="qrisPreviewDialog">
+        <div class="modal-content border-0 shadow">
+            <div class="modal-header bg-light py-3 border-bottom">
+                <h5 class="modal-title fw-bold text-dark" id="modalQrisPreviewLabel">
+                    <i data-feather="maximize" class="feather-icon text-danger me-2" style="width: 16px; height: 16px;"></i>
+                    <span id="qrisPreviewTitle">QRIS Kas RT</span>
+                </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body text-center pb-4 pt-2">
-                <h5 class="fw-bold text-dark mb-1" id="modalQrisLabel">QRIS Kas RT 06</h5>
-                <p class="text-muted small mb-3">Scan menggunakan M-Banking atau E-Wallet Anda</p>
-                <div class="mb-3 d-flex justify-content-center">
-                    <div style="transform: scale(0.7); transform-origin: center center; margin-bottom: -150px; margin-top: -30px;">
-                        <?= $this->include('components/qris_card') ?>
-                    </div>
+            <div class="modal-body p-4 text-center">
+                <div class="qris-preview-toolbar d-flex flex-wrap justify-content-center align-items-center gap-2 mb-3">
+                    <button type="button" class="btn btn-outline-secondary btn-sm" onclick="zoomQris(-0.2)" title="Perkecil"><i data-feather="zoom-out" style="width: 14px; height: 14px;"></i></button>
+                    <span class="small text-muted" id="qrisPreviewZoomLabel">100%</span>
+                    <button type="button" class="btn btn-outline-secondary btn-sm" onclick="zoomQris(0.2)" title="Perbesar"><i data-feather="zoom-in" style="width: 14px; height: 14px;"></i></button>
+                    <button type="button" class="btn btn-outline-secondary btn-sm" onclick="resetQrisZoom()">Reset</button>
+                    <button type="button" class="btn btn-outline-secondary btn-sm" onclick="toggleQrisFullscreen()"><i data-feather="maximize-2" style="width: 14px; height: 14px;"></i> Layar penuh</button>
                 </div>
-                <div class="bg-danger bg-opacity-10 text-danger rounded p-2 px-3 d-inline-block">
-                    <span class="d-block font-11 fw-bold">NMID</span>
-                    <span class="font-monospace fw-bold">ID1024098234120</span>
+                <div class="qris-modal-stage p-3 rounded-3 border d-flex align-items-center justify-content-center">
+                    <img id="qrisPreviewImage" src="" alt="QRIS Kas RT" class="rounded border shadow-sm">
                 </div>
+                <span class="badge bg-white text-dark border font-11 px-2 py-1 mt-3" id="qrisPreviewFilename">qris.jpg</span>
+            </div>
+            <div class="modal-footer bg-light py-2">
+                <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Tutup</button>
+                <a id="qrisPreviewDownload" class="btn btn-success btn-sm fw-semibold" href="#" download><i data-feather="download" style="width: 14px; height: 14px;"></i> Unduh QRIS</a>
             </div>
         </div>
     </div>
 </div>
 
 <script>
+let qrisPreviewScale = 1;
+function applyQrisZoom() {
+    const image = document.getElementById('qrisPreviewImage');
+    const label = document.getElementById('qrisPreviewZoomLabel');
+    image.style.transform = 'scale(' + qrisPreviewScale + ')';
+    image.classList.toggle('is-zoomed', qrisPreviewScale > 1);
+    label.textContent = Math.round(qrisPreviewScale * 100) + '%';
+}
+function zoomQris(step) {
+    qrisPreviewScale = Math.min(3, Math.max(1, qrisPreviewScale + step));
+    applyQrisZoom();
+}
+function resetQrisZoom() {
+    qrisPreviewScale = 1;
+    applyQrisZoom();
+}
+function toggleQrisFullscreen() {
+    const dialog = document.getElementById('qrisPreviewDialog');
+    const stage = dialog.querySelector('.qris-modal-stage');
+    dialog.classList.toggle('modal-fullscreen');
+    stage.style.maxHeight = dialog.classList.contains('modal-fullscreen') ? '82vh' : '76vh';
+}
+function lihatQris(url, nama) {
+    const image = document.getElementById('qrisPreviewImage');
+    const download = document.getElementById('qrisPreviewDownload');
+    const filename = url.split('/').pop() || 'qris.jpg';
+    document.getElementById('qrisPreviewTitle').textContent = nama;
+    document.getElementById('qrisPreviewFilename').textContent = filename;
+    image.src = url;
+    download.href = url;
+    download.setAttribute('download', filename);
+    resetQrisZoom();
+    new bootstrap.Modal(document.getElementById('modalQrisPreview')).show();
+    if (typeof feather !== 'undefined') feather.replace();
+}
+
 function handleCheck(currentIndex) {
     const checks = document.querySelectorAll('.period-check');
     const isChecked = checks[currentIndex].checked;
@@ -241,11 +358,7 @@ function validatePayment() {
     });
 
     if (!hasChecked) {
-        if (typeof showAppToast === 'function') {
-            showAppToast('Pilih minimal satu bulan tagihan untuk dibayar.', 'warning', 'Peringatan');
-        } else {
-            alert('Pilih minimal satu bulan tagihan untuk dibayar.');
-        }
+        showAppToast('Pilih minimal satu bulan tagihan untuk dibayar.', 'warning', 'Peringatan');
         return false;
     }
     return true;

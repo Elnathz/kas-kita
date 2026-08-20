@@ -1,5 +1,14 @@
 <?= $this->extend('layouts/app') ?>
 <?= $this->section('content') ?>
+<?php
+$wilayah = $wilayah ?? [];
+$bendahara = $bendahara ?? [];
+$nomorWa = \App\Libraries\IuranPeriodSummary::normalizePhone($pembayaran['no_telepon'] ?? '');
+$periodeLabel = date('F Y', mktime(0, 0, 0, (int) ($pembayaran['periode_bulan'] ?? 1), 1, (int) ($pembayaran['periode_tahun'] ?? date('Y'))));
+$pesanWa = 'Halo Bapak/Ibu ' . ($pembayaran['nama'] ?? '') . ",\n\nBerikut kuitansi resmi pembayaran iuran kas RT periode " . $periodeLabel . ' sebesar Rp ' . number_format((float) ($pembayaran['nominal'] ?? 0), 0, ',', '.') . ".\n\nPembayaran sudah diverifikasi oleh pengurus RT. Terima kasih atas partisipasinya.";
+$wilayahSingkat = 'RT ' . ($wilayah['rt'] ?? '-') . ' / RW ' . ($wilayah['rw'] ?? '-');
+$wilayahLengkap = trim(($wilayah['kelurahan'] ?? '') . ', ' . ($wilayah['kecamatan'] ?? '') . ', ' . ($wilayah['kota'] ?? '') . ', ' . ($wilayah['provinsi'] ?? ''), ' ,');
+?>
 <div class="row justify-content-center">
     <div class="col-lg-8 col-xl-7">
         
@@ -10,10 +19,12 @@
                 <span>Kembali</span>
             </a>
             <div class="d-flex flex-column flex-sm-row gap-2">
-                <a href="https://wa.me/6281234567893?text=Halo%20Ibu%20Rina%2C%20ini%20kuitansi%20resmi%20pelunasan%20iuran%20kas%20RT%2004%20bulan%20Agustus%202026.%20Terima%20kasih." target="_blank" class="btn btn-outline-success btn-sm d-inline-flex align-items-center justify-content-center gap-1">
+                <?php if ($nomorWa !== ''): ?>
+                <a href="https://wa.me/<?= esc($nomorWa) ?>?text=<?= rawurlencode($pesanWa) ?>" target="_blank" class="btn btn-outline-success btn-sm d-inline-flex align-items-center justify-content-center gap-1">
                     <i data-feather="send" class="feather-icon" style="width: 14px; height: 14px;"></i>
                     <span>Kirim WA</span>
                 </a>
+                <?php endif; ?>
                 <button onclick="window.print()" class="btn btn-success btn-sm d-inline-flex align-items-center justify-content-center gap-1 fw-semibold">
                     <i data-feather="printer" class="feather-icon" style="width: 14px; height: 14px;"></i>
                     <span>Cetak / PDF</span>
@@ -33,9 +44,9 @@
                             <i data-feather="shield" class="feather-icon text-white" style="width: 22px; height: 22px;"></i>
                         </div>
                         <div>
-                            <h6 class="fw-bold text-dark mb-0 font-14">RUKUN TETANGGA 04 / RW 12</h6>
+                            <h6 class="fw-bold text-dark mb-0 font-14">RUKUN TETANGGA <?= esc($wilayah['rt'] ?? '-') ?> / RW <?= esc($wilayah['rw'] ?? '-') ?></h6>
                             <span class="text-muted font-11 d-block">Sistem Pengelolaan Kas Warga - Kas-Kita</span>
-                            <span class="text-muted font-10">Kel. Sukamaju, Kec. Cibeunying Kidul, Kota Bandung</span>
+                            <span class="text-muted font-10"><?= esc($wilayahLengkap) ?></span>
                         </div>
                     </div>
                     <div class="text-start text-sm-end w-100 w-sm-auto pt-2 pt-sm-0 border-top border-sm-top-0">
@@ -58,7 +69,7 @@
                         <div class="col-sm-4 text-muted font-13">Telah Diterima Dari</div>
                         <div class="col-sm-8">
                             <span class="fw-bold text-dark font-15 d-block"><?= esc($pembayaran['nama'] ?? 'N/A') ?></span>
-                            <span class="text-dark font-13"><?= esc($pembayaran['blok_rumah'] ?? '') ?> / No. <?= esc($pembayaran['no_rumah'] ?? '') ?> (<?= esc($pembayaran['nama_jalan'] ?? '') ?>)</span>
+                            <span class="text-dark font-13"><?= esc($pembayaran['blok_rumah'] ?? '') ?> / <?= esc($pembayaran['no_rumah'] ?? '') ?> (<?= esc($pembayaran['nama_jalan'] ?? '') ?>)</span>
                         </div>
 
                         <!-- Untuk Pembayaran -->
@@ -92,10 +103,10 @@
                     <div class="d-flex justify-content-between align-items-end text-center">
                         <div class="text-start font-12 text-muted" style="max-width: 250px;">
                             <i data-feather="info" class="feather-icon me-1" style="width: 12px; height: 12px;"></i>
-                            Kuitansi ini merupakan bukti pembayaran sah yang diterbitkan secara elektronik oleh Sistem Kas-Kita RT 04.
+                            Kuitansi ini merupakan bukti pembayaran sah yang diterbitkan secara elektronik oleh Sistem Kas-Kita <?= esc($wilayahSingkat) ?>.
                         </div>
                         <div style="width: 220px;">
-                            <span class="font-12 text-muted d-block mb-1">Bandung, <?= date('d F Y', strtotime($pembayaran['verified_at'] ?? 'now')) ?><br><strong>Bendahara RT 04</strong></span>
+                            <span class="font-12 text-muted d-block mb-1"><?= esc($wilayah['kota'] ?? '') ?>, <?= date('d F Y', strtotime($pembayaran['verified_at'] ?? 'now')) ?><br><strong><?= esc($bendahara['nama'] ?? 'Bendahara RT') ?></strong></span>
                             
                             <!-- Digital Signature & RT Stamp Overlay -->
                             <div class="position-relative d-inline-block my-1" style="height: 65px; width: 170px;">
@@ -103,8 +114,8 @@
                                 <div class="position-absolute top-50 start-50 translate-middle opacity-50" style="pointer-events: none; z-index: 1;">
                                     <div class="rounded-circle border border-2 border-primary d-flex flex-column align-items-center justify-content-center text-primary fw-bold" style="width: 70px; height: 70px; transform: rotate(-12deg); border-style: dashed !important;">
                                         <span style="font-size: 7px;" class="text-uppercase">PENGURUS RT</span>
-                                        <span class="fw-bolder font-10">RT 04</span>
-                                        <span style="font-size: 7px;">RW 12</span>
+                                        <span class="fw-bolder font-10">RT <?= esc($wilayah['rt'] ?? '-') ?></span>
+                                        <span style="font-size: 7px;">RW <?= esc($wilayah['rw'] ?? '-') ?></span>
                                     </div>
                                 </div>
                                 <!-- Tanda Tangan Farros Rifantiarno SVG -->

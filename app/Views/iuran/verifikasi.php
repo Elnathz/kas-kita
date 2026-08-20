@@ -3,6 +3,9 @@
 <div class="row">
     <div class="col-lg-8 mx-auto">
         <!-- Alert Status Warga jika Menunggak / Macet -->
+        <?php if ($error = session()->getFlashdata('error')): ?>
+            <div class="alert alert-danger border-0 rounded p-3 mb-4"><?= esc($error) ?></div>
+        <?php endif; ?>
         <div class="alert alert-warning border-0 rounded p-3 mb-4 d-flex align-items-center">
             <i data-feather="alert-triangle" class="feather-icon text-warning me-2"></i>
             <div>
@@ -50,7 +53,16 @@
                     <div class="col-md-6">
                         <h6 class="fw-bold text-muted small text-uppercase mb-3">Bukti Transfer</h6>
                         <div class="border rounded p-2 text-center bg-light">
-                            <?php $bukti = !empty($pembayaran['bukti_transfer']) ? base_url('uploads/bukti/' . $pembayaran['bukti_transfer']) : base_url('FreeDash/src/assets/images/big/img1.jpg'); ?>
+                            <?php
+                            $buktiPath = trim((string) ($pembayaran['bukti_transfer'] ?? ''));
+                            if ($buktiPath === '') {
+                                $bukti = base_url('assets/images/buktitf1.jpeg');
+                            } elseif (str_starts_with($buktiPath, 'assets/') || str_starts_with($buktiPath, 'uploads/')) {
+                                $bukti = base_url($buktiPath);
+                            } else {
+                                $bukti = base_url('uploads/bukti/' . $buktiPath);
+                            }
+                            ?>
                             <img src="<?= esc($bukti) ?>" alt="Bukti Transfer" class="img-fluid rounded" style="max-height: 250px; object-fit: cover;">
                             <div class="mt-2">
                                 <a href="<?= esc($bukti) ?>" target="_blank" class="btn btn-sm btn-outline-secondary">
@@ -58,14 +70,25 @@
                                 </a>
                             </div>
                         </div>
+                        <?php if (!empty($pembayaran['bukti_penolakan'])): ?>
+                            <div class="alert alert-light border mt-3 mb-0 small">
+                                <strong>Bukti penolakan tersimpan:</strong>
+                                <a href="<?= base_url($pembayaran['bukti_penolakan']) ?>" target="_blank" rel="noopener">Lihat bukti pengurus</a>
+                            </div>
+                        <?php endif; ?>
                     </div>
                 </div>
 
-                <form action="<?= base_url('iuran/verifikasi/proses/' . ($id ?? 1)) ?>" method="post">
+                <form id="formVerifikasiIuran" action="<?= base_url('iuran/verifikasi/proses/' . ($id ?? 1)) ?>" method="post" enctype="multipart/form-data">
                     <?= csrf_field() ?>
                     <div class="mb-4">
                         <label class="form-label text-dark fw-semibold small" for="catatan">Catatan Verifikasi (Opsional jika disetujui, Wajib jika ditolak)</label>
-                        <textarea class="form-control" id="catatan" name="catatan" rows="2" placeholder="Contoh: Bukti transfer terverifikasi masuk ke rekening RT."></textarea>
+                        <textarea class="form-control" id="catatan" name="catatan" rows="2" placeholder="Contoh: Nominal tidak sesuai rekening koran RT."><?= esc(old('catatan')) ?></textarea>
+                    </div>
+                    <div class="mb-4">
+                        <label class="form-label text-dark fw-semibold small" for="bukti_penolakan">Bukti Pendukung Penolakan</label>
+                        <input class="form-control" type="file" id="bukti_penolakan" name="bukti_penolakan" accept=".jpg,.jpeg,.png,.webp,.pdf">
+                        <div class="form-text">Wajib jika menolak. Maksimal 2 MB, format JPG, PNG, WEBP, atau PDF.</div>
                     </div>
 
                     <div class="d-flex justify-content-end gap-2">
@@ -77,4 +100,19 @@
         </div>
     </div>
 </div>
+<script>
+document.getElementById('formVerifikasiIuran')?.addEventListener('submit', function (event) {
+    const action = event.submitter?.value;
+    if (action !== 'tolak') return;
+
+    const catatan = document.getElementById('catatan');
+    const bukti = document.getElementById('bukti_penolakan');
+    if (!catatan?.value.trim() || !bukti?.files.length) {
+        event.preventDefault();
+        if (typeof showAppToast === 'function') {
+            showAppToast('Penolakan wajib disertai catatan dan bukti pendukung.', 'warning', 'Data Penolakan Belum Lengkap');
+        }
+    }
+});
+</script>
 <?= $this->endSection() ?>
