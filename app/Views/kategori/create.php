@@ -12,15 +12,23 @@
                     <a href="<?= base_url('kategori') ?>" class="btn btn-outline-secondary btn-sm">Kembali</a>
                 </div>
 
+                <?php if (session()->getFlashdata('errors')): ?>
+                <div class="alert alert-danger py-2 px-3 small mb-3">
+                    <ul class="mb-0 ps-3">
+                        <?php foreach (session()->getFlashdata('errors') as $err): ?><li><?= esc($err) ?></li><?php endforeach; ?>
+                    </ul>
+                </div>
+                <?php endif; ?>
+
                 <form action="<?= base_url('kategori/store') ?>" method="post">
                     <?= csrf_field() ?>
                     <div class="mb-3">
                         <label class="form-label text-dark fw-semibold small" for="nama">Nama Kategori</label>
-                        <input type="text" class="form-control" id="nama" name="nama" placeholder="Contoh: Kegiatan Agustusan / Kerja Bakti" required>
+                        <input type="text" class="form-control" id="nama" name="nama" value="<?= esc(old('nama')) ?>" placeholder="Contoh: Kegiatan Agustusan / Kerja Bakti" required>
                     </div>
                     <div class="mb-4">
                         <label class="form-label text-dark fw-semibold small" for="deskripsi">Deskripsi / Rincian Pos</label>
-                        <textarea class="form-control" id="deskripsi" name="deskripsi" rows="3" placeholder="Jelaskan tujuan alokasi pos kategori ini..."></textarea>
+                        <textarea class="form-control" id="deskripsi" name="deskripsi" rows="3" placeholder="Jelaskan tujuan alokasi pos kategori ini..."><?= esc(old('deskripsi')) ?></textarea>
                     </div>
 
                     <div class="d-flex justify-content-end gap-2">
