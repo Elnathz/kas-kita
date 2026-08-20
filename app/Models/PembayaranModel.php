@@ -12,7 +12,7 @@ class PembayaranModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['user_id', 'periode_bulan', 'periode_tahun', 'nominal', 'bukti_transfer', 'status', 'catatan', 'verified_by', 'verified_at'];
+    protected $allowedFields    = ['user_id', 'periode_bulan', 'periode_tahun', 'nominal', 'bukti_transfer', 'bukti_penolakan', 'status', 'catatan', 'verified_by', 'verified_at'];
 
     // Dates
     protected $useTimestamps = true;

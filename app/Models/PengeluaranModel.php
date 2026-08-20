@@ -12,7 +12,7 @@ class PengeluaranModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['kategori_id', 'tanggal', 'nominal', 'keterangan', 'created_by'];
+    protected $allowedFields    = ['kategori_id', 'tanggal', 'nominal', 'keterangan', 'foto_nota', 'dokumentasi', 'created_by'];
 
     // Dates
     protected $useTimestamps = true;

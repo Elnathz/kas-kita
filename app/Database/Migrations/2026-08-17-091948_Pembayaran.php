@@ -37,6 +37,11 @@ class Pembayaran extends Migration
                 'constraint' => '255',
                 'null'       => true,
             ],
+            'bukti_penolakan' => [
+                'type'       => 'VARCHAR',
+                'constraint' => '255',
+                'null'       => true,
+            ],
             'status' => [
                 'type'       => 'ENUM',
                 'constraint' => ['pending', 'terverifikasi', 'ditolak'],

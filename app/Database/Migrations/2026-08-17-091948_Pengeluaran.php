@@ -30,6 +30,16 @@ class Pengeluaran extends Migration
             'keterangan' => [
                 'type' => 'TEXT',
             ],
+            'foto_nota' => [
+                'type' => 'VARCHAR',
+                'constraint' => 255,
+                'null' => true,
+            ],
+            'dokumentasi' => [
+                'type' => 'VARCHAR',
+                'constraint' => 255,
+                'null' => true,
+            ],
             'created_by' => [
                 'type'       => 'INT',
                 'constraint' => 11,

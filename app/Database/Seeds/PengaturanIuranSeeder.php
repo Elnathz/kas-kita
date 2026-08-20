@@ -10,7 +10,10 @@ class PengaturanIuranSeeder extends Seeder
     {
         $data = [
             'nominal'      => 50000.00,
-            'berlaku_dari' => '2026-01-01',
+            'tanggal_jatuh_tempo' => 20,
+            'berlaku_dari' => date('Y-01-01'),
+            'toleransi_macet' => 2,
+            'is_active'    => 1,
             'created_by'   => 1, // Budi Santoso (Pengurus)
             'created_at'   => date('Y-m-d H:i:s'),
         ];

@@ -19,10 +19,29 @@ class PengaturanIuran extends Migration
                 'type'       => 'DECIMAL',
                 'constraint' => '12,2',
             ],
+            'tanggal_jatuh_tempo' => [
+                'type' => 'TINYINT',
+                'constraint' => 2,
+                'null' => true,
+            ],
             'berlaku_dari' => [
                 'type' => 'DATE',
             ],
+            'toleransi_macet' => [
+                'type'       => 'INT',
+                'constraint' => 11,
+                'default'    => 3,
+            ],
+            'is_active' => [
+                'type' => 'TINYINT',
+                'constraint' => 1,
+                'default' => 1,
+            ],
             'created_at' => [
+                'type'    => 'DATETIME',
+                'null'    => true,
+            ],
+            'updated_at' => [
                 'type'    => 'DATETIME',
                 'null'    => true,
             ],

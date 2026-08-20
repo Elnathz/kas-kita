@@ -15,6 +15,8 @@ class DatabaseSeeder extends Seeder
             'users',
             'kategori_pengeluaran',
             'master_wilayah',
+            'pengaturan_sistem',
+            'metode_pembayaran',
         ];
 
         $this->db->query('SET FOREIGN_KEY_CHECKS = 0');
@@ -33,5 +35,7 @@ class DatabaseSeeder extends Seeder
         $this->call('KategoriPengeluaranSeeder');
         $this->call('PembayaranSeeder');
         $this->call('PengeluaranSeeder');
+        $this->call('PengaturanSistemSeeder');
+        $this->call('MetodePembayaranSeeder');
     }
 }

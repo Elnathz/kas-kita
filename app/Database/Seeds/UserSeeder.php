@@ -17,7 +17,10 @@ class UserSeeder extends Seeder
             'username'   => 'admin',
             'password'   => password_hash('admin123', PASSWORD_DEFAULT),
             'role'       => 'pengurus',
-            'no_rumah'   => 'R/01',
+            'jabatan'    => 'Ketua RT',
+            'blok_rumah' => 'Blok R',
+            'no_rumah'   => 'No. 01',
+            'nama_jalan' => 'Jalan Anggada 1',
             'no_telepon' => '08111111111',
             'alamat'     => 'Blok R / No. 01',
             'is_active'  => 1,
@@ -31,7 +34,10 @@ class UserSeeder extends Seeder
             'username'   => 'bendahara',
             'password'   => password_hash('admin123', PASSWORD_DEFAULT),
             'role'       => 'pengurus',
-            'no_rumah'   => 'R/02',
+            'jabatan'    => 'Bendahara',
+            'blok_rumah' => 'Blok R',
+            'no_rumah'   => 'No. 02',
+            'nama_jalan' => 'Jalan Anggada 2',
             'no_telepon' => '08111111112',
             'alamat'     => 'Blok R / No. 02',
             'is_active'  => 1,
@@ -45,7 +51,10 @@ class UserSeeder extends Seeder
             'username'   => 'warga1',
             'password'   => password_hash('farros123', PASSWORD_DEFAULT),
             'role'       => 'warga',
-            'no_rumah'   => 'S/05',
+            'jabatan'    => null,
+            'blok_rumah' => 'Blok S',
+            'no_rumah'   => 'No. 05',
+            'nama_jalan' => 'Jalan Anggada 3',
             'no_telepon' => '08222222222',
             'alamat'     => 'Blok S / No. 05',
             'is_active'  => 1,
@@ -54,18 +63,23 @@ class UserSeeder extends Seeder
         ];
 
         // 4. Generate 20 Warga Aktif Lainnya
-        $blokList = ['R', 'S', 'T'];
+        $blokList = ['Blok R', 'Blok S', 'Blok T'];
+        $jalanList = ['Jalan Anggada 1', 'Jalan Anggada 2', 'Jalan Anggada 3'];
         for ($i = 2; $i <= 21; $i++) {
             $blok = $faker->randomElement($blokList);
-            $noRumah = str_pad($faker->numberBetween(1, 15), 2, '0', STR_PAD_LEFT);
+            $noRumah = 'No. ' . str_pad($faker->numberBetween(1, 15), 2, '0', STR_PAD_LEFT);
+            $jalan = $faker->randomElement($jalanList);
             $data[] = [
                 'nama'       => $faker->name,
                 'username'   => 'warga' . $i,
                 'password'   => password_hash('warga123', PASSWORD_DEFAULT),
                 'role'       => 'warga',
-                'no_rumah'   => $blok . '/' . $noRumah,
-                'no_telepon' => $faker->phoneNumber,
-                'alamat'     => "Blok {$blok} / No. {$noRumah}",
+                'jabatan'    => null,
+                'blok_rumah' => $blok,
+                'no_rumah'   => $noRumah,
+                'nama_jalan' => $jalan,
+                'no_telepon' => '0812' . str_pad((string) $i, 8, '0', STR_PAD_LEFT),
+                'alamat'     => "{$blok} / {$noRumah}",
                 'is_active'  => 1,
                 'created_at' => date('Y-m-d H:i:s', strtotime('-' . $faker->numberBetween(1, 12) . ' months')),
                 'updated_at' => date('Y-m-d H:i:s'),
@@ -75,15 +89,19 @@ class UserSeeder extends Seeder
         // 5. Generate 3 Warga Pending (Belum disetujui / Pendaftar Baru)
         for ($i = 22; $i <= 24; $i++) {
             $blok = $faker->randomElement($blokList);
-            $noRumah = str_pad($faker->numberBetween(1, 15), 2, '0', STR_PAD_LEFT);
+            $noRumah = 'No. ' . str_pad($faker->numberBetween(1, 15), 2, '0', STR_PAD_LEFT);
+            $jalan = $faker->randomElement($jalanList);
             $data[] = [
                 'nama'       => $faker->name,
                 'username'   => 'warga' . $i,
                 'password'   => password_hash('warga123', PASSWORD_DEFAULT),
                 'role'       => 'warga',
-                'no_rumah'   => $blok . '/' . $noRumah,
-                'no_telepon' => $faker->phoneNumber,
-                'alamat'     => "Blok {$blok} / No. {$noRumah}",
+                'jabatan'    => null,
+                'blok_rumah' => $blok,
+                'no_rumah'   => $noRumah,
+                'nama_jalan' => $jalan,
+                'no_telepon' => '0812' . str_pad((string) $i, 8, '0', STR_PAD_LEFT),
+                'alamat'     => "{$blok} / {$noRumah}",
                 'is_active'  => 0,
                 'created_at' => date('Y-m-d H:i:s', strtotime('-' . $faker->numberBetween(1, 5) . ' days')),
                 'updated_at' => date('Y-m-d H:i:s'),

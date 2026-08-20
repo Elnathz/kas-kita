@@ -33,6 +33,21 @@ class Users extends Migration
                 'constraint' => ['pengurus', 'warga'],
                 'default'    => 'warga',
             ],
+            'jabatan' => [
+                'type'       => 'VARCHAR',
+                'constraint' => 50,
+                'null'       => true,
+            ],
+            'blok_rumah' => [
+                'type'       => 'VARCHAR',
+                'constraint' => '50',
+                'null'       => true,
+            ],
+            'nama_jalan' => [
+                'type'       => 'VARCHAR',
+                'constraint' => '100',
+                'null'       => true,
+            ],
             'no_rumah' => [
                 'type'       => 'VARCHAR',
                 'constraint' => '10',

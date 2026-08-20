@@ -10,19 +10,19 @@ class KategoriPengeluaranSeeder extends Seeder
     {
         $data = [
             [
-                'nama'       => 'Kas',
+                'nama_kategori'       => 'Kas',
                 'deskripsi'  => 'Pengeluaran untuk keperluan kas operasional RT',
                 'is_active'  => 1,
                 'created_at' => date('Y-m-d H:i:s'),
             ],
             [
-                'nama'       => 'Sosial',
+                'nama_kategori'       => 'Sosial',
                 'deskripsi'  => 'Pengeluaran untuk bantuan sosial warga',
                 'is_active'  => 1,
                 'created_at' => date('Y-m-d H:i:s'),
             ],
             [
-                'nama'       => 'Konsumsi',
+                'nama_kategori'       => 'Konsumsi',
                 'deskripsi'  => 'Pengeluaran untuk acara dan pertemuan warga',
                 'is_active'  => 1,
                 'created_at' => date('Y-m-d H:i:s'),

@@ -4,7 +4,7 @@ namespace App\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
 
-class KategoriPengeluaran extends Migration
+class PengaturanSistem extends Migration
 {
     public function up()
     {
@@ -15,35 +15,34 @@ class KategoriPengeluaran extends Migration
                 'unsigned'       => true,
                 'auto_increment' => true,
             ],
-            'nama_kategori' => [
+            'kategori' => [
                 'type'       => 'VARCHAR',
-                'constraint' => '50',
-                'unique'     => true,
+                'constraint' => 50,
             ],
-            'deskripsi' => [
+            'kunci' => [
+                'type'       => 'VARCHAR',
+                'constraint' => 100,
+            ],
+            'nilai' => [
                 'type' => 'TEXT',
                 'null' => true,
             ],
-            'is_active' => [
-                'type'       => 'TINYINT',
-                'constraint' => 1,
-                'default'    => 1,
-            ],
             'created_at' => [
-                'type'    => 'DATETIME',
-                'null'    => true,
+                'type' => 'DATETIME',
+                'null' => true,
             ],
             'updated_at' => [
-                'type'    => 'DATETIME',
-                'null'    => true,
+                'type' => 'DATETIME',
+                'null' => true,
             ],
         ]);
         $this->forge->addKey('id', true);
-        $this->forge->createTable('kategori_pengeluaran');
+        $this->forge->addUniqueKey('kunci');
+        $this->forge->createTable('pengaturan_sistem');
     }
 
     public function down()
     {
-        $this->forge->dropTable('kategori_pengeluaran');
+        $this->forge->dropTable('pengaturan_sistem');
     }
 }
