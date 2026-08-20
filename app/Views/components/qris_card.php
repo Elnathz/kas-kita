@@ -26,7 +26,7 @@
 
         <!-- Merchant Info -->
         <div class="text-center mb-3">
-            <h5 class="fw-bold text-dark mb-1" style="font-size: 1.1rem;"><?= $merchant_name ?? 'KAS RT 06 RW 20' ?></h5>
+            <h5 class="fw-bold text-dark mb-1" style="font-size: 1.1rem;"><?= $merchant_name ?? 'KAS RT' ?></h5>
             <p class="mb-0 text-dark font-12">NMID: <?= $nmid ?? 'ID1024098234120' ?></p>
             <p class="mb-0 text-muted" style="font-size: 10px;">TID: <?= $tid ?? 'A01' ?></p>
         </div>

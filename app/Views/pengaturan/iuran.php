@@ -1,5 +1,21 @@
 <?= $this->extend('layouts/app') ?>
 <?= $this->section('content') ?>
+<?php
+$kebijakanAktif = $kebijakanAktif ?? [];
+$nominalAktif = (int) ($kebijakanAktif['nominal'] ?? 50000);
+$tempoAktif = (int) ($kebijakanAktif['tanggal_jatuh_tempo'] ?? 20);
+$toleransiAktif = (int) ($kebijakanAktif['toleransi_macet'] ?? 2);
+$berlakuAktif = $kebijakanAktif['berlaku_dari'] ?? date('Y-m-d');
+$metodeBankAktif = null;
+$metodeQrisAktif = null;
+foreach (($metodePembayaran ?? []) as $metode) {
+    if (($metode['jenis'] ?? '') === 'bank' && $metodeBankAktif === null) $metodeBankAktif = $metode;
+    if (($metode['jenis'] ?? '') === 'qris' && $metodeQrisAktif === null) $metodeQrisAktif = $metode;
+}
+$atasNamaBank = $metodeBankAktif['atas_nama'] ?? ('Kas ' . trim(($wilayah['rt'] ?? '') . ' ' . ($wilayah['rw'] ?? '') . ' ' . ($wilayah['kelurahan'] ?? '')));
+$namaMerchantQris = $metodeQrisAktif['atas_nama'] ?? ('KAS ' . trim(($wilayah['rt'] ?? '') . ' ' . ($wilayah['rw'] ?? '') . ' ' . ($wilayah['kelurahan'] ?? '')));
+$nmidQris = $metodeQrisAktif['nomor'] ?? 'ID1024098234120';
+?>
 <div class="row g-4">
     <!-- ============================================================== -->
     <!-- KOLOM KIRI: PENGATURAN TARIF, JATUH TEMPO & RIWAYAT -->
@@ -18,15 +34,15 @@
                     <div class="row g-3 text-center text-sm-start">
                         <div class="col-sm-4 border-end-sm">
                             <span class="text-dark fw-bold small d-block mb-1">Nominal Iuran Aktif</span>
-                            <h4 class="fw-bold text-success mb-0">Rp 50.000 <span class="fs-6 text-dark fw-medium">/ bulan</span></h4>
+                            <h4 class="fw-bold text-success mb-0">Rp <?= number_format($nominalAktif, 0, ',', '.') ?> <span class="fs-6 text-dark fw-medium">/ bulan</span></h4>
                         </div>
                         <div class="col-sm-4 border-end-sm">
                             <span class="text-dark fw-bold small d-block mb-1">Tanggal Jatuh Tempo</span>
-                            <h4 class="fw-bold text-warning mb-0">Tanggal 20 <span class="fs-6 text-dark fw-medium">/ bulan</span></h4>
+                            <h4 class="fw-bold text-warning mb-0">Tanggal <?= $tempoAktif ?> <span class="fs-6 text-dark fw-medium">/ bulan</span></h4>
                         </div>
                         <div class="col-sm-4">
                             <span class="text-dark fw-bold small d-block mb-1">Kategori Macet</span>
-                            <h4 class="fw-bold text-danger mb-0">2 Bulan <span class="fs-6 text-dark fw-medium">ke atas</span></h4>
+                            <h4 class="fw-bold text-danger mb-0"><?= $toleransiAktif ?> Bulan <span class="fs-6 text-dark fw-medium">ke atas</span></h4>
                         </div>
                     </div>
                 </div>
@@ -36,15 +52,15 @@
                     <div class="row g-3">
                         <div class="col-md-6">
                             <label class="form-label text-dark fw-semibold small mb-1" for="nominal">Nominal Iuran Bulanan (Rp)</label>
-                            <input type="number" class="form-control" id="nominal" name="nominal" value="50000" placeholder="Contoh: 50000" required>
+                            <input type="number" class="form-control" id="nominal" name="nominal" value="<?= esc($nominalAktif) ?>" placeholder="Contoh: 50000" required>
                             <span class="text-muted font-12">Besaran iuran pokok setiap kepala keluarga.</span>
                         </div>
                         <div class="col-md-6">
                             <label class="form-label text-dark fw-semibold small mb-1" for="tanggal_jatuh_tempo">Tanggal Jatuh Tempo Bulanan</label>
                             <select class="form-select" id="tanggal_jatuh_tempo" name="tanggal_jatuh_tempo" required>
                                 <?php for ($d = 1; $d <= 28; $d++) : ?>
-                                    <option value="<?= $d ?>" <?= ($d == 20) ? 'selected' : '' ?>>
-                                        Tanggal <?= $d ?> setiap bulan <?= ($d == 20) ? '(Aktif Saat Ini)' : '' ?>
+                                    <option value="<?= $d ?>" <?= ($d == $tempoAktif) ? 'selected' : '' ?>>
+                                        Tanggal <?= $d ?> setiap bulan <?= ($d == $tempoAktif) ? '(Aktif Saat Ini)' : '' ?>
                                     </option>
                                 <?php endfor; ?>
                             </select>
@@ -53,17 +69,13 @@
                         <div class="col-md-6">
                             <label class="form-label text-dark fw-semibold small mb-1" for="toleransi_macet">Batas Kategori Status Macet</label>
                             <select class="form-select" id="toleransi_macet" name="toleransi_macet">
-                                <option value="2" selected>2 Bulan Menunggak (Standar)</option>
-                                <option value="3">3 Bulan Menunggak</option>
-                                <option value="4">4 Bulan Menunggak</option>
-                                <option value="5">5 Bulan Menunggak</option>
-                                <option value="6">6 Bulan Menunggak</option>
+                                <?php for ($t = 2; $t <= 6; $t++): ?><option value="<?= $t ?>" <?= $t === $toleransiAktif ? 'selected' : '' ?>><?= $t ?> Bulan Menunggak<?= $t === 2 ? ' (Standar)' : '' ?></option><?php endfor; ?>
                             </select>
                             <span class="text-muted font-12">Kriteria warga otomatis masuk kategori macet.</span>
                         </div>
                         <div class="col-md-6">
                             <label class="form-label text-dark fw-semibold small mb-1" for="berlaku_dari">Mulai Berlaku Tanggal</label>
-                            <input type="date" class="form-control" id="berlaku_dari" name="berlaku_dari" value="<?= date('Y-m-d') ?>" required>
+                            <input type="date" class="form-control" id="berlaku_dari" name="berlaku_dari" value="<?= esc($berlakuAktif) ?>" required>
                             <span class="text-muted font-12">Waktu kebijakan baru mulai diberlakukan.</span>
                         </div>
                     </div>
@@ -97,26 +109,17 @@
                             </tr>
                         </thead>
                         <tbody>
+                            <?php foreach (($riwayatIuran ?? []) as $riwayat): ?>
                             <tr>
-                                <td class="fw-semibold text-dark text-nowrap">Rp 50.000</td>
-                                <td class="text-nowrap">Tanggal 20 / bulan</td>
-                                <td class="text-nowrap">01 Januari 2026</td>
-                                <td class="text-nowrap">
-                                    <span class="text-dark fw-medium">Agus Hariyanto</span>
-                                    <small class="text-muted d-block font-11">Pengurus RT</small>
-                                </td>
-                                <td class="text-center text-nowrap"><span class="badge bg-success">Aktif</span></td>
+                                <td class="fw-semibold text-dark text-nowrap">Rp <?= number_format($riwayat['nominal'], 0, ',', '.') ?></td>
+                                <td class="text-nowrap">Tanggal <?= esc($riwayat['tanggal_jatuh_tempo'] ?? '-') ?> / bulan</td>
+                                <td class="text-nowrap"><?= date('d F Y', strtotime($riwayat['berlaku_dari'])) ?></td>
+                                <td class="text-nowrap"><span class="text-dark fw-medium"><?= esc($riwayat['created_by_nama']) ?></span><small class="text-muted d-block font-11">Pengurus RT</small></td>
+                                <?php $statusKebijakan = $riwayat['status_label'] ?? (!empty($riwayat['is_active']) ? 'Aktif' : 'Arsip'); ?>
+                                <td class="text-center text-nowrap"><span class="badge <?= $statusKebijakan === 'Aktif' ? 'bg-success' : ($statusKebijakan === 'Terjadwal' ? 'bg-warning text-dark' : 'bg-secondary') ?>"><?= esc($statusKebijakan) ?></span></td>
                             </tr>
-                            <tr>
-                                <td class="fw-semibold text-dark text-nowrap">Rp 40.000</td>
-                                <td class="text-nowrap">Tanggal 15 / bulan</td>
-                                <td class="text-nowrap">01 Januari 2025</td>
-                                <td class="text-nowrap">
-                                    <span class="text-dark fw-medium">Agus Hariyanto</span>
-                                    <small class="text-muted d-block font-11">Pengurus RT</small>
-                                </td>
-                                <td class="text-center text-nowrap"><span class="badge bg-secondary">Arsip</span></td>
-                            </tr>
+                            <?php endforeach; ?>
+                            <?php if (empty($riwayatIuran)): ?><tr><td colspan="5" class="text-center text-muted py-3">Belum ada riwayat kebijakan.</td></tr><?php endif; ?>
                         </tbody>
                     </table>
                 </div>
@@ -136,36 +139,56 @@
                     <p class="text-muted small mb-0">Identitas administratif wilayah dan manajemen daftar blok serta jalan.</p>
                 </div>
 
-                <form action="#" method="post">
+                <form action="<?= base_url('pengaturan/iuran/update') ?>" method="post">
+                    <?= csrf_field() ?>
                     <div class="row g-3">
                         <!-- RT & RW -->
                         <div class="col-6">
                             <label class="form-label text-dark fw-semibold small mb-1" for="rt">Nomor RT</label>
-                            <input type="text" class="form-control" id="rt" name="rt" value="RT 06" required>
+                            <input type="text" class="form-control" id="rt" name="rt" value="<?= esc($wilayah['rt'] ?? '') ?>" required>
                         </div>
                         <div class="col-6">
                             <label class="form-label text-dark fw-semibold small mb-1" for="rw">Nomor RW</label>
-                            <input type="text" class="form-control" id="rw" name="rw" value="RW 20" required>
+                            <input type="text" class="form-control" id="rw" name="rw" value="<?= esc($wilayah['rw'] ?? '') ?>" required>
                         </div>
 
                         <!-- Kelurahan & Kecamatan -->
                         <div class="col-6">
                             <label class="form-label text-dark fw-semibold small mb-1" for="kelurahan">Kelurahan / Desa</label>
-                            <input type="text" class="form-control" id="kelurahan" name="kelurahan" value="Purwodadi" required>
+                            <input type="text" class="form-control" id="kelurahan" name="kelurahan" value="<?= esc($wilayah['kelurahan'] ?? '') ?>" required>
                         </div>
                         <div class="col-6">
                             <label class="form-label text-dark fw-semibold small mb-1" for="kecamatan">Kecamatan</label>
-                            <input type="text" class="form-control" id="kecamatan" name="kecamatan" value="Purwodadi" required>
+                            <input type="text" class="form-control" id="kecamatan" name="kecamatan" value="<?= esc($wilayah['kecamatan'] ?? '') ?>" required>
                         </div>
 
                         <!-- Kota/Kabupaten & Provinsi -->
                         <div class="col-6">
                             <label class="form-label text-dark fw-semibold small mb-1" for="kota">Kota / Kabupaten</label>
-                            <input type="text" class="form-control" id="kota" name="kota" value="Grobogan" required>
+                            <input type="text" class="form-control" id="kota" name="kota" value="<?= esc($wilayah['kota'] ?? '') ?>" required>
                         </div>
                         <div class="col-6">
                             <label class="form-label text-dark fw-semibold small mb-1" for="provinsi">Provinsi</label>
-                            <input type="text" class="form-control" id="provinsi" name="provinsi" value="Jawa Tengah" required>
+                            <input type="text" class="form-control" id="provinsi" name="provinsi" value="<?= esc($wilayah['provinsi'] ?? '') ?>" required>
+                        </div>
+
+                        <div class="col-6">
+                            <label class="form-label text-dark fw-semibold small mb-1" for="ketua_id">Ketua RT</label>
+                            <select class="form-select" id="ketua_id" name="ketua_id" required>
+                                <option value="">Pilih Ketua RT</option>
+                                <?php foreach ($pengurus as $person): ?>
+                                    <option value="<?= esc($person['id']) ?>" <?= (int) $ketuaId === (int) $person['id'] ? 'selected' : '' ?>><?= esc($person['nama']) ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                        <div class="col-6">
+                            <label class="form-label text-dark fw-semibold small mb-1" for="bendahara_id">Bendahara</label>
+                            <select class="form-select" id="bendahara_id" name="bendahara_id" required>
+                                <option value="">Pilih Bendahara</option>
+                                <?php foreach ($pengurus as $person): ?>
+                                    <option value="<?= esc($person['id']) ?>" <?= (int) $bendaharaId === (int) $person['id'] ? 'selected' : '' ?>><?= esc($person['nama']) ?></option>
+                                <?php endforeach; ?>
+                            </select>
                         </div>
 
                         <div class="col-12 mt-3">
@@ -278,41 +301,46 @@
                     </div>
                 </div>
 
-                <!-- 1. Rekening Bank Transfer Utama -->
+                <?php foreach (($metodePembayaran ?? []) as $metode): ?>
                 <div class="p-3 bg-white rounded-3 mb-3 border shadow-sm">
                     <div class="d-flex justify-content-between align-items-center mb-1">
-                        <span class="fw-bold text-dark font-14">Bank Central Asia (BCA)</span>
-                        <span class="badge bg-success">Transfer Bank</span>
+                        <span class="fw-bold text-dark font-14"><?= esc($metode['nama_metode']) ?></span>
+                        <span class="badge <?= $metode['jenis'] === 'qris' ? 'bg-primary' : 'bg-success' ?>"><?= esc(strtoupper($metode['jenis'])) ?></span>
                     </div>
-                    <span class="fs-5 text-dark fw-bold d-block">8830-1234-5678</span>
-                    <small class="text-muted">a.n Kas RT 04 RW 12 Sukamaju</small>
-                </div>
-
-                <!-- 2. QRIS Kas RT Interaktif -->
-                <div class="p-3 bg-white rounded-3 mb-3 border shadow-sm">
-                    <div class="d-flex justify-content-between align-items-center mb-2">
-                        <span class="fw-bold text-dark font-14">QRIS Pembayaran Digital</span>
-                        <span class="badge bg-primary">E-Wallet &amp; M-Banking</span>
+                    <?php if (!empty($metode['nomor'])): ?><span class="fs-5 text-dark fw-bold d-block"><?= esc($metode['nomor']) ?></span><?php endif; ?>
+                    <?php if (!empty($metode['atas_nama'])): ?><small class="text-muted">a.n. <?= esc($metode['atas_nama']) ?></small><?php endif; ?>
+                    <div class="d-flex gap-2 mt-2">
+                        <button type="button" class="btn btn-xs btn-outline-warning" onclick="document.getElementById('edit-metode-<?= esc($metode['id']) ?>').classList.toggle('d-none')">Edit</button>
+                        <form method="post" action="<?= base_url('pengaturan/iuran/metode/delete/' . $metode['id']) ?>" onsubmit="return confirm('Hapus metode pembayaran ini?');" class="d-inline">
+                            <?= csrf_field() ?><button type="submit" class="btn btn-xs btn-outline-danger">Hapus</button>
+                        </form>
                     </div>
-                    <div class="d-flex align-items-center gap-3">
-                        <div style="width: 68px; height: 68px; overflow: hidden; border-radius: 8px; border: 1px solid #ddd; position: relative;">
-                            <div style="transform: scale(0.18); transform-origin: top left; width: 380px;">
-                                <?= $this->include('components/qris_card') ?>
-                            </div>
-                        </div>
-                        <div>
-                            <span class="fw-bold text-dark font-12 d-block">KAS RT 04 RW 12</span>
-                            <small class="text-muted font-11 d-block">NMID: ID1024098234120</small>
-                            <span class="text-success font-11 fw-semibold">Mendukung BCA, Mandiri, GoPay, OVO, ShopeePay, DANA</span>
-                        </div>
+                    <div id="edit-metode-<?= esc($metode['id']) ?>" class="d-none mt-3 pt-3 border-top">
+                        <form action="<?= base_url('pengaturan/iuran/metode/update/' . $metode['id']) ?>" method="post" enctype="multipart/form-data" class="row g-2">
+                            <?= csrf_field() ?>
+                            <div class="col-4"><select name="jenis" class="form-select form-select-sm"><option value="bank" <?= $metode['jenis'] === 'bank' ? 'selected' : '' ?>>Bank</option><option value="qris" <?= $metode['jenis'] === 'qris' ? 'selected' : '' ?>>QRIS</option><option value="ewallet" <?= $metode['jenis'] === 'ewallet' ? 'selected' : '' ?>>E-Wallet</option></select></div>
+                            <div class="col-8"><input name="nama_metode" class="form-control form-control-sm" value="<?= esc($metode['nama_metode']) ?>" required></div>
+                            <div class="col-6"><input name="nomor" class="form-control form-control-sm" value="<?= esc($metode['nomor'] ?? '') ?>" placeholder="Nomor / NMID"></div>
+                            <div class="col-6"><input name="atas_nama" class="form-control form-control-sm" value="<?= esc($metode['atas_nama'] ?? '') ?>" placeholder="Atas nama"></div>
+                            <div class="col-8"><input name="detail" class="form-control form-control-sm" value="<?= esc($metode['detail'] ?? '') ?>" placeholder="Keterangan"></div>
+                            <div class="col-4"><input type="file" name="gambar" class="form-control form-control-sm" accept="image/jpeg,image/png,image/webp"></div>
+                            <div class="col-12"><button class="btn btn-warning btn-sm w-100" type="submit">Simpan Perubahan</button></div>
+                        </form>
                     </div>
                 </div>
-
-                <!-- Tombol Buka Modal Pengaturan Rekening & QRIS -->
-                <button type="button" class="btn btn-outline-success w-100 fw-semibold d-flex align-items-center justify-content-center gap-2" data-bs-toggle="modal" data-bs-target="#modalKelolaRekening">
-                    <i data-feather="credit-card" class="feather-icon" style="width: 16px; height: 16px;"></i>
-                    <span>Kelola Rekening Bank &amp; QRIS</span>
-                </button>
+                <?php endforeach; ?>
+                <form action="<?= base_url('pengaturan/iuran/metode/store') ?>" method="post" enctype="multipart/form-data" class="border rounded p-3 bg-light">
+                    <?= csrf_field() ?><h6 class="fw-bold mb-3">Tambah Metode Pembayaran</h6>
+                    <div class="row g-2">
+                        <div class="col-4"><select name="jenis" class="form-select form-select-sm" required><option value="bank">Bank</option><option value="qris">QRIS</option><option value="ewallet">E-Wallet</option></select></div>
+                        <div class="col-8"><input name="nama_metode" class="form-control form-control-sm" placeholder="Nama metode" required></div>
+                        <div class="col-6"><input name="nomor" class="form-control form-control-sm" placeholder="Nomor rekening / NMID"></div>
+                        <div class="col-6"><input name="atas_nama" class="form-control form-control-sm" placeholder="Atas nama"></div>
+                        <div class="col-8"><input name="detail" class="form-control form-control-sm" placeholder="Keterangan"></div>
+                        <div class="col-4"><input type="file" name="gambar" class="form-control form-control-sm" accept="image/jpeg,image/png,image/webp"></div>
+                        <div class="col-12"><button class="btn btn-success btn-sm w-100" type="submit">Tambah Metode</button></div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -368,7 +396,7 @@
                                 </div>
                                 <div class="col-12">
                                     <label class="form-label text-dark fw-semibold small mb-1" for="atas_nama">Atas Nama Rekening</label>
-                                    <input type="text" class="form-control" id="atas_nama" name="atas_nama" value="Kas RT 04 RW 12 Sukamaju" required>
+                                    <input type="text" class="form-control" id="atas_nama" name="atas_nama" value="<?= esc($atasNamaBank) ?>" required>
                                 </div>
                             </div>
                         </form>
@@ -387,11 +415,11 @@
                                 <div class="col-md-7">
                                     <div class="mb-3">
                                         <label class="form-label text-dark fw-semibold small mb-1" for="nama_merchant">Nama Merchant QRIS</label>
-                                        <input type="text" class="form-control" id="nama_merchant" name="nama_merchant" value="KAS RT 04 RW 12 SUKAMAJU" required>
+                                        <input type="text" class="form-control" id="nama_merchant" name="nama_merchant" value="<?= esc($namaMerchantQris) ?>" required>
                                     </div>
                                     <div class="mb-3">
                                         <label class="form-label text-dark fw-semibold small mb-1" for="nmid">NMID (Nomor Merchant ID)</label>
-                                        <input type="text" class="form-control" id="nmid" name="nmid" value="ID1024098234120" required>
+                                        <input type="text" class="form-control" id="nmid" name="nmid" value="<?= esc($nmidQris) ?>" required>
                                     </div>
                                     <div>
                                         <label class="form-label text-dark fw-semibold small mb-1" for="file_qris">Unggah File Gambar QRIS Baru</label>
