@@ -2,7 +2,8 @@
 $uri = service('uri');
 $seg1 = $uri->getTotalSegments() >= 1 ? $uri->getSegment(1) : '';
 $seg2 = $uri->getTotalSegments() >= 2 ? $uri->getSegment(2) : '';
-$isWargaMode = (session()->get('role') === 'warga');
+$activeRole = session()->get('active_role') ?? session()->get('role');
+$isWargaMode = ($activeRole === 'warga');
 ?>
 <!-- ============================================================== -->
 <!-- Left Sidebar - style you can find in sidebar.scss  -->

@@ -2,9 +2,11 @@
 <!-- Topbar header -->
 <!-- ============================================================== -->
 <?php
-$isWargaMode = (session()->get('role') === 'warga');
+$activeRole = session()->get('active_role') ?? session()->get('role');
+$isWargaMode = ($activeRole === 'warga');
+$isPengurus = (session()->get('role') === 'pengurus');
 $currentUserName = session()->get('nama') ?? 'Pengguna';
-$currentUserRole = ucfirst(session()->get('role') ?? 'Unknown');
+$currentUserRole = ucfirst($activeRole ?? 'Unknown');
 ?>
 <header class="topbar" data-navbarbg="skin6">
     <nav class="navbar top-navbar navbar-expand-lg">
@@ -52,6 +54,13 @@ $currentUserRole = ucfirst(session()->get('role') ?? 'Unknown');
                     <?php else : ?>
                         <a class="dropdown-item" href="<?= base_url('dashboard') ?>">
                             <i data-feather="home" class="svg-icon text-primary"></i> Dashboard Pengurus
+                        </a>
+                    <?php endif; ?>
+
+                    <?php if ($isPengurus) : ?>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item text-primary fw-semibold" href="<?= base_url('switch-role') ?>">
+                            <i data-feather="refresh-cw" class="svg-icon text-primary"></i> <?= $isWargaMode ? 'Beralih ke Pengurus' : 'Beralih ke Warga' ?>
                         </a>
                     <?php endif; ?>
 
@@ -107,6 +116,13 @@ $currentUserRole = ucfirst(session()->get('role') ?? 'Unknown');
                         <?php else : ?>
                             <a class="dropdown-item" href="<?= base_url('dashboard') ?>">
                                 <i data-feather="home" class="svg-icon text-primary"></i> Dashboard Pengurus
+                            </a>
+                        <?php endif; ?>
+
+                        <?php if ($isPengurus) : ?>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item text-primary fw-semibold" href="<?= base_url('switch-role') ?>">
+                                <i data-feather="refresh-cw" class="svg-icon text-primary"></i> <?= $isWargaMode ? 'Beralih ke Pengurus' : 'Beralih ke Warga' ?>
                             </a>
                         <?php endif; ?>
 
