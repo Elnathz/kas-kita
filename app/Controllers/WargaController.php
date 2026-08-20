@@ -17,6 +17,7 @@ class WargaController extends BaseController
         $this->masterBlokModel = new MasterBlokModel();
     }
 
+    // Menampilkan halaman daftar data utama
     public function index()
     {
         $blokList = $this->masterBlokModel->findAll();
@@ -29,25 +30,33 @@ class WargaController extends BaseController
             $dataWargaPerBlok[$blok['nama_blok']] = [
                 'id' => $blok['id'],
                 'kapasitas' => $blok['maks_nomor'],
-                'warga' => []
+                'warga' => [],
+                'warga_aktif_count' => 0
             ];
         }
 
+        $totalWargaAktif = 0;
         foreach ($users as $user) {
             if (isset($dataWargaPerBlok[$user['blok_rumah']])) {
                 $dataWargaPerBlok[$user['blok_rumah']]['warga'][] = $user;
                 $totalWarga++;
+                if ($user['is_active'] == 1) {
+                    $dataWargaPerBlok[$user['blok_rumah']]['warga_aktif_count']++;
+                    $totalWargaAktif++;
+                }
             }
         }
 
         $data = [
             'dataWargaPerBlok' => $dataWargaPerBlok,
-            'totalWarga' => $totalWarga
+            'totalWarga' => $totalWarga,
+            'totalWargaAktif' => $totalWargaAktif
         ];
 
         return view('warga/index', $data);
     }
 
+    // Menampilkan form untuk menambah data baru
     public function create()
     {
         $masterJalanModel = new \App\Models\MasterJalanModel();
@@ -59,6 +68,7 @@ class WargaController extends BaseController
         return view('warga/create', $data);
     }
 
+    // Memproses penyimpanan data baru ke database
     public function store()
     {
         $rules = [
@@ -94,6 +104,7 @@ class WargaController extends BaseController
         return redirect()->to('/warga')->with('message', 'Warga berhasil ditambahkan.');
     }
 
+    // Menampilkan form untuk mengubah data berdasarkan ID
     public function edit($id = null)
     {
         if (!$id) return redirect()->to('/warga');
@@ -112,6 +123,7 @@ class WargaController extends BaseController
         return view('warga/edit', $data);
     }
 
+    // Memproses pembaruan data ke database
     public function update($id = null)
     {
         if (!$id) return redirect()->to('/warga');
@@ -157,6 +169,7 @@ class WargaController extends BaseController
         return redirect()->to('/warga')->with('message', 'Warga berhasil diupdate.');
     }
 
+    // Menghapus data dari database berdasarkan ID
     public function delete($id = null)
     {
         if ($id) {
@@ -164,5 +177,37 @@ class WargaController extends BaseController
             return redirect()->to('/warga')->with('message', 'Warga berhasil dihapus.');
         }
         return redirect()->to('/warga');
+    }
+
+    // Fungsi approve
+    public function approve($id = null)
+    {
+        if ($id) {
+            $this->userModel->update($id, ['is_active' => 1]);
+            return redirect()->back()->with('message', 'Pendaftar berhasil disetujui.');
+        }
+        return redirect()->back();
+    }
+
+    // Fungsi reject
+    public function reject($id = null)
+    {
+        if ($id) {
+            $user = $this->userModel->find($id);
+            if ($user) {
+                $alasan = $this->request->getPost('alasan') ?? 'Data tidak valid.';
+                $no_hp = $user['no_telepon'];
+                if (strpos($no_hp, '0') === 0) {
+                    $no_hp = '62' . substr($no_hp, 1);
+                }
+                
+                $pesan_wa = "Halo " . $user['nama'] . ",\n\nMohon maaf, pendaftaran akun Kas RT Anda *ditolak*.\n\n*Alasan:* " . $alasan;
+                $link_wa = "https://wa.me/" . preg_replace('/[^0-9]/', '', $no_hp) . "?text=" . urlencode($pesan_wa);
+                
+                $this->userModel->delete($id);
+                return redirect()->back()->with('message', 'Pendaftar berhasil ditolak dan dihapus. <a href="' . $link_wa . '" target="_blank" class="btn btn-sm btn-success ms-2">Kirim Penjelasan WA</a>');
+            }
+        }
+        return redirect()->back();
     }
 }

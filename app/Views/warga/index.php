@@ -38,82 +38,86 @@
                 <!-- ACCORDION GRUP DATA WARGA PER BLOK (MURNI KEPENDUDUKAN) -->
                 <!-- ============================================================== -->
                 <div class="accordion d-flex flex-column gap-3" id="accordionWargaBlok">
-                    
+
                     <?php foreach ($dataWargaPerBlok as $namaBlok => $dataBlok): ?>
-                    <?php 
+                        <?php
                         $blokIdStr = strtolower(str_replace(' ', '-', $namaBlok));
                         $wargaCount = count($dataBlok['warga']);
+                        $wargaAktifCount = $dataBlok['warga_aktif_count'];
                         $kapasitas = $dataBlok['kapasitas'];
-                    ?>
-                    <div class="accordion-item border rounded-3 overflow-hidden shadow-sm item-blok-wrapper" id="item-<?= $blokIdStr ?>">
-                        <h2 class="accordion-header" id="heading<?= $blokIdStr ?>">
-                            <button class="accordion-button bg-white text-dark py-3 px-4 fw-bold d-flex justify-content-between align-items-center" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<?= $blokIdStr ?>" aria-expanded="true" aria-controls="collapse<?= $blokIdStr ?>">
-                                <div class="d-flex flex-wrap align-items-center">
-                                    <span class="fw-bold text-dark fs-6"><?= esc($namaBlok) ?></span>
-                                    <span class="text-muted font-12 fw-normal ms-2">(Kapasitas <?= $kapasitas ?> Rumah • <?= $wargaCount ?> Terdaftar)</span>
-                                </div>
-                                <div class="ms-auto me-3 d-none d-md-flex align-items-center font-12 text-muted">
-                                    <span><?= $wargaCount ?> Kepala Keluarga Aktif</span>
-                                </div>
-                            </button>
-                        </h2>
-                        <div id="collapse<?= $blokIdStr ?>" class="accordion-collapse collapse show" aria-labelledby="heading<?= $blokIdStr ?>">
-                            <div class="accordion-body p-0">
-                                <div class="table-responsive">
-                                    <table class="table table-hover align-middle mb-0">
-                                        <thead class="table-light">
-                                            <tr>
-                                                <th class="text-nowrap ps-4" style="width: 100px;">No. Rumah</th>
-                                                <th class="text-nowrap" style="width: 130px;">Nama Jalan</th>
-                                                <th class="text-nowrap">Nama Kepala Keluarga</th>
-                                                <th class="text-nowrap">Username</th>
-                                                <th class="text-nowrap">Nomor WhatsApp</th>
-                                                <th class="text-nowrap text-center">Role Akun</th>
-                                                <th class="text-nowrap text-center">Status Akun</th>
-                                                <th class="text-nowrap text-center" style="width: 130px;">Aksi</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <?php if($wargaCount == 0): ?>
+                        ?>
+                        <div class="accordion-item border rounded-3 overflow-hidden shadow-sm item-blok-wrapper" id="item-<?= $blokIdStr ?>">
+                            <h2 class="accordion-header" id="heading<?= $blokIdStr ?>">
+                                <button class="accordion-button bg-white text-dark py-3 px-4 fw-bold d-flex justify-content-between align-items-center" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<?= $blokIdStr ?>" aria-expanded="true" aria-controls="collapse<?= $blokIdStr ?>">
+                                    <div class="d-flex flex-wrap align-items-center">
+                                        <span class="fw-bold text-dark fs-6"><?= esc($namaBlok) ?></span>
+                                        <span class="text-muted font-12 fw-normal ms-2">(Kapasitas <?= $kapasitas ?> Rumah • <?= $wargaCount ?> Terdaftar)</span>
+                                    </div>
+                                    <div class="ms-auto me-3 d-none d-md-flex align-items-center font-12 text-muted">
+                                        <span><?= $wargaAktifCount ?> Kepala Keluarga Aktif</span>
+                                        <?php if ($wargaCount - $wargaAktifCount > 0): ?>
+                                            <span class="badge bg-warning text-dark ms-2 rounded-pill"><?= $wargaCount - $wargaAktifCount ?> Menunggu</span>
+                                        <?php endif; ?>
+                                    </div>
+                                </button>
+                            </h2>
+                            <div id="collapse<?= $blokIdStr ?>" class="accordion-collapse collapse show" aria-labelledby="heading<?= $blokIdStr ?>">
+                                <div class="accordion-body p-0">
+                                    <div class="table-responsive">
+                                        <table class="table table-hover align-middle mb-0">
+                                            <thead class="table-light">
                                                 <tr>
-                                                    <td colspan="8" class="text-center text-muted py-4">Belum ada warga yang terdaftar di blok ini.</td>
+                                                    <th class="text-nowrap ps-4" style="width: 100px;">No. Rumah</th>
+                                                    <th class="text-nowrap" style="width: 130px;">Nama Jalan</th>
+                                                    <th class="text-nowrap">Nama Kepala Keluarga</th>
+                                                    <th class="text-nowrap">Username</th>
+                                                    <th class="text-nowrap">Nomor WhatsApp</th>
+                                                    <th class="text-nowrap text-center">Role Akun</th>
+                                                    <th class="text-nowrap text-center">Status Akun</th>
+                                                    <th class="text-nowrap text-center" style="width: 130px;">Aksi</th>
                                                 </tr>
-                                            <?php else: ?>
-                                                <?php foreach ($dataBlok['warga'] as $warga): ?>
-                                                <tr>
-                                                    <td class="ps-4 fw-bold text-dark text-nowrap"><?= esc($warga['no_rumah']) ?></td>
-                                                    <td class="text-nowrap text-dark fw-medium"><?= esc($warga['nama_jalan']) ?></td>
-                                                    <td class="fw-semibold text-nowrap text-dark"><?= esc($warga['nama']) ?></td>
-                                                    <td class="text-nowrap text-muted"><?= esc($warga['username']) ?></td>
-                                                    <td class="text-nowrap"><?= esc($warga['no_telepon'] ?? '-') ?></td>
-                                                    <td class="text-center text-nowrap">
-                                                        <?php if($warga['role'] == 'pengurus'): ?>
-                                                            <span class="badge bg-primary text-white">Pengurus RT</span>
-                                                        <?php else: ?>
-                                                            <span class="badge bg-light text-dark border">Warga</span>
-                                                        <?php endif; ?>
-                                                    </td>
-                                                    <td class="text-center text-nowrap">
-                                                        <?php if($warga['is_active']): ?>
-                                                            <span class="badge bg-success">Aktif</span>
-                                                        <?php else: ?>
-                                                            <span class="badge bg-warning text-dark">Menunggu</span>
-                                                        <?php endif; ?>
-                                                    </td>
-                                                    <td class="text-center text-nowrap pe-4">
-                                                        <a href="<?= base_url('warga/edit/' . $warga['id']) ?>" class="btn btn-sm btn-outline-warning me-1">Edit</a>
-                                                        <!-- Meneruskan ID ke fungsi javascript hapus -->
-                                                        <button class="btn btn-sm btn-outline-danger" onclick="konfirmasiHapus('<?= addslashes($warga['nama']) ?>', '<?= addslashes($warga['blok_rumah']) ?> / <?= addslashes($warga['no_rumah']) ?> (<?= addslashes($warga['nama_jalan']) ?>)', <?= $warga['id'] ?>)">Hapus</button>
-                                                    </td>
-                                                </tr>
-                                                <?php endforeach; ?>
-                                            <?php endif; ?>
-                                        </tbody>
-                                    </table>
+                                            </thead>
+                                            <tbody>
+                                                <?php if ($wargaCount == 0): ?>
+                                                    <tr>
+                                                        <td colspan="8" class="text-center text-muted py-4">Belum ada warga yang terdaftar di blok ini.</td>
+                                                    </tr>
+                                                <?php else: ?>
+                                                    <?php foreach ($dataBlok['warga'] as $warga): ?>
+                                                        <tr>
+                                                            <td class="ps-4 fw-bold text-dark text-nowrap"><?= esc($warga['no_rumah']) ?></td>
+                                                            <td class="text-nowrap text-dark fw-medium"><?= esc($warga['nama_jalan']) ?></td>
+                                                            <td class="fw-semibold text-nowrap text-dark"><?= esc($warga['nama']) ?></td>
+                                                            <td class="text-nowrap text-muted"><?= esc($warga['username']) ?></td>
+                                                            <td class="text-nowrap"><?= esc($warga['no_telepon'] ?? '-') ?></td>
+                                                            <td class="text-center text-nowrap">
+                                                                <?php if ($warga['role'] == 'pengurus'): ?>
+                                                                    <span class="badge bg-primary text-white">Pengurus RT</span>
+                                                                <?php else: ?>
+                                                                    <span class="badge bg-light text-dark border">Warga</span>
+                                                                <?php endif; ?>
+                                                            </td>
+                                                            <td class="text-center text-nowrap">
+                                                                <?php if ($warga['is_active']): ?>
+                                                                    <span class="badge bg-success">Aktif</span>
+                                                                <?php else: ?>
+                                                                    <span class="badge bg-warning text-dark">Menunggu</span>
+                                                                <?php endif; ?>
+                                                            </td>
+                                                            <td class="text-center text-nowrap pe-4">
+                                                                <a href="<?= base_url('warga/edit/' . $warga['id']) ?>" class="btn btn-sm btn-outline-warning me-1">Edit</a>
+                                                                <!-- Meneruskan ID ke fungsi javascript hapus -->
+                                                                <button class="btn btn-sm btn-outline-danger" onclick="konfirmasiHapus('<?= addslashes($warga['nama']) ?>', '<?= addslashes($warga['blok_rumah']) ?> / <?= addslashes($warga['no_rumah']) ?> (<?= addslashes($warga['nama_jalan']) ?>)', <?= $warga['id'] ?>)">Hapus</button>
+                                                            </td>
+                                                        </tr>
+                                                    <?php endforeach; ?>
+                                                <?php endif; ?>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
                     <?php endforeach; ?>
 
                 </div>
@@ -158,62 +162,66 @@
 
 <!-- Script Accordion Buka-Tutup, Filter Blok, dan Modal Hapus -->
 <script>
-let idWargaYangDihapus = null;
+    let idWargaYangDihapus = null;
 
-function konfirmasiHapus(nama, alamat, id) {
-    idWargaYangDihapus = id;
-    document.getElementById('hapusNamaWarga').textContent = nama;
-    document.getElementById('hapusAlamatWarga').textContent = alamat;
-    const modalEl = document.getElementById('modalHapusWarga');
-    const modal = new bootstrap.Modal(modalEl);
-    modal.show();
-}
-
-function eksekusiHapus() {
-    const modalEl = document.getElementById('modalHapusWarga');
-    const modal = bootstrap.Modal.getInstance(modalEl);
-    if (modal) {
-        modal.hide();
+    function konfirmasiHapus(nama, alamat, id) {
+        idWargaYangDihapus = id;
+        document.getElementById('hapusNamaWarga').textContent = nama;
+        document.getElementById('hapusAlamatWarga').textContent = alamat;
+        const modalEl = document.getElementById('modalHapusWarga');
+        const modal = new bootstrap.Modal(modalEl);
+        modal.show();
     }
-    showAppToast('Data warga berhasil dihapus dari master kependudukan RT 04.', 'info', 'Warga Terhapus');
-}
 
-function toggleAllAccordions(open) {
-    const collapsibles = document.querySelectorAll('#accordionWargaBlok .accordion-collapse');
-    collapsibles.forEach(c => {
-        const bsCollapse = bootstrap.Collapse.getOrCreateInstance(c, { toggle: false });
-        if (open) {
-            bsCollapse.show();
-        } else {
-            bsCollapse.hide();
+    function eksekusiHapus() {
+        const modalEl = document.getElementById('modalHapusWarga');
+        const modal = bootstrap.Modal.getInstance(modalEl);
+        if (modal) {
+            modal.hide();
         }
-    });
-}
+        showAppToast('Data warga berhasil dihapus dari master kependudukan RT 04.', 'info', 'Warga Terhapus');
+    }
 
-function filterBlok(blokId, btn) {
-    // Update active button styling
-    document.querySelectorAll('.filter-blok-btn').forEach(b => {
-        b.classList.remove('btn-success', 'active');
-        b.classList.add('btn-outline-secondary');
-    });
-    btn.classList.remove('btn-outline-secondary');
-    btn.classList.add('btn-success', 'active');
-
-    // Filter items
-    const items = document.querySelectorAll('.item-blok-wrapper');
-    if (blokId === 'all') {
-        items.forEach(item => item.style.display = 'block');
-    } else {
-        items.forEach(item => {
-            if (item.id === 'item-' + blokId) {
-                item.style.display = 'block';
-                const collapse = item.querySelector('.accordion-collapse');
-                bootstrap.Collapse.getOrCreateInstance(collapse, { toggle: false }).show();
+    function toggleAllAccordions(open) {
+        const collapsibles = document.querySelectorAll('#accordionWargaBlok .accordion-collapse');
+        collapsibles.forEach(c => {
+            const bsCollapse = bootstrap.Collapse.getOrCreateInstance(c, {
+                toggle: false
+            });
+            if (open) {
+                bsCollapse.show();
             } else {
-                item.style.display = 'none';
+                bsCollapse.hide();
             }
         });
     }
-}
+
+    function filterBlok(blokId, btn) {
+        // Update active button styling
+        document.querySelectorAll('.filter-blok-btn').forEach(b => {
+            b.classList.remove('btn-success', 'active');
+            b.classList.add('btn-outline-secondary');
+        });
+        btn.classList.remove('btn-outline-secondary');
+        btn.classList.add('btn-success', 'active');
+
+        // Filter items
+        const items = document.querySelectorAll('.item-blok-wrapper');
+        if (blokId === 'all') {
+            items.forEach(item => item.style.display = 'block');
+        } else {
+            items.forEach(item => {
+                if (item.id === 'item-' + blokId) {
+                    item.style.display = 'block';
+                    const collapse = item.querySelector('.accordion-collapse');
+                    bootstrap.Collapse.getOrCreateInstance(collapse, {
+                        toggle: false
+                    }).show();
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+    }
 </script>
 <?= $this->endSection() ?>
